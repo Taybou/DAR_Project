@@ -7,10 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>Hello World !!!</title>
-  </head>
-  <body>
-  Hello World !!!
-  </body>
+<head>
+    <title>BooXchange</title>
+</head>
+<body>
+Hello World !!!
+Our application have been successfully deployed :) !!!
+</body>
 </html>
