@@ -13,5 +13,9 @@
 <body>
 Hello World !!!
 Our application have been successfully deployed :) !!!
+<p>
+    this paragraph have been written after deployment. <br>
+    if you can read this, it means that the continuous integration for .jsp pages is working !
+</p>
 </body>
 </html>
