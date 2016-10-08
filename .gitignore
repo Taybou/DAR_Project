@@ -16,7 +16,7 @@ hs_err_pid*
 out/
 web/bower_components
 web/node_modules
-/webapps/booxchange/bower_components/
-/webapps/booxchange/node_modules/
+/webapps/ROOT/bower_components/
+/webapps/ROOT/node_modules/
 /lib/
-/webapps/booxchange/WEB-INF/lib/
+/webapps/ROOT/WEB-INF/lib/
