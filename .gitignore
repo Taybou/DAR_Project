@@ -20,3 +20,4 @@ web/node_modules
 /webapps/ROOT/node_modules/
 /lib/
 /webapps/ROOT/WEB-INF/lib/
+/web/META-INF/context.xml

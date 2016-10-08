@@ -6,8 +6,12 @@
 package dao;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /*
 * MorphiaDataStore is a package private Class, it is accessible only by classes in the same package and it cannot be extended
@@ -23,9 +27,9 @@ final class MorphiaDataStore {
     private static MongoClient mongoClient = null;
     private static Morphia morphia = null;
 
+    private static final String DATABASE_SERVER_PRODUCTION = "mongodb://booxchange:booxchange@ds048319.mlab.com:48319/booxchange";
 
-    private static final String DATABASE_SERVER = "localhost";
-    private static final int DATABASE_SERVER_PORT = 27017;
+    private static final String DATABASE_SERVER_DEVELOPMENT = "mongodb://localhost:27017/";
 
     private static final String DATABASE_NAME = "booxchange";
 
@@ -36,7 +40,6 @@ final class MorphiaDataStore {
 
     }
 
-
     static Datastore getDataStore() {
 
         if (datastoreInstance != null) return datastoreInstance;
@@ -46,7 +49,26 @@ final class MorphiaDataStore {
 //            Mapping the beans
             morphia.mapPackage("beans");
 //            Creating a MongoDB instance
-            mongoClient = new MongoClient(DATABASE_SERVER, DATABASE_SERVER_PORT);
+
+            String environment;
+
+            try {
+                InitialContext initialContext = new InitialContext();
+                environment = (String) initialContext.lookup("java:comp/env/environment");
+
+                if (environment.compareTo("production") == 0){
+                    System.out.println("MongoDB Production mode");
+                    mongoClient = new MongoClient(new MongoClientURI(DATABASE_SERVER_PRODUCTION));
+                }
+                else {
+                    System.out.println("MongoDB Development mode");
+                    mongoClient = new MongoClient(new MongoClientURI(DATABASE_SERVER_DEVELOPMENT));
+                }
+            } catch (NamingException e) {
+                System.out.println("MongoDB Development mode: No environment variable found");
+                mongoClient = new MongoClient(new MongoClientURI(DATABASE_SERVER_DEVELOPMENT));
+            }
+
             datastoreInstance = morphia.createDatastore(mongoClient, DATABASE_NAME);
             datastoreInstance.ensureIndexes();
             return datastoreInstance;
