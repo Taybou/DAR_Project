@@ -3,4 +3,44 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+
+    <!-- Filters -->
+    <filter>
+        <filter-name>JsonFilter</filter-name>
+        <filter-class>filters.JsonFilter</filter-class>
+    </filter>
+
+
+    <!-- Filters Mapping -->
+
+    <filter-mapping>
+        <filter-name>JsonFilter</filter-name>
+        <url-pattern>/api/users</url-pattern>
+    </filter-mapping>
+
+    <!-- Servlets -->
+
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <jsp-file>/home.html</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Users</servlet-name>
+        <servlet-class>servlets.UsersServlet</servlet-class>
+    </servlet>
+
+    <!-- Servlets Mapping-->
+    
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern/>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Users</servlet-name>
+        <url-pattern>/api/users</url-pattern>
+    </servlet-mapping>
+
 </web-app>

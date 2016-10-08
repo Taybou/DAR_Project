@@ -14,3 +14,9 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/workspace.xml
 out/
+web/bower_components
+web/node_modules
+/webapps/booxchange/bower_components/
+/webapps/booxchange/node_modules/
+/lib/
+/webapps/booxchange/WEB-INF/lib/
