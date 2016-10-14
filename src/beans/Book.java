@@ -1,4 +1,4 @@
-package entity;
+package beans;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -16,14 +16,18 @@ public class Book {
     private String author;
     private String language;
     private String category;
+    private String mImageUrl;
 
-    public Book(String isbn, String title, String author, String language, String category) {
+    public Book(String isbn, String title, String author, String language, String category, String mImageUrl) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.language = language;
         this.category = category;
+        this.mImageUrl = mImageUrl;
     }
+
+
 
     public String getIsbn() {
         return isbn;
@@ -63,5 +67,13 @@ public class Book {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getmImageUrl() {
+        return mImageUrl;
+    }
+
+    public void setmImageUrl(String mImageUrl) {
+        this.mImageUrl = mImageUrl;
     }
 }

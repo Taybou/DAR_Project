@@ -1,8 +1,24 @@
 package dao;
 
+
+import beans.Book;
+import org.mongodb.morphia.dao.DAO;
+
 /**
  * BooXchange Project
  * Created by Nour Elislam on 2016-10-15.
  */
-public class BookDAO {
+public interface BookDAO extends DAO <Book,String>{
+
+    /**
+     * get a book details using its ISBN
+     *
+     * @return
+     */
+    public Book getBookDetails(String ISBN);
+
+
+
+
+
 }
