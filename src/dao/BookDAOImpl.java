@@ -1,9 +1,7 @@
 package dao;
 
 import beans.Book;
-import com.mongodb.MongoClient;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
 
 /**
