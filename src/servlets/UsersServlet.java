@@ -1,7 +1,7 @@
 package servlets;
 
 import bean.User;
-import dao.UserDAO;
+import dao.user.UserDAO;
 import servlets.wrappers.HttpServletJsonRequest;
 import servlets.wrappers.HttpServletJsonResponse;
 

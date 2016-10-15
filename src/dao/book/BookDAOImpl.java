@@ -1,4 +1,4 @@
-package dao;
+package dao.book;
 
 import bean.Book;
 import org.mongodb.morphia.Datastore;

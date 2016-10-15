@@ -17,7 +17,7 @@ import javax.naming.NamingException;
 * MorphiaDataStore is a package private Class, it is accessible only by classes in the same package and it cannot be extended
 * */
 
-final class MorphiaDataStore {
+public final class MorphiaDataStore {
 
 
     private static final String DATABASE_SERVER_PRODUCTION = "mongodb://booxchange:booxchange@ds048319.mlab.com:48319/booxchange";
@@ -36,11 +36,11 @@ final class MorphiaDataStore {
     /*
     * This Class is a Utility class and it should not be instantiated
     * */
-    private MorphiaDataStore() {
+    public MorphiaDataStore() {
 
     }
 
-    static Datastore getDataStore() {
+    public static Datastore getDataStore() {
 
         if (datastore != null) return datastore;
         else {
@@ -74,7 +74,7 @@ final class MorphiaDataStore {
         }
     }
 
-    static Morphia getMorphia() {
+    public static Morphia getMorphia() {
         return morphia;
     }
 
@@ -87,7 +87,7 @@ final class MorphiaDataStore {
     }
 
     //USELESS METHOD
-    static MongoClient getMongoClient() {
+    public static MongoClient getMongoClient() {
         return mongoClient;
     }
 
