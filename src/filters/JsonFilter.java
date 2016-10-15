@@ -32,31 +32,18 @@ public class JsonFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        String httpMethod = request.getMethod();
-        if (httpMethod.compareToIgnoreCase("post") == 0 || httpMethod.compareToIgnoreCase("put") == 0) {
+        if (request.getContentType().compareToIgnoreCase("application/json") == 0) {
+            HttpServletJsonRequest httpServletJsonRequest = new HttpServletJsonRequest(request);
+            HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
 
-            String contentType = request.getContentType();
-            if (contentType == null || contentType.compareToIgnoreCase("application/json") != 0) {
-                Error error = new Error("Content Type must be \"application/json\"");
-                HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
-                httpServletJsonResponse.setStatus(400);
-                httpServletJsonResponse.sendJsonObject(error);
-            }
-            else {
-                this.forwardRequest(servletRequest, servletResponse, filterChain);
-            }
+            filterChain.doFilter(httpServletJsonRequest, httpServletJsonResponse);
         }
         else {
-            this.forwardRequest(servletRequest, servletResponse, filterChain);
+            Error error = new Error("Content Type must be \"application/json\"");
+            HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
+            httpServletJsonResponse.setStatus(400);
+            httpServletJsonResponse.sendJsonObject(error);
         }
-    }
-
-    private void forwardRequest(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
-        HttpServletJsonRequest httpServletJsonRequest = new HttpServletJsonRequest((HttpServletRequest) servletRequest);
-        HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
-
-        filterChain.doFilter(httpServletJsonRequest, httpServletJsonResponse);
     }
 
     @Override
