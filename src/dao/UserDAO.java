@@ -1,6 +1,6 @@
 package dao;
 
-import beans.User;
+import bean.User;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 

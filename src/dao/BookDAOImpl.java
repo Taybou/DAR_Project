@@ -1,6 +1,6 @@
 package dao;
 
-import beans.Book;
+import bean.Book;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 

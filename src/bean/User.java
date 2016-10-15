@@ -1,4 +1,4 @@
-package beans;
+package bean;
 import org.mongodb.morphia.annotations.*;
 
 /**
