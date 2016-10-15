@@ -16,15 +16,15 @@ public class Book {
     private String author;
     private String language;
     private String category;
-    private String mImageUrl;
+    private String thumbnail;
 
-    public Book(String isbn, String title, String author, String language, String category, String mImageUrl) {
+    public Book(String isbn, String title, String author, String language, String category, String thumbnail) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.language = language;
         this.category = category;
-        this.mImageUrl = mImageUrl;
+        this.thumbnail = thumbnail;
     }
 
 
@@ -69,11 +69,11 @@ public class Book {
         this.category = category;
     }
 
-    public String getmImageUrl() {
-        return mImageUrl;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setmImageUrl(String mImageUrl) {
-        this.mImageUrl = mImageUrl;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
