@@ -5,7 +5,7 @@ import org.mongodb.morphia.annotations.Id;
 
 /**
  * BooXchange Project
- * Created by Xo on 14/10/2016.
+ * Created by Mohamed Tayeb on 14/10/2016.
  */
 @Entity("Book")
 public class Book {
