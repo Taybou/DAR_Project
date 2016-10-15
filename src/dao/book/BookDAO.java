@@ -13,7 +13,7 @@ public interface BookDAO extends DAO <Book,String>{
     /**
      * get a book details using its ISBN
      *
-     * @return
+     * @return Book
      */
     public Book getBookDetails(String ISBN);
 
