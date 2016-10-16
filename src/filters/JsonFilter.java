@@ -32,18 +32,31 @@ public class JsonFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        if (request.getContentType().compareToIgnoreCase("application/json") == 0) {
-            HttpServletJsonRequest httpServletJsonRequest = new HttpServletJsonRequest(request);
-            HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
+        String httpMethod = request.getMethod();
+        if (httpMethod.compareToIgnoreCase("post") == 0 || httpMethod.compareToIgnoreCase("put") == 0 || httpMethod.compareToIgnoreCase("delete") == 0) {
 
-            filterChain.doFilter(httpServletJsonRequest, httpServletJsonResponse);
+            String contentType = request.getContentType();
+            if (contentType == null || contentType.compareToIgnoreCase("application/json") != 0) {
+                Error error = new Error("Content Type must be \"application/json\"");
+                HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
+                httpServletJsonResponse.setStatus(400);
+                httpServletJsonResponse.sendJsonObject(error);
+            }
+            else {
+                this.forwardRequest(servletRequest, servletResponse, filterChain);
+            }
         }
         else {
-            Error error = new Error("Content Type must be \"application/json\"");
-            HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
-            httpServletJsonResponse.setStatus(400);
-            httpServletJsonResponse.sendJsonObject(error);
+            this.forwardRequest(servletRequest, servletResponse, filterChain);
         }
+    }
+
+    private void forwardRequest(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        HttpServletJsonRequest httpServletJsonRequest = new HttpServletJsonRequest((HttpServletRequest) servletRequest);
+        HttpServletJsonResponse httpServletJsonResponse = new HttpServletJsonResponse((HttpServletResponse) servletResponse);
+
+        filterChain.doFilter(httpServletJsonRequest, httpServletJsonResponse);
     }
 
     @Override

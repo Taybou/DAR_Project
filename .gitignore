@@ -16,8 +16,7 @@ hs_err_pid*
 out/
 web/bower_components
 web/node_modules
-/webapps/ROOT/bower_components/
-/webapps/ROOT/node_modules/
 /lib/
-/webapps/ROOT/WEB-INF/lib/
 /web/META-INF/context.xml
+/.idea/uiDesigner.xml
+/webapps/

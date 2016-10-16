@@ -17,7 +17,7 @@ import javax.naming.NamingException;
 * MorphiaDataStore is a package private Class, it is accessible only by classes in the same package and it cannot be extended
 * */
 
-public final class MorphiaDataStore {
+final public class MorphiaDataStore {
 
 
     private static final String DATABASE_SERVER_PRODUCTION = "mongodb://booxchange:booxchange@ds048319.mlab.com:48319/booxchange";
@@ -30,13 +30,11 @@ public final class MorphiaDataStore {
     *
     */
     private static Datastore datastore = null;
-    private static MongoClient mongoClient = null;
-    private static Morphia morphia = null;
 
     /*
     * This Class is a Utility class and it should not be instantiated
     * */
-    public MorphiaDataStore() {
+    private MorphiaDataStore() {
 
     }
 
@@ -45,13 +43,14 @@ public final class MorphiaDataStore {
         if (datastore != null) return datastore;
         else {
 //            Creating a morphia instance
-            morphia = new Morphia();
+            Morphia morphia = new Morphia();
 //            Mapping the beans
-            morphia.mapPackage("beans");
+            morphia.mapPackage("bean");
 //            Creating a MongoDB instance
 
             String environment;
 
+            MongoClient mongoClient;
             try {
                 InitialContext initialContext = new InitialContext();
                 environment = (String) initialContext.lookup("java:comp/env/environment");
@@ -73,22 +72,4 @@ public final class MorphiaDataStore {
             return datastore;
         }
     }
-
-    public static Morphia getMorphia() {
-        return morphia;
-    }
-
-    public void setMorphia(Morphia morphia) {
-        this.morphia = morphia;
-    }
-
-    public void setDatastore(Datastore datastore) {
-        this.datastore = datastore;
-    }
-
-    //USELESS METHOD
-    public static MongoClient getMongoClient() {
-        return mongoClient;
-    }
-
 }

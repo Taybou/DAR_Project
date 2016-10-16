@@ -50,7 +50,6 @@
                             <input type="text" name="userName"
                                    required class="form-control"
                                    ng-model="signinCtrl.userData.userName"
-                                   ng-model-options="{ updateOn: 'blur' }"
                                    id="username"  placeholder="Entrer un Nom d'Utilisateur"/>
                         </div>
                     </div>
@@ -64,7 +63,6 @@
                             <input type="password" name="password"
                                    required class="form-control"
                                    ng-model="signinCtrl.userData.password"
-                                   ng-model-options="{ updateOn: 'blur' }"
                                    id="password"  placeholder="Entrer un Mot de passe"/>
                         </div>
                     </div>

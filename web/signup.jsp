@@ -125,7 +125,6 @@
                             <input type="password" name="confirmedPassword"
                                    required class="form-control"
                                    ng-model="signupCtrl.confirmedPassword"
-                                   ng-model-options="{ updateOn: 'blur' }"
                                    id="confirm"  placeholder="Confirmer le Mot de passe"/>
                         </div>
                     </div>

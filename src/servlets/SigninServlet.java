@@ -1,14 +1,13 @@
 package servlets;
 
-import beans.User;
+import bean.User;
 import dao.DAOFactory;
-import dao.UserDAO;
+import dao.user.UserDAO;
 import errors.Error;
 import filters.AuthorizationFilter;
 import servlets.wrappers.HttpServletJsonRequest;
 import servlets.wrappers.HttpServletJsonResponse;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

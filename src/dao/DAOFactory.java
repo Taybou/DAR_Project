@@ -1,6 +1,6 @@
 package dao;
 
-import beans.User;
+import dao.user.UserDAO;
 
 /**
  * BooXchange Project
