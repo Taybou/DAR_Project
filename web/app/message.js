@@ -16,8 +16,22 @@ myapp.controller("MsgCtrl",  ["$scope","$resource",'$http', function($scope, $re
     $scope.fetchMsg = function () {
 
         var Message = $resource('/api/messages?sender=:sender&receiver=:receiver', {'query':  {method:'GET', isArray:true}});
-        $scope.messages = Message.query({sender : $scope.myUsername, receiver:$scope.username}, function() {
-
+        $scope.messages = Message.query({sender : $scope.myUsername, receiver:$scope.username}, function(response) {
+            console.log(response);
+            for( var index in response){
+                var value = response[index];
+                if(value.timeStamp !== undefined) {
+                    value.time = (new Date(value.timeStamp)).toDateString();
+                    value.moment = moment(value.timeStamp).fromNow();
+                }
+                console.log("Index = " + index + " value = " + value);
+            }
+            // for(var msg in response) {
+            //     console.log(msg);
+            //     msg.time = (new Date(msg.timeStamp)).toTimeString();
+            //     msg.moment = moment(msg.time);
+            // }
+            return response;
         });
 
         // $http({

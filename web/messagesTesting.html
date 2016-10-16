@@ -20,6 +20,7 @@
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <!-- ***************************************************** -->
 
     <!-- Loading AngularJS External Modules -->
@@ -42,7 +43,7 @@
     username : <input ng-model="username">
     <button ng-click="fetchMsg()" > GET </button>
     <ul>
-        <li ng-repeat="msg in messages">[{{msg.timeStamp}}] {{ msg.from.userName}} : {{msg.content}} </li>
+        <li ng-repeat="msg in messages">[{{msg.moment}}] {{ msg.from.userName}} : {{msg.content}} </li>
     </ul>
 
     message : <input ng-model="message">
