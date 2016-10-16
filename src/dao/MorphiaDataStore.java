@@ -17,32 +17,32 @@ import javax.naming.NamingException;
 * MorphiaDataStore is a package private Class, it is accessible only by classes in the same package and it cannot be extended
 * */
 
-final class MorphiaDataStore {
+public final class MorphiaDataStore {
+
+
+    private static final String DATABASE_SERVER_PRODUCTION = "mongodb://booxchange:booxchange@ds048319.mlab.com:48319/booxchange";
+    private static final String DATABASE_SERVER_DEVELOPMENT = "mongodb://localhost:27017/";
+    private static final String DATABASE_NAME = "booxchange";
 
     // datastoreInstance and mongoClient are Singletons
     /*
     * See Morphia Doc and MongoDB Doc for more information avout Datastore and MongoClient
-    * */
-    private static Datastore datastoreInstance = null;
+    *
+    */
+    private static Datastore datastore = null;
     private static MongoClient mongoClient = null;
     private static Morphia morphia = null;
-
-    private static final String DATABASE_SERVER_PRODUCTION = "mongodb://booxchange:booxchange@ds048319.mlab.com:48319/booxchange";
-
-    private static final String DATABASE_SERVER_DEVELOPMENT = "mongodb://localhost:27017/";
-
-    private static final String DATABASE_NAME = "booxchange";
 
     /*
     * This Class is a Utility class and it should not be instantiated
     * */
-    private MorphiaDataStore() {
+    public MorphiaDataStore() {
 
     }
 
-    static Datastore getDataStore() {
+    public static Datastore getDataStore() {
 
-        if (datastoreInstance != null) return datastoreInstance;
+        if (datastore != null) return datastore;
         else {
 //            Creating a morphia instance
             morphia = new Morphia();
@@ -56,11 +56,10 @@ final class MorphiaDataStore {
                 InitialContext initialContext = new InitialContext();
                 environment = (String) initialContext.lookup("java:comp/env/environment");
 
-                if (environment.compareTo("production") == 0){
+                if (environment.compareTo("production") == 0) {
                     System.out.println("MongoDB Production mode");
                     mongoClient = new MongoClient(new MongoClientURI(DATABASE_SERVER_PRODUCTION));
-                }
-                else {
+                } else {
                     System.out.println("MongoDB Development mode");
                     mongoClient = new MongoClient(new MongoClientURI(DATABASE_SERVER_DEVELOPMENT));
                 }
@@ -69,17 +68,27 @@ final class MorphiaDataStore {
                 mongoClient = new MongoClient(new MongoClientURI(DATABASE_SERVER_DEVELOPMENT));
             }
 
-            datastoreInstance = morphia.createDatastore(mongoClient, DATABASE_NAME);
-            datastoreInstance.ensureIndexes();
-            return datastoreInstance;
+            datastore = morphia.createDatastore(mongoClient, DATABASE_NAME);
+            datastore.ensureIndexes();
+            return datastore;
         }
     }
 
-    static MongoClient getMongoClient() {
+    public static Morphia getMorphia() {
+        return morphia;
+    }
+
+    public void setMorphia(Morphia morphia) {
+        this.morphia = morphia;
+    }
+
+    public void setDatastore(Datastore datastore) {
+        this.datastore = datastore;
+    }
+
+    //USELESS METHOD
+    public static MongoClient getMongoClient() {
         return mongoClient;
     }
 
-    static Morphia getMorphia() {
-        return morphia;
-    }
 }

@@ -1,4 +1,4 @@
-package beans;
+package bean;
 
 enum Gender {
     MALE,
