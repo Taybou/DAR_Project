@@ -1,6 +1,7 @@
 package servlets.wrappers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import errors.Error;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -34,5 +35,10 @@ public class HttpServletJsonResponse extends HttpServletResponseWrapper {
     public void sendJsonMap(Map<String, Object> map) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(this.getWriter(), map);
+    }
+
+    public void sendJsonError(Error error, int statusCode) throws IOException {
+        this.setStatus(statusCode);
+        this.sendJsonObject(error);
     }
 }
