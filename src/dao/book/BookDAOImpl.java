@@ -1,21 +1,31 @@
 package dao.book;
 
-import bean.Book;
+import dao.MorphiaDataStore;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.dao.BasicDAO;
 
 /**
  * BooXchange Project
  * Created by Nour Elislam on 2016-10-15.
  */
-public class BookDAOImpl  extends BasicDAO<Book, String> implements BookDAO {
+public class BookDAOImpl implements BookDAO {
 
-    public BookDAOImpl(Class<Book> entityClass, Datastore ds) {
-        super(entityClass, ds);
+    private Datastore datastore = null;
+
+    public BookDAOImpl() {
+
+        datastore = MorphiaDataStore.getDataStore();
     }
 
     @Override
-    public Book getBookDetails(String ISBN) {
+    public String getBookDetails(String ISBN) {
+
+        BookRestService bookRestService = new BookRestService();
+        try {
+            return bookRestService.getBookDetails(ISBN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }
