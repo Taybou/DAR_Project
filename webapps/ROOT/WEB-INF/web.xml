@@ -66,6 +66,11 @@
     </servlet>
 
 
+    <servlet>
+        <servlet-name>Messages</servlet-name>
+        <servlet-class>servlets.MessagesServlet</servlet-class>
+    </servlet>
+
     <!-- Servlets Mapping-->
 
     <servlet-mapping>
@@ -96,11 +101,6 @@
     <servlet-mapping>
         <servlet-name>SigninServlet</servlet-name>
         <url-pattern>/api/signin</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>bookServlet</servlet-name>
-        <url-pattern>/api/books/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

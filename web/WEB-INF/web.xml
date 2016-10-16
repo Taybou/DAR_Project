@@ -61,13 +61,12 @@
     </servlet>
 
     <servlet>
-        <servlet-name>bookServlet</servlet-name>
-        <servlet-class>servlets.book.BookServlet</servlet-class>
+        <servlet-name>Messages</servlet-name>
+        <servlet-class>servlets.MessagesServlet</servlet-class>
     </servlet>
 
-
     <!-- Servlets Mapping-->
-
+    
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern/>
@@ -99,8 +98,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>bookServlet</servlet-name>
-        <url-pattern>/api/books/*</url-pattern>
+        <servlet-name>Messages</servlet-name>
+        <url-pattern>/api/messages</url-pattern>
     </servlet-mapping>
 
 </web-app>
