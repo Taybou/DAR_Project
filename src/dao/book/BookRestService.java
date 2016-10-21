@@ -5,6 +5,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -20,6 +21,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URI;
 
 
 /**
@@ -70,7 +72,7 @@ public class BookRestService {
         try {
             uriBuilder = new URIBuilder();
             uriBuilder.setScheme("https").setHost("www.goodreads.com").setPath("/book/isbn/" + query)
-                    .setParameter("key", API_KEY);
+                    .setParameter("key", APIKEY);
             uri = uriBuilder.build();
             httpGet = new HttpGet(uri);
 
@@ -100,7 +102,7 @@ public class BookRestService {
         String language = null;
         String category = null;
         String thumbnail = null;
-        String average_rating = null ;
+        String average_rating = null;
         String description = null;
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -148,13 +150,13 @@ public class BookRestService {
             e.printStackTrace();
         }
 
-        Book bookO = new Book(isbn, title, author, language, category, thumbnail,average_rating,description);
+        Book bookO = new Book(isbn, title, author, language, category, thumbnail, average_rating, description);
         return bookO;
     }
 
-    private String  formatUrl (String url){
+    private String formatUrl(String url) {
         int ind = url.lastIndexOf("m");
-        url = new StringBuilder(url).replace(ind, ind+1,"l").toString();
-        return  url;
+        url = new StringBuilder(url).replace(ind, ind + 1, "l").toString();
+        return url;
     }
 }

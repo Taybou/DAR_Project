@@ -18,9 +18,7 @@ public class Book {
     private String category;
     private String thumbnail;
     private String average_rating;
-    private String desciption ;
-
-
+    private String desciption;
 
 
     public Book(String isbn, String title, String author, String language, String category, String thumbnail, String average_rating, String desciption) {
@@ -33,6 +31,7 @@ public class Book {
         this.average_rating = average_rating;
         this.desciption = desciption;
     }
+
     public String getAverage_rating() {
         return average_rating;
     }
@@ -41,13 +40,14 @@ public class Book {
         this.average_rating = average_rating;
     }
 
+    public void setDesciption(String desciption) {
+        this.desciption = desciption;
+    }
+
     public String getDesciption() {
         return desciption;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
-    }
 
     public String getIsbn() {
         return isbn;

@@ -1,6 +1,8 @@
 package dao.book;
 
 
+import bean.Book;
+
 import bean.User;
 
 import bean.Book;
