@@ -1,5 +1,6 @@
 package servlets.book;
 
+import bean.User;
 import dao.DAOFactory;
 import dao.book.BookDAO;
 
@@ -9,17 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * BooXchange Project
- * Created by Mohamed Tayeb on 16/10/2016.
+ * Created by Mohamed Tayeb on 20/10/2016.
  */
-@WebServlet(name = "BookServlet")
-public class BookServlet extends HttpServlet {
+@WebServlet(name = "BookSearchServlet")
+public class BookSearchServlet extends HttpServlet {
 
-    private static final String VUE_BOOK = "myBook";
     BookDAO bookDAO;
-
 
     public void init() {
         bookDAO = DAOFactory.getBookDAO();
@@ -34,6 +35,14 @@ public class BookServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    }
 
+        bookDAO.findBooksByTitle_Author_ISBN("0441172717");
+
+        List booksIsbnList = new ArrayList();
+        booksIsbnList.add("784");
+        booksIsbnList.add("555");
+
+        User user = new User("b", booksIsbnList);
+        bookDAO.addBooks(user);
+    }
 }

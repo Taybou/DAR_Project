@@ -1,5 +1,8 @@
 package bean;
+
 import org.mongodb.morphia.annotations.*;
+
+import java.util.List;
 
 /**
  * BooXchange Project
@@ -27,6 +30,8 @@ public class User {
     private String address;
     private String profilePictureUrl;
 
+    private List<String> booksIsbnList;
+
     public User() {
     }
 
@@ -36,6 +41,19 @@ public class User {
         this.firstName = firstName;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String userName, List<String> booksIsbnList) {
+        this.userName = userName;
+        this.booksIsbnList = booksIsbnList;
+    }
+
+    public List<String> getBooksIsbnList() {
+        return booksIsbnList;
+    }
+
+    public void setBooksIsbnList(List<String> booksIsbnList) {
+        this.booksIsbnList = booksIsbnList;
     }
 
     public String getProfilePictureUrl() {

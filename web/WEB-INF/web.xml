@@ -68,6 +68,10 @@
         <servlet-name>bookServlet</servlet-name>
         <servlet-class>servlets.book.BookServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>bookSearchServlet</servlet-name>
+        <servlet-class>servlets.book.BookSearchServlet</servlet-class>
+    </servlet>
 
 
     <!-- Servlets Mapping-->
@@ -109,6 +113,10 @@
     <servlet-mapping>
         <servlet-name>bookServlet</servlet-name>
         <url-pattern>/api/books/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>bookSearchServlet</servlet-name>
+        <url-pattern>/api/books/searsh/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

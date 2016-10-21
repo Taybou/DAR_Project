@@ -7,9 +7,9 @@ import dao.user.UserDAO;
  * BooXchange Project
  * Created by Al on 14-Oct-16.
  */
-final public class DAOFactory {
+public final class DAOFactory {
 
-    static public UserDAO getUserDAO() {
+    public static UserDAO getUserDAO() {
         return new UserDAO();
     }
 
