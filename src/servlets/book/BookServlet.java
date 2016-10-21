@@ -1,7 +1,9 @@
 package servlets.book;
 
+import bean.Book;
 import dao.DAOFactory;
 import dao.book.BookDAO;
+import servlets.wrappers.HttpServletJsonResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,32 +27,17 @@ public class BookServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        merge(request, response);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        merge(request, response);
+        //merge(request, response);
+        HttpServletJsonResponse jsonResponse = new HttpServletJsonResponse(response);
+        Book book = bookDAO.getBookDetails("0061726834");
+        jsonResponse.sendJsonObject(book);
+        response = jsonResponse;
+
     }
 
-    private void merge(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
 
-        PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset=\"utf-8\" />");
-        out.println("<title>Test</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<p>Ceci est une page générée depuis une servlet.</p>");
-        out.println("</body>");
-        out.println("</html>");
-        try {
-            System.out.println(bookDAO.getBookDetails("0441172717"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

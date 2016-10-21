@@ -1,5 +1,6 @@
 package dao.book;
 
+import bean.Book;
 import dao.MorphiaDataStore;
 import org.mongodb.morphia.Datastore;
 
@@ -17,7 +18,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public String getBookDetails(String ISBN) {
+    public Book getBookDetails(String ISBN) {
 
         BookRestService bookRestService = new BookRestService();
         try {

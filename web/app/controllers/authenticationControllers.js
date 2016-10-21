@@ -4,9 +4,9 @@
     */
 
 angular.module('authApp')
-    .controller('SignupController', [
-        'authenticationService',
-        function (authenticationService) {
+            .controller('SignupController', [
+                'authenticationService',
+                function (authenticationService) {
 
             var vm = this;
             vm.createdUser = null;

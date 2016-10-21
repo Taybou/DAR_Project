@@ -43,6 +43,7 @@
     <button ng-click="fetchMsg()" > GET </button>
     <ul>
         <li ng-repeat="msg in messages">[{{msg.timeStamp}}] {{ msg.from.userName}} : {{msg.content}} </li>
+
     </ul>
 
     message : <input ng-model="message">
