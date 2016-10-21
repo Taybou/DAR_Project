@@ -1,6 +1,7 @@
 package dao.book;
 
 import bean.User;
+import bean.Book;
 import dao.MorphiaDataStore;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -19,14 +20,16 @@ public class BookDAOImpl implements BookDAO {
     private BookRestService bookRestService = null;
 
     public BookDAOImpl() {
+
         datastore = MorphiaDataStore.getDataStore();
         bookRestService = new BookRestService();
 
     }
 
     @Override
-    public String getBookDetails(String ISBN) {
+    public Book getBookDetails(String ISBN) {
 
+        BookRestService bookRestService = new BookRestService();
         try {
             return bookRestService.getBookDetails(ISBN);
         } catch (Exception e) {

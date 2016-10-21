@@ -3,6 +3,8 @@ package dao.book;
 
 import bean.User;
 
+import bean.Book;
+
 /**
  * BooXchange Project
  * Created by Nour Elislam on 2016-10-15.
@@ -14,7 +16,7 @@ public interface BookDAO {
      *
      * @return Book
      */
-    public String getBookDetails(String ISBN);
+    public Book getBookDetails(String ISBN);
 
     public String findBooksByTitle_Author_ISBN(String query);
 

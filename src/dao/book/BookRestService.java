@@ -5,11 +5,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -17,10 +18,8 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.Node;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URI;
 
 
 /**
@@ -30,8 +29,9 @@ import java.net.URI;
 
 public class BookRestService {
 
-
-    private static final String API_KEY = "SqPGSUll3Xu1ysNbFEXtng";
+    private static final String FORMAT = "xml";
+    private static final String ISBN = "ISBN";
+    private static final String APIKEY = "SqPGSUll3Xu1ysNbFEXtng";
 
     private HttpResponse httpResponse;
     private int statusCode;
@@ -40,13 +40,28 @@ public class BookRestService {
     private URIBuilder uriBuilder;
     private URI uri;
 
-    public BookRestService() {
-    }
+    public Book getBookDetails(String isbn) throws Exception {
+        String result = "Rien0";
+        HttpClient httpClient = HttpClientBuilder.create().build();
 
-    public String getBookDetails(String isbn) throws Exception {
-        return null;
-    }
+        try {
+            HttpGet getRequest = new HttpGet("https://www.goodreads.com/book/isbn/" + isbn + "?key=" + APIKEY);
+            getRequest.addHeader("accept", "application/xml");
+            HttpResponse response = httpClient.execute(getRequest);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 200) {
+                throw new RuntimeException("Failed with HTTP error code : " + statusCode);
+            }
+            HttpEntity httpEntity = response.getEntity();
+            String apiOutput = EntityUtils.toString(httpEntity);
 
+            result = apiOutput;
+        } finally {
+            httpClient.getConnectionManager().shutdown();
+        }
+
+        return getBookObject(result);
+    }
 
     public String findBooksByTitle_Author_ISBN(String query) throws Exception {
         String result = "";
@@ -85,6 +100,8 @@ public class BookRestService {
         String language = null;
         String category = null;
         String thumbnail = null;
+        String average_rating = null ;
+        String description = null;
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
@@ -101,7 +118,11 @@ public class BookRestService {
 
                     language = book.getElementsByTagName("language_code").item(0).getTextContent();
 
-                    thumbnail = book.getElementsByTagName("image_url").item(0).getTextContent();
+                    thumbnail = formatUrl(book.getElementsByTagName("image_url").item(0).getTextContent());
+
+                    description = book.getElementsByTagName("description").item(0).getTextContent();
+
+                    average_rating = book.getElementsByTagName("average_rating").item(0).getTextContent();
 
                     final NodeList authorNode = book.getChildNodes();
                     for (int j = 0; j < authorNode.getLength(); j++) {
@@ -127,8 +148,13 @@ public class BookRestService {
             e.printStackTrace();
         }
 
-        Book bookO = new Book(isbn, title, author, language, category, thumbnail);
+        Book bookO = new Book(isbn, title, author, language, category, thumbnail,average_rating,description);
         return bookO;
     }
 
+    private String  formatUrl (String url){
+        int ind = url.lastIndexOf("m");
+        url = new StringBuilder(url).replace(ind, ind+1,"l").toString();
+        return  url;
+    }
 }

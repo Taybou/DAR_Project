@@ -46,6 +46,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>BookDetails</servlet-name>
+        <jsp-file>/booksDetails.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
         <servlet-name>Users</servlet-name>
         <servlet-class>servlets.UsersServlet</servlet-class>
     </servlet>
@@ -90,6 +95,11 @@
     <servlet-mapping>
         <servlet-name>Users</servlet-name>
         <url-pattern>/api/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BookDetails</servlet-name>
+        <url-pattern>/bookDetails</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

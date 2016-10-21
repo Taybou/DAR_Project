@@ -17,17 +17,37 @@ public class Book {
     private String language;
     private String category;
     private String thumbnail;
+    private String average_rating;
+    private String desciption ;
 
-    public Book(String isbn, String title, String author, String language, String category, String thumbnail) {
+
+
+
+    public Book(String isbn, String title, String author, String language, String category, String thumbnail, String average_rating, String desciption) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.language = language;
         this.category = category;
         this.thumbnail = thumbnail;
+        this.average_rating = average_rating;
+        this.desciption = desciption;
+    }
+    public String getAverage_rating() {
+        return average_rating;
     }
 
+    public void setAverage_rating(String average_rating) {
+        this.average_rating = average_rating;
+    }
 
+    public String getDesciption() {
+        return desciption;
+    }
+
+    public void setDesciption(String desciption) {
+        this.desciption = desciption;
+    }
 
     public String getIsbn() {
         return isbn;
