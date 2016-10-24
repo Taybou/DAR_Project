@@ -12,8 +12,8 @@ myapp.config(['$resourceProvider', function($resourceProvider) {
 }]);
 
 myapp.controller("MsgCtrl",  ["$scope","$resource",'$http', function($scope, $resource, $http) {
-    $scope.username='Cptn Jack Sparrow';
-    $scope.fetchMsg = function () {
+    e$scope.username='Cptn Jack Sparrow';
+    $scop.fetchMsg = function () {
 
         var Message = $resource('/api/messages?sender=:sender&receiver=:receiver', {'query':  {method:'GET', isArray:true}});
         $scope.messages = Message.query({sender : $scope.myUsername, receiver:$scope.username}, function(response) {

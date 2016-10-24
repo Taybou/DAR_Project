@@ -45,8 +45,7 @@ public class SignupServlet extends HttpServlet {
             session.setAttribute(AuthorizationFilter.USER_SESSION, null);
             Error error = new Error("The user name is taken");
             response.sendJsonError(error, 400);
-        }
-        else {
+        } else {
             //If not exists : create a user
             user = new User();
             user.setUserName((String) signupPost.get("userName"));
@@ -54,6 +53,7 @@ public class SignupServlet extends HttpServlet {
             user.setEmail((String) signupPost.get("email"));
             user.setFirstName((String) signupPost.get("firstName"));
             user.setLastName((String) signupPost.get("lastName"));
+
             // Add the user:
             userDAO.addUser(user);
             // Creating a session for the user (if you want to connect the user on signup)
