@@ -34,6 +34,7 @@ public class BookRestService {
     private static final String FORMAT = "xml";
     private static final String ISBN = "ISBN";
     private static final String APIKEY = "SqPGSUll3Xu1ysNbFEXtng";
+    private static final String GOODREADS_URI = "https://www.goodreads.com/search/index.xml";
 
     private HttpResponse httpResponse;
     private int statusCode;
