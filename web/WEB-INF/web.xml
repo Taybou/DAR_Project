@@ -120,6 +120,14 @@
         <servlet-name>Messages</servlet-name>
         <url-pattern>/api/messages</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>bookServlet</servlet-name>
+        <url-pattern>/api/books/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>bookSearchServlet</servlet-name>
+        <url-pattern>/api/books/searsh/*</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>bookServlet</servlet-name>
