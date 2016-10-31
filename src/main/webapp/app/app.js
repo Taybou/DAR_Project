@@ -1,10 +1,11 @@
 /**
-    * BooXchange Project
-    * Created by Al on 06-Oct-16.
-    */
+ * BooXchange Project
+ * Created by Al on 06-Oct-16.
+ */
 
-angular.module('booxchangeApp', ['ngSanitize'
+angular.module('booxchangeApp', [
     /*Put dependencies here*/
+    'angularModalService'
 ]);
 
 

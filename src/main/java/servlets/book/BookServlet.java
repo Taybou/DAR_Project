@@ -1,9 +1,8 @@
 package servlets.book;
 
-import bean.Book;
+import bean.User;
 import bean.googlebooks.GoogleBook;
 import dao.DAOFactory;
-import dao.book.BookAPIAccess;
 import dao.book.BookDAO;
 import servlets.wrappers.HttpServletJsonResponse;
 
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,27 +31,48 @@ public class BookServlet extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //merge(request, response);
-        /*HttpServletJsonResponse jsonResponse = new HttpServletJsonResponse(response);
-        Book book = bookDAO.getBookDetails("0061726834");
-        jsonResponse.sendJsonObject(book);
-        response = jsonResponse;
-*/
-        String query = req.getParameter("q");
-        String id = req.getParameter("id");
-        HttpServletJsonResponse jsonResponse = ((HttpServletJsonResponse) resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpServletJsonResponse jsonResponse = ((HttpServletJsonResponse) response);
 
-        BookAPIAccess bookAPIAccess = new BookAPIAccess();
-//        @url(/api/books?q=something) : find books
-        if (query!= null) {
-            List<GoogleBook> books = bookAPIAccess.findBooks(query);
-            jsonResponse.sendJsonObject(books);
+        String query = request.getParameter("query");
+        String action = request.getParameter("action");
+        //String id = request.getParameter("id");
+
+        switch (action) {
+            case "search":
+                if (query != null) {
+                    List<GoogleBook> books = bookDAO.findBooks(query);
+                    jsonResponse.sendJsonObject(books);
+                    response = jsonResponse;
+                }
+                break;
+
+            case "add":
+                String userName = request.getParameter("userName");
+                List booksIsbnList = new ArrayList();
+                booksIsbnList.add(query);
+                User user = new User(userName, booksIsbnList);
+
+                bookDAO.addBooks(user);
+
+                jsonResponse.sendJsonObject("successfully added");
+                response = jsonResponse;
+                break;
+
+            case "details":
+                if (query != null) {
+                    GoogleBook book = bookDAO.getBookDetails(query);
+                    jsonResponse.sendJsonObject(book);
+                    response = jsonResponse;
+                }
+                break;
+
         }
-        else if (id != null) {
-            GoogleBook book = bookAPIAccess.getBook(id);
-            jsonResponse.sendJsonObject(book);
-        }
+
+//        if (id != null) {
+//            GoogleBook book = bookAPIAccess.getBook(id);
+//            jsonResponse.sendJsonObject(book);
+//        }
     }
 
 

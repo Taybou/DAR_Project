@@ -17,8 +17,7 @@ import java.util.ArrayList;
  */
 public class BookAPIAccess {
 
-    public static String GOOGLE_BOOKS_URI_GET_ONE = "https://www.googleapis.com/books/v1/volumes/{id}";
-    public static String GOOGLE_BOOKS_URI_GET_MANY = "https://www.googleapis.com/books/v1/volumes";
+    public static String GOOGLE_BOOKS_URI = "https://www.googleapis.com/books/v1/volumes";
 
     //private ObjectMapper objectMapper;
 
@@ -46,12 +45,12 @@ public class BookAPIAccess {
         });
     }
 
-    public GoogleBook getBook(String identifier) {
+    public GoogleBook getBook(String isbn) {
 
         try {
-            HttpResponse<GoogleBook> response = Unirest.get(GOOGLE_BOOKS_URI_GET_ONE)
+            HttpResponse<GoogleBook> response = Unirest.get(GOOGLE_BOOKS_URI)
                     .header("cache-control", "no-cache")
-                    .routeParam("id", identifier)
+                    .queryString("q", "isbn:" + isbn)
                     .asObject(GoogleBook.class);
 
             return response.getBody();
@@ -65,7 +64,7 @@ public class BookAPIAccess {
     public ArrayList<GoogleBook> findBooks(String query) {
 
         try {
-            HttpResponse<BookSearchResult> response = Unirest.get(GOOGLE_BOOKS_URI_GET_MANY)
+            HttpResponse<BookSearchResult> response = Unirest.get(GOOGLE_BOOKS_URI)
                     .header("cache-control", "no-cache")
                     .queryString("q", query)
                     .asObject(BookSearchResult.class);

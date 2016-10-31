@@ -22,6 +22,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 
 /**
@@ -66,14 +67,16 @@ public class BookRestService {
         return getBookObject(result);
     }
 
-    public String findBooksByTitle_Author_ISBN(String query) throws Exception {
+    public List<Book> findBooksByTitle_Author_ISBN(String query) throws Exception {
         String result = "";
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
             uriBuilder = new URIBuilder();
-            uriBuilder.setScheme("https").setHost("www.goodreads.com").setPath("/book/isbn/" + query)
-                    .setParameter("key", APIKEY);
+            uriBuilder.setScheme("https").setHost("www.goodreads.com").setPath("/search/index.xml")
+                    .setParameter("key", APIKEY)
+                    .setParameter("q", query);
+
             uri = uriBuilder.build();
             httpGet = new HttpGet(uri);
 
@@ -91,7 +94,7 @@ public class BookRestService {
             httpClient.getConnectionManager().shutdown();
         }
 
-        return getBookObject(result).getIsbn();
+        return getArrayBookObject(result);
 
     }
 
@@ -153,6 +156,57 @@ public class BookRestService {
 
         Book bookO = new Book(isbn, title, author, language, category, thumbnail, average_rating, description);
         return bookO;
+    }
+
+    private List<Book> getArrayBookObject(String xmlFile) {
+
+        String id = null;
+        String title = null;
+        String author = null;
+        String thumbnail = null;
+
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            final DocumentBuilder builder = factory.newDocumentBuilder();
+            final Document document = builder.parse(new InputSource(new ByteArrayInputStream(xmlFile.getBytes("utf-8"))));
+            final Element root = document.getDocumentElement();
+            final NodeList racineNoeuds = root.getChildNodes();
+            for (int i = 0; i < racineNoeuds.getLength(); i++) {
+                if (racineNoeuds.item(i).getNodeType() == Node.ELEMENT_NODE && racineNoeuds.item(i).getNodeName().equals("book")) {
+
+                    final Element book = (Element) racineNoeuds.item(i);
+                    title = book.getElementsByTagName("title").item(0).getTextContent();
+
+                    thumbnail = formatUrl(book.getElementsByTagName("image_url").item(0).getTextContent());
+
+                    final NodeList authorNode = book.getChildNodes();
+                    for (int j = 0; j < authorNode.getLength(); j++) {
+                        if (authorNode.
+                                item(j).
+                                getNodeType() == Node.
+                                ELEMENT_NODE && authorNode
+                                .item(j)
+                                .getNodeName()
+                                .equals("authors")) {
+                            final Element authorE = (Element) authorNode.item(j);
+                            author = authorE.getElementsByTagName("name").item(0).getTextContent();
+                        }
+                    }
+
+                }
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Book book = new Book(title, author, thumbnail, id);
+
+
+        return null;
     }
 
     private String formatUrl(String url) {

@@ -1,8 +1,9 @@
 package dao.book;
 
-import bean.Book;
 import bean.User;
-import bean.Book;
+import bean.googlebooks.GoogleBook;
+import bean.googlebooks.IndustryIdentifier;
+import bean.googlebooks.VolumeInfo;
 import dao.MorphiaDataStore;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -19,36 +20,52 @@ public class BookDAOImpl implements BookDAO {
 
     private Datastore datastore = null;
     private BookRestService bookRestService = null;
+    private BookAPIAccess bookAPIAccess;
 
     public BookDAOImpl() {
-
         datastore = MorphiaDataStore.getDataStore();
         bookRestService = new BookRestService();
-
+        bookAPIAccess = new BookAPIAccess();
     }
 
     @Override
-    public Book getBookDetails(String ISBN) {
-
-        BookRestService bookRestService = new BookRestService();
-        try {
-            return bookRestService.getBookDetails(ISBN);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public GoogleBook getBookDetails(String isbn) {
+        GoogleBook book = bookAPIAccess.getBook(isbn);
+        return book;
     }
 
     @Override
-    public String findBooksByTitle_Author_ISBN(String query) {
-        try {
-            return bookRestService.findBooksByTitle_Author_ISBN(query);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public List<GoogleBook> findBooks(String query) {
+
+        List<GoogleBook> books = bookAPIAccess.findBooks(query);
+        List<GoogleBook> booksList = new ArrayList<>();
+
+        for (GoogleBook book : books) {
+            GoogleBook mBook = new GoogleBook();
+            VolumeInfo volumeInfo = new VolumeInfo();
+
+            volumeInfo.setTitle(book.getVolumeInfo().getTitle());
+            volumeInfo.setAuthors(book.getVolumeInfo().getAuthors());
+            volumeInfo.setImageLinks(book.getVolumeInfo().getImageLinks());
+            boolean isValid = false;
+
+            for (IndustryIdentifier industryIdentifier :
+                    book.getVolumeInfo().getIndustryIdentifiers()) {
+                if (industryIdentifier.getType().equals("ISBN_13")) {
+                    List<IndustryIdentifier> list = new ArrayList<>();
+                    list.add(industryIdentifier);
+                    volumeInfo.setIndustryIdentifiers(list);
+                    isValid = true;
+                }
+            }
+
+            if (isValid) {
+                mBook.setVolumeInfo(volumeInfo);
+                booksList.add(mBook);
+            }
         }
 
-        return null;
+        return booksList;
     }
 
     @Override
