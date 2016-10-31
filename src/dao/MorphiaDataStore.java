@@ -45,7 +45,7 @@ final public class MorphiaDataStore {
 //            Creating a morphia instance
             Morphia morphia = new Morphia();
 //            Mapping the beans
-            morphia.mapPackage("bean");
+            morphia.mapPackage("src/bean");
 //            Creating a MongoDB instance
 
             String environment;

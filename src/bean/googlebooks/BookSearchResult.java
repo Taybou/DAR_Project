@@ -1,24 +1,20 @@
 
 package bean.googlebooks;
 
+import com.fasterxml.jackson.annotation.*;
+
+import javax.annotation.Generated;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-    "kind",
-    "totalItems",
-    "items"
+        "kind",
+        "totalItems",
+        "items"
 })
 public class BookSearchResult {
 
@@ -32,9 +28,7 @@ public class BookSearchResult {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
-     * @return
-     *     The kind
+     * @return The kind
      */
     @JsonProperty("kind")
     public String getKind() {
@@ -42,9 +36,7 @@ public class BookSearchResult {
     }
 
     /**
-     * 
-     * @param kind
-     *     The kind
+     * @param kind The kind
      */
     @JsonProperty("kind")
     public void setKind(String kind) {
@@ -52,9 +44,7 @@ public class BookSearchResult {
     }
 
     /**
-     * 
-     * @return
-     *     The totalItems
+     * @return The totalItems
      */
     @JsonProperty("totalItems")
     public Integer getTotalItems() {
@@ -62,9 +52,7 @@ public class BookSearchResult {
     }
 
     /**
-     * 
-     * @param totalItems
-     *     The totalItems
+     * @param totalItems The totalItems
      */
     @JsonProperty("totalItems")
     public void setTotalItems(Integer totalItems) {
@@ -72,9 +60,7 @@ public class BookSearchResult {
     }
 
     /**
-     * 
-     * @return
-     *     The items
+     * @return The items
      */
     @JsonProperty("items")
     public List<GoogleBook> getItems() {
@@ -82,9 +68,7 @@ public class BookSearchResult {
     }
 
     /**
-     * 
-     * @param items
-     *     The items
+     * @param items The items
      */
     @JsonProperty("items")
     public void setItems(List<GoogleBook> items) {

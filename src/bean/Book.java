@@ -19,6 +19,7 @@ public class Book {
     private String thumbnail;
     private String average_rating;
     private String desciption;
+    private String idBook;
 
 
     public Book(String isbn, String title, String author, String language, String category, String thumbnail, String average_rating, String desciption) {
@@ -30,6 +31,21 @@ public class Book {
         this.thumbnail = thumbnail;
         this.average_rating = average_rating;
         this.desciption = desciption;
+    }
+
+    public Book(String title, String author, String thumbnail, String idBook) {
+        this.title = title;
+        this.author = author;
+        this.thumbnail = thumbnail;
+        this.idBook = idBook;
+    }
+
+    public String getIdBook() {
+        return idBook;
+    }
+
+    public void setIdBook(String idBook) {
+        this.idBook = idBook;
     }
 
     public String getAverage_rating() {

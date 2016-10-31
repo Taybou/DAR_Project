@@ -1,26 +1,30 @@
 package dao.book;
 
 
-import bean.Book;
-
 import bean.User;
+import bean.googlebooks.GoogleBook;
 
-import bean.Book;
+import java.util.List;
 
 /**
  * BooXchange Project
- * Created by Nour Elislam on 2016-10-15.
+ * Created by Mohamed Tayeb on 2016-10-15.
  */
 public interface BookDAO {
 
     /**
-     * get a book details using its ISBN
+     * get a book details using its isbn
      *
-     * @return Book
+     * @return GoogleBook
      */
-    public Book getBookDetails(String ISBN);
+    public GoogleBook getBookDetails(String isbn);
 
-    public String findBooksByTitle_Author_ISBN(String query);
+    /**
+     * find books by query
+     *
+     * @return List<GoogleBook>
+     */
+    public List<GoogleBook> findBooks(String query);
 
     public void addBooks(User user);
 }

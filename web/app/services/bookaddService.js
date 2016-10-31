@@ -1,20 +1,23 @@
 /**
- * Created by islam on 2016-10-19.
+ * BooXchange Project
+ * Created by Mohamed Tayeb on 23/10/2016.
  */
 
 angular.module('booxchangeApp')
-    .factory('dataFactory', ['$http', function ($http) {
+    .factory('bookaddService', ['$http', function ($http) {
 
-        this.getDetails = function (query, onSuccess, onError) {
+        this.addBook = function (userName, query, onSuccess, onError) {
+            console.log('serviceX : ' + userName + ' , ' + query);
+
             $http({
                 method: 'GET',
-                url: '/api/books?query=' + query + '&action=details',
+                url: '/api/books?query=' + query + '&userName=' + userName + '&action=add',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then(
                 function success(response) {
-                    onSuccess(response, 'details');
+                    onSuccess(response,'added');
                 },
                 function error(response) {
                     onError(response);
