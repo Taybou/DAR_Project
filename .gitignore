@@ -14,9 +14,12 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/workspace.xml
 out/
-web/bower_components
-web/node_modules
+src/main/webapp/bower_components
+src/main/webapp/node_modules
 /lib/
-/web/META-INF/context.xml
+/main/web/META-INF/context.xml
 /.idea/uiDesigner.xml
 /webapps/
+/.idea/inspectionProfiles/
+/.idea/libraries/
+/target/

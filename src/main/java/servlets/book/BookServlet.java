@@ -26,7 +26,6 @@ public class BookServlet extends HttpServlet {
 
     public void init() {
         bookDAO = DAOFactory.getBookDAO();
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,4 +54,6 @@ public class BookServlet extends HttpServlet {
             jsonResponse.sendJsonObject(book);
         }
     }
+
+
 }
