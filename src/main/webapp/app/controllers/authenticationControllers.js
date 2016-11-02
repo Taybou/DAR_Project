@@ -43,7 +43,7 @@ angular.module('authApp')
             };
 
             var onSuccess = function () {
-                $window.location.href = '/main/web';
+                $window.location.href = '/';
             };
 
             vm.submit = function () {

@@ -4,9 +4,23 @@
  */
 
 angular.module('booxchangeApp', [
-    /*Put dependencies here*/
-    'angularModalService'
-]);
+        'ngRoute'
+    ])
+    .config([
+        '$routeProvider',
+        function ($routeProvider) {
 
-
-
+            $routeProvider
+                .when('/home', {
+                    templateUrl: 'views/search.html',
+                    controller: 'BookSearchController',
+                    controllerAs: 'bookSearchCtrl'
+                })
+                .when('/book/:bookISBN', {
+                    templateUrl: 'views/book.html',
+                    controller: 'BookController',
+                    controllerAs: 'bookCtrl'
+                })
+                .otherwise('/home');
+        }
+    ]);
