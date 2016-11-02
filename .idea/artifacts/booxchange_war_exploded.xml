@@ -1,0 +1,38 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="booxchange:war exploded">
+    <output-path>$PROJECT_DIR$/target/booxchange</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="booxchange" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax:javaee-api:7.0" />
+          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.0" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: org.mongodb.morphia:morphia:1.2.1" />
+          <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.2.2" />
+          <element id="library" level="project" name="Maven: cglib:cglib-nodep:2.2.2" />
+          <element id="library" level="project" name="Maven: com.thoughtworks.proxytoys:proxytoys:1.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.7.3" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.7.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.7.3" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:1.3.2" />
+          <element id="library" level="project" name="Maven: com.mashape.unirest:unirest-java:1.4.9" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.3.6" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.3.3" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.3" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.6" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpasyncclient:4.0.2" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore-nio:4.3.2" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpmime:4.3.6" />
+          <element id="library" level="project" name="Maven: org.json:json:20140107" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/booxchange/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="booxchange/web/Web" />
+    </root>
+  </artifact>
+</component>
