@@ -1,6 +1,5 @@
 package servlets.book;
 
-import bean.User;
 import bean.googlebooks.GoogleBook;
 import dao.DAOFactory;
 import dao.book.BookDAO;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +34,6 @@ public class BookServlet extends HttpServlet {
 
         String query = request.getParameter("query");
         String action = request.getParameter("action");
-        //String id = request.getParameter("id");
 
         switch (action) {
             case "search":
@@ -45,19 +42,6 @@ public class BookServlet extends HttpServlet {
                     jsonResponse.sendJsonObject(books);
                 }
                 break;
-            //TODO: This action should be moved to the user API. it concerns the ressource User and not Book
-            case "add":
-                //TODO: No Need to specify the userName, you can get it by using the session (See authorisation Filter)
-                String userName = request.getParameter("userName");
-                List booksIsbnList = new ArrayList();
-                booksIsbnList.add(query);
-                User user = new User(userName, booksIsbnList);
-
-                bookDAO.addBooks(user);
-
-                jsonResponse.sendJsonObject("successfully added");
-                break;
-
             case "details":
                 if (query != null) {
                     GoogleBook book = bookDAO.getBookDetails(query);
@@ -66,9 +50,5 @@ public class BookServlet extends HttpServlet {
                 break;
         }
 
-//        if (id != null) {
-//            GoogleBook book = bookAPIAccess.getBook(id);
-//            jsonResponse.sendJsonObject(book);
-//        }
     }
 }
