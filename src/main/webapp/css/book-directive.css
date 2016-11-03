@@ -1,0 +1,31 @@
+book .bookCard {
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    border: 1px solid lightgrey;
+    background-color: white;
+}
+
+book .bookCard button {
+    margin: 5px;
+}
+
+book .bookTitle {
+    font-family: "Open Sans";
+    font-size: 24pt;
+}
+
+book .bookInfo {
+    font-size: 14pt;
+}
+
+book .bookThumbnail {
+    height: 230px;
+    border: 1px solid lightgray;
+    margin-top: 8px;
+}
+
+book a.btn {
+    margin: 5px;
+}

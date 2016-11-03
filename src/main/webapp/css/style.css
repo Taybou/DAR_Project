@@ -1,0 +1,19 @@
+html, body, .main-view, section.home {
+    height: 100%;
+}
+
+.main-view {
+    margin-top: 60px;
+}
+
+.book-view {
+    padding-top: 30px;
+}
+
+.book-view .book-image {
+    text-align: center;
+}
+
+.book-view .book-image {
+    display: inline;
+}

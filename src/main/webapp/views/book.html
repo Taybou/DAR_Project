@@ -1,0 +1,32 @@
+<section class="book-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-2">
+                <div class="book-image"><img src="{{bookCtrl.book.volumeInfo.imageLinks.thumbnail}}" class="img-responsive" ></div>
+            </div>
+            {{bookCtrl.book.volumeInfo.thumbnail}}
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>{{bookCtrl.book.volumeInfo.title}}</h3>
+                        <span>
+                            by <span ng-repeat="author in bookCtrl.book.volumeInfo.authors"> {{author}} </span>.
+                        </span>
+                    </div>
+                    <div class="panel-body isbn">
+                        <label>ISBN :&nbsp;&nbsp;</label><span>{{bookCtrl.ISBN}}</span><br>
+                        <label>Langue :&nbsp;&nbsp;</label><span>{{bookCtrl.book.volumeInfo.language}}</span><br>
+                        <label>Note :&nbsp;&nbsp<span>{{bookCtrl.book.volumeInfo.averageRating}}/5</span></label>
+                    </div>
+
+                    <div class="panel-body desc">
+                        <label>Description</label>
+                        <br>
+                        <p>
+                            {{ bookCtrl.book.volumeInfo.description || 'N/A' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

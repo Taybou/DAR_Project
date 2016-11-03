@@ -1,0 +1,42 @@
+<section class="home">
+    <div class="search-wrapper">
+        <h1 class="welecome">Echangez les livres que vous ne lisez plus</h1>
+        <form novalidate>
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control"
+                       ng-model="bookSearchCtrl.query"
+                       placeholder="Rechercher un livre">
+
+                <span class="input-group-btn">
+                <button class="btn" ng-click="bookSearchCtrl.find()"
+                        ng-disabled="bookSearchCtrl.loading">
+                    <i class='fa fa-1x fa-circle-o-notch fa-spin' ng-show="bookSearchCtrl.loading"></i>
+                    <i class="fa fa-1x fa-search" ng-hide="bookSearchCtrl.loading"></i>
+                </button>
+            </span>
+            </div>
+        </form>
+        <div class="result-number" ng-show="bookSearchCtrl.loading || bookSearchCtrl.books !== null">
+            <i class="fa fa-4x fa-circle-o-notch fa-spin" ng-show="bookSearchCtrl.loading"></i>
+            <div ng-show="bookSearchCtrl.books !== null">
+                <h1>{{bookSearchCtrl.books.length}} Résultats</h1>
+                <div>
+                    <i class="fa fa-4x fa-chevron-circle-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="search-result" id="search-result" ng-hide="bookSearchCtrl.books === null">
+    <div class="container">
+        <div class="row">
+            <h1>Résultats ({{bookSearchCtrl.books.length}})</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <book ng-repeat="book in bookSearchCtrl.books" book="book"></book>
+            </div>
+        </div>
+    </div>
+</section>

@@ -48,12 +48,18 @@ public class BookAPIAccess {
     public GoogleBook getBook(String isbn) {
 
         try {
-            HttpResponse<GoogleBook> response = Unirest.get(GOOGLE_BOOKS_URI)
+            HttpResponse<BookSearchResult> response = Unirest.get(GOOGLE_BOOKS_URI)
                     .header("cache-control", "no-cache")
                     .queryString("q", "isbn:" + isbn)
-                    .asObject(GoogleBook.class);
+                    .asObject(BookSearchResult.class);
 
-            return response.getBody();
+            BookSearchResult result = response.getBody();
+            if (result.getTotalItems() == 0) {
+                return null;
+            }
+            else {
+                return result.getItems().get(0);
+            }
         } catch (UnirestException e) {
             e.printStackTrace();
         }
@@ -67,6 +73,7 @@ public class BookAPIAccess {
             HttpResponse<BookSearchResult> response = Unirest.get(GOOGLE_BOOKS_URI)
                     .header("cache-control", "no-cache")
                     .queryString("q", query)
+                    .queryString("maxResults", 20)
                     .asObject(BookSearchResult.class);
             BookSearchResult result = response.getBody();
             return (ArrayList<GoogleBook>) result.getItems();

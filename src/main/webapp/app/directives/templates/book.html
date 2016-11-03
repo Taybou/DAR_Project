@@ -1,0 +1,26 @@
+<div class="bookCard">
+    <div class="row">
+        <div class="col-md-3">
+            <img class="bookThumbnail" src="{{book.volumeInfo.imageLinks.thumbnail}}" alt="bookimage">
+        </div>
+        <div class="col-md-9">
+            <h1 class="bookTitle">{{book.volumeInfo.title}}</h1>
+            <h2 class="bookInfo">ISBN: </h2>
+            <p>{{(book.volumeInfo.industryIdentifiers)[0].identifier}}</p>
+            <h2 class="bookInfo">Authors: </h2>
+            <p>
+                <span ng-repeat="author in book.volumeInfo.authors"> {{author}} </span>.
+            </p>
+
+            <a href="#"
+               class="btn btn-info pull-right">
+                Ajouter
+            </a>
+
+            <a href="#/book/{{book.volumeInfo.industryIdentifiers[0].identifier}}"
+               class="btn btn-success pull-right">
+                Details
+            </a>
+        </div>
+    </div>
+</div>

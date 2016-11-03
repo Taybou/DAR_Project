@@ -1,3 +1,4 @@
+<!--<%@page contentType="text/html" pageEncoding="UTF-8"%>-->
 <!DOCTYPE html>
 <html lang="en" ng-app="booxchangeApp">
 <head>
@@ -11,6 +12,9 @@
 
     <!-- Loading Internal CSS files -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/book-directive.css">
     <!--****************************-->
 
     <!-- Loading AngularJS Modules -->
@@ -24,18 +28,52 @@
 
     <!-- Loading AngularJS External Modules -->
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <!--****************************************************** -->
+    <!--******************************************************-->
 
     <!-- Loading Internal Angular Scripts and Modules -->
     <!-- App module -->
     <script src="app/app.js"></script>
     <!-- Services -->
+    <script src="app/services/bookService.js"></script>
+    <script src="app/services/bookaddService.js"></script>
     <!-- Directives -->
+    <script src="app/directives/bookDirective.js"></script>
     <!-- Controllers-->
+    <script src="app/controllers/bookSearchController.js"></script>
+    <script src="app/controllers/bookController.js"></script>
     <!--****************************************************** -->
 
 </head>
 <body>
-Hello from angular !!
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">BooXChange</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a href="#"><i class="fa fa-2x fa-bell-o" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-2x fa-envelope-o" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-2x fa-user-circle-o" aria-hidden="true"></i> Profile</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- This is the main view. it changes depending on the route-->
+<div ng-view class="main-view"></div>
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <p class="navbar-text pull-left">BooXChange © 2016 - Créé par Allaoua, Islam, Omar et Tayeb
+        </p>
+
+        <a href="https://github.com/Taybou/DAR_Project" target="_blank" class="navbar-btn btn-info btn pull-right">
+            <span class="fa fa-github"></span>  Voir Sur GitHub</a>
+    </div>
+</div>
 </body>
 </html>

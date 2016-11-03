@@ -43,11 +43,11 @@ public class BookServlet extends HttpServlet {
                 if (query != null) {
                     List<GoogleBook> books = bookDAO.findBooks(query);
                     jsonResponse.sendJsonObject(books);
-                    response = jsonResponse;
                 }
                 break;
-
+            //TODO: This action should be moved to the user API. it concerns the ressource User and not Book
             case "add":
+                //TODO: No Need to specify the userName, you can get it by using the session (See authorisation Filter)
                 String userName = request.getParameter("userName");
                 List booksIsbnList = new ArrayList();
                 booksIsbnList.add(query);
@@ -56,17 +56,14 @@ public class BookServlet extends HttpServlet {
                 bookDAO.addBooks(user);
 
                 jsonResponse.sendJsonObject("successfully added");
-                response = jsonResponse;
                 break;
 
             case "details":
                 if (query != null) {
                     GoogleBook book = bookDAO.getBookDetails(query);
                     jsonResponse.sendJsonObject(book);
-                    response = jsonResponse;
                 }
                 break;
-
         }
 
 //        if (id != null) {
@@ -74,6 +71,4 @@ public class BookServlet extends HttpServlet {
 //            jsonResponse.sendJsonObject(book);
 //        }
     }
-
-
 }
