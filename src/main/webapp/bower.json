@@ -26,6 +26,7 @@
     "angular-cookies": "^1.5.8",
     "angular-touch": "^1.5.8",
     "angular-bootstrap": "^2.1.4",
-    "angular-modal-service": "^0.10.1"
+    "angular-modal-service": "^0.10.1",
+    "moment": "^2.15.2"
   }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="MsgApp">
+<html lang="en" ng-app="MsgApp" style="height: 100%;">
 <head>
     <meta charset="UTF-8">
     <title>BooXchange</title>
@@ -11,6 +11,9 @@
 
     <!-- Loading Internal CSS files -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/messages.css">
+    <link rel="stylesheet" href="css/chat.css">
+
     <!--****************************-->
 
     <!-- Loading AngularJS Modules -->
@@ -20,10 +23,12 @@
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <!-- ***************************************************** -->
 
     <!-- Loading AngularJS External Modules -->
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+
     <!--****************************************************** -->
 
     <!-- Loading Internal Angular Scripts and Modules -->
@@ -36,18 +41,148 @@
     <!--****************************************************** -->
 
 </head>
-<body>
-<div ng-app="MsgApp" ng-controller = "MsgCtrl">
-    my username : <input ng-model="myUsername"> <br>
-    username : <input ng-model="username">
-    <button ng-click="fetchMsg()" > GET </button>
-    <ul>
-        <li ng-repeat="msg in messages">[{{msg.timeStamp}}] {{ msg.from.userName}} : {{msg.content}} </li>
+<body style="height: 100%;">
+<div ng-app="MsgApp" ng-controller = "MsgCtrl" style="height: 100%;">
+    <div hidden>
+        my username : <input ng-model="myUsername">
+        <button ng-click="getContacts()" > GET </button>
+    </div>
+    <div hidden class="list-group" style="width:20%;float:left;">
+        <button type="button" class="list-group-item"  ng-repeat="user in contacts" ng-click="fetchMsg(user.userName)">
+            {{user.firstName}} {{ user.lastName}}
+        </button>
+    </div>
+    <div hidden class="panel panel-info" style="width:80%;float:right;bottom: 0;">
+        <div class="panel-heading"><h3>{{username}}</h3></div>
+        <div class="panel-body">
+            <ul >
+                <li  ng-repeat="msg in messages">[{{msg.moment}}] {{ msg.from.userName}} : {{msg.content}} </li>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            message : <input ng-model="message">
+            <button ng-click="sendMsg()" > SEND </button>
+        </div>
+    </div>
 
-    </ul>
 
-    message : <input ng-model="message">
-    <button ng-click="sendMsg()" > SEND </button>
+
+    <div class="container app">
+        <div class="main">
+            <div class="container">
+                <div class="messages">
+                    <h1>Messages <span class="icon icon-arrow-down"></span></h1>
+                    <ul class="message-list">
+                        <li class="{{user.active? 'active' : 'new'}}" ng-repeat="user in contacts" ng-click="fetchMsg(user.userName)">
+
+                            <div class="preview">
+                                <h3>{{user.firstName}} {{ user.lastName}} </h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <section class="message">
+
+
+
+
+
+
+
+                    <div class="container">
+
+                        <div hidden class="meta-data">
+                            <p>
+                                <img src="http://placehold.it/40x40" class="avatar" alt="" />
+                                <a>@{{username}}</a>
+                            </p>
+                        </div>
+
+
+                        <div class="row">
+                            <div style="height: 100%;">
+                    <div class="panel panel-primary" style="height: 92%;">
+                        <div class="panel-body" style="height: 100%;">
+                            <ul class="chat">
+                                <li ng-repeat="msg in messages" class="{{msg.pullDirection}} clearfix">
+                                    <span class="chat-img pull-{{msg.pullDirection}}">
+                                        <img src="http://placehold.it/50/{{msg.color}}/fff&text={{msg.initials}}" alt="User Avatar" class="img-circle" />
+
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <small class="primary-font pull-{{msg.pullDirection}}">
+                                                <a>@{{msg.from.userName}}</a>
+                                            </small>
+                                            <small class="pull-{{msg.inverseDirection}} text-muted">
+                                                <span class="glyphicon glyphicon-time"></span>{{msg.moment}}
+                                            </small>
+                                        </div><br>
+                                        <p>
+                                            {{msg.content}}
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input ng-model="message" id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" ng-click="sendMsg()" id="btn-chat">
+                                Send</button>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </div></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!--<div class="body">-->
+                        <!--<ul>-->
+                            <!--<li  ng-repeat="msg in messages">[{{msg.moment}}] {{ msg.from.userName}} : {{msg.content}} </li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--<div class="action">-->
+
+                        <!--<div class="input-group">-->
+                            <!--<input type="text" class="form-control" placeholder="Message" ng-model="message">-->
+                            <!--<span class="input-group-btn">-->
+                                <!--<button class="btn btn-info" ng-click="sendMsg()" type="button">-->
+                                    <!--<span class="glyphicon glyphicon-send"></span>-->
+                                    <!--Send-->
+                                <!--</button>-->
+                            <!--</span>-->
+                        <!--</div>-->
+
+                        <!--</button>-->
+                    <!--</div>-->
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>
 
 

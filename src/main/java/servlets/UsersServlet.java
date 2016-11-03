@@ -1,6 +1,8 @@
 package servlets;
 
+import bean.Message;
 import bean.User;
+import dao.message.MessageDAO;
 import dao.user.UserDAO;
 import servlets.wrappers.HttpServletJsonRequest;
 import servlets.wrappers.HttpServletJsonResponse;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,7 @@ public class UsersServlet extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         String userName = req.getParameter("userName");
+        String relatedToUser = req.getParameter("relatedTo");
         HttpServletJsonResponse jsonResponse = ((HttpServletJsonResponse) resp);
 
 //        @url(/api/users?userName=something) : Get one user
@@ -38,10 +42,29 @@ public class UsersServlet extends HttpServlet {
             User user = userDAO.getUserByUserName(userName);
             jsonResponse.sendJsonObject(user);
         }
+//        @url(/api/users?relatedTo=some user) : Get users who have messaged "some user"
+        else if (relatedToUser != null) {
+            MessageDAO messageDAO = new MessageDAO();
+            List<Message> messages = messageDAO.getLatestMessagesByUser(userDAO.getUserByUserName(relatedToUser));
+            HashMap<String, User> result = new HashMap<>();
+            String temp_username;
+            for(Message msg : messages) {
+                if(msg.getFrom().getUserName().equals(relatedToUser)) {
+                    temp_username = msg.getTo().getUserName();
+                } else {
+                    temp_username = msg.getFrom().getUserName();
+                }
+                if(!result.containsKey(temp_username)) {
+                    result.put(temp_username, userDAO.getUserByUserName(temp_username));
+                }
+            }
+            jsonResponse.sendJsonObject(result);
+
+        }
 //        @url(/api/users) : Get All users
         else {
-            List<User> users = userDAO.getAllUsers();
-            jsonResponse.sendJsonObject(users);
+                List<User> users = userDAO.getAllUsers();
+                jsonResponse.sendJsonObject(users);
         }
     }
 
