@@ -4,8 +4,8 @@
  */
 
 angular.module('booxchangeApp', [
-        'ngRoute', "ngResource"
-    ])
+    'ngRoute', "ngResource"
+])
     .config([
         '$routeProvider',
         function ($routeProvider) {
@@ -36,6 +36,12 @@ angular.module('booxchangeApp', [
                     controller: 'UserController',
                     controllerAs: 'userCtrl'
                 })
+                .when('/exchange', {
+                    templateUrl: '',
+                    controller: 'ExchangeController',
+                    controllerAs: 'exchangeCtrl'
+                })
+
                 .otherwise('/home');
         }
     ]);
