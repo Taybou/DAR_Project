@@ -4,7 +4,7 @@
  */
 
 angular.module('booxchangeApp', [
-        'ngRoute'
+        'ngRoute', "ngResource"
     ])
     .config([
         '$routeProvider',
@@ -20,6 +20,11 @@ angular.module('booxchangeApp', [
                     templateUrl: 'views/book.html',
                     controller: 'BookController',
                     controllerAs: 'bookCtrl'
+                })
+                .when('/messages/:username', {
+                    templateUrl: 'views/messages.html',
+                    controller: 'messageController',
+                    controllerAs: 'MsgCtrl'
                 })
                 .otherwise('/home');
         }
