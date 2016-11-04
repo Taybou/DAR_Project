@@ -10,9 +10,13 @@ angular.module('booxchangeApp')
         this.getBooks = function (query, onSuccess, onError) {
             $http({
                 method: 'GET',
-                url: '/api/books?query=' + query + '&action=search',
                 headers: {
                     'Content-Type': 'application/json'
+                },
+                url: '/api/books',
+                params: {
+                    query: query,
+                    action: 'search'
                 }
             }).then(
                 function success(response) {
@@ -24,7 +28,7 @@ angular.module('booxchangeApp')
             );
         };
 
-        // get one book by isbn
+        // Get one book by isbn
         this.getBook = function (isbn, onSuccess, onError) {
 
             $http({

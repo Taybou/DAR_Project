@@ -26,6 +26,16 @@ angular.module('booxchangeApp', [
                     controller: 'messageController',
                     controllerAs: 'MsgCtrl'
                 })
+                .when('/user/:userID/book/:bookISBN', {
+                    templateUrl: 'views/book.html',
+                    controller: 'UserController',
+                    controllerAs: 'userCtrl'
+                })
+                .when('/user/:userID/books', {
+                    templateUrl: 'views/book.html',
+                    controller: 'UserController',
+                    controllerAs: 'userCtrl'
+                })
                 .otherwise('/home');
         }
     ]);

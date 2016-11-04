@@ -25,19 +25,19 @@ angular.module('booxchangeApp')
             };
 
             return vm;
-        }])
+        }]);
 
-    .filter('getIsbn13', function () {
-
-        return function (isbns) {
-
-            var filtered = [];
-            for (var i = 0; i < isbns.length; i++) {
-                var isbn = isbns[i];
-                if (isbn.type == 'ISBN_13') {
-                    filtered.push(isbn);
-                }
-            }
-            return filtered;
-        }
-    });
+    // .filter('getIsbn13', function () {
+    //
+    //     return function (isbns) {
+    //
+    //         var filtered = [];
+    //         for (var i = 0; i < isbns.length; i++) {
+    //             var isbn = isbns[i];
+    //             if (isbn.type == 'ISBN_13') {
+    //                 filtered.push(isbn);
+    //             }
+    //         }
+    //         return filtered;
+    //     }
+    // });
