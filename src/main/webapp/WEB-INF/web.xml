@@ -78,8 +78,10 @@
         <servlet-name>bookServlet</servlet-name>
         <servlet-class>servlets.book.BookServlet</servlet-class>
     </servlet>
-
-
+    <servlet>
+        <servlet-name>exchangeServlet</servlet-name>
+        <servlet-class>servlets.ExchangeServlet</servlet-class>
+    </servlet>
 
 
     <!-- Servlets Mapping-->
@@ -132,6 +134,10 @@
     <servlet-mapping>
         <servlet-name>bookServlet</servlet-name>
         <url-pattern>/api/books</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>exchangeServlet</servlet-name>
+        <url-pattern>/api/exchanges</url-pattern>
     </servlet-mapping>
 
 

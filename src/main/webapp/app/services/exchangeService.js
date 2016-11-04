@@ -1,21 +1,24 @@
 /**
  * BooXchange Project
- * Created by Mohamed Tayeb on 23/10/2016.
+ * Created by Mohamed Tayeb on 04/11/2016.
  */
+
 angular.module('booxchangeApp')
-    .factory('userService', ['$http', function ($http) {
+    .factory('exchangeService', ['$http', function ($http) {
 
-        this.addBook = function (userName, isbn, onSuccess, onError) {
+        this.addExchange = function (user1, user2, isbnBookUser1, isbnBookUser2, onSuccess, onError) {
             $http({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                url: '/api/users',
+                url: '/api/books',
                 params: {
-                    isbn: isbn,
-                    username: userName,
-                    action: 'add'
+                    action: 'add',
+                    user1: user1,
+                    user2: user2,
+                    isbnBookUser1: isbnBookUser1,
+                    isbnBookUser2: isbnBookUser2
                 }
             }).then(
                 function success(response) {
@@ -27,17 +30,16 @@ angular.module('booxchangeApp')
             );
         };
 
-        this.deleteBook = function (userName, isbn, onSuccess, onError) {
+        this.acceptExchange = function (id, onSuccess, onError) {
             $http({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                url: '/api/users',
+                url: '/api/books',
                 params: {
-                    isbn: isbn,
-                    username: userName,
-                    action: 'delete'
+                    action: 'accept',
+                    id: id
                 }
             }).then(
                 function success(response) {
@@ -49,16 +51,37 @@ angular.module('booxchangeApp')
             );
         };
 
-        this.getBooks = function (userName, isbn, onSuccess, onError) {
+        this.getSubimetted = function (user1, onSuccess, onError) {
             $http({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                url: '/api/users',
+                url: '/api/books',
                 params: {
-                    username: userName,
-                    action: 'getbooks'
+                    action: 'viewSubmitted',
+                    user1: user1
+                }
+            }).then(
+                function success(response) {
+                    onSuccess(response);
+                },
+                function error(response) {
+                    onError(response);
+                }
+            );
+        };
+
+        this.getNotified = function (user2, onSuccess, onError) {
+            $http({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/api/books',
+                params: {
+                    action: 'viewNotified',
+                    user2: user2
                 }
             }).then(
                 function success(response) {
