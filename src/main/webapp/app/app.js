@@ -4,8 +4,8 @@
  */
 
 angular.module('booxchangeApp', [
-    'ngRoute', "ngResource"
-])
+        'ngRoute', 'ngResource', 'ui.bootstrap'
+    ])
     .config([
         '$routeProvider',
         function ($routeProvider) {
@@ -15,6 +15,16 @@ angular.module('booxchangeApp', [
                     templateUrl: 'views/search.html',
                     controller: 'BookSearchController',
                     controllerAs: 'bookSearchCtrl'
+                })
+                .when('/profile', {
+                    templateUrl: 'views/profile.html',
+                    controller: 'UserProfileController',
+                    controllerAs: 'userProfileCtrl'
+                })
+                .when('/user/:userName', {
+                    templateUrl: 'views/user.html',
+                    controller: 'ViewUserProfileController',
+                    controllerAs: 'viewUserProfileCtrl'
                 })
                 .when('/book/:bookISBN', {
                     templateUrl: 'views/book.html',

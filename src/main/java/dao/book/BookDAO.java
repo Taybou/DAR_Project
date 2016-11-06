@@ -25,4 +25,11 @@ public interface BookDAO {
      */
     public List<GoogleBook> findBooks(String query);
 
+    /**
+     * find books that are owned by actual users in BooXchange
+     *
+     * @return List<GoogleBook>
+     */
+
+    public List<GoogleBook> findOwnedBooks(String query);
 }

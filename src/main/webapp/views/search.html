@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <book ng-repeat="book in bookSearchCtrl.books" book="book"></book>
+                <book ng-repeat="book in bookSearchCtrl.books | orderBy:'-userCount'" book="book"></book>
             </div>
         </div>
     </div>

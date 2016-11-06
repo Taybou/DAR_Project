@@ -3,10 +3,13 @@ package dao.book;
 import bean.googlebooks.GoogleBook;
 import bean.googlebooks.IndustryIdentifier;
 import bean.googlebooks.VolumeInfo;
+import dao.DAOFactory;
 import dao.MorphiaDataStore;
+import dao.user.UserDAO;
 import org.mongodb.morphia.Datastore;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -60,7 +63,44 @@ public class BookDAOImpl implements BookDAO {
             }
         }
 
-        return booksList;
+        return updateUserCount(booksList);
     }
 
+    @Override
+    public List<GoogleBook> findOwnedBooks(String query) {
+
+        UserDAO userDAO = DAOFactory.getUserDAO();
+
+        List<GoogleBook> books = this.findBooks(query);
+        List<GoogleBook> filteredBooks = new ArrayList<>();
+
+
+        for (GoogleBook book : books) {
+
+            int userCount = userDAO.getUserByISBN(book.getVolumeInfo()
+                    .getIndustryIdentifiers().get(0)
+                    .getIdentifier()).size();
+
+            if (userCount != 0) {
+                book.setUserCount(userCount);
+                filteredBooks.add(book);
+            }
+        }
+
+        return filteredBooks;
+    }
+
+    private List<GoogleBook> updateUserCount(List<GoogleBook> books) {
+
+        UserDAO userDAO = DAOFactory.getUserDAO();
+
+        for (GoogleBook book : books) {
+            int userCount = userDAO.getUserByISBN(book.getVolumeInfo()
+                    .getIndustryIdentifiers().get(0)
+                    .getIdentifier()).size();
+            book.setUserCount(userCount);
+        }
+
+        return books;
+    }
 }

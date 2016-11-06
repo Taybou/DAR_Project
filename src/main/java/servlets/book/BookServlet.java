@@ -3,6 +3,7 @@ package servlets.book;
 import bean.googlebooks.GoogleBook;
 import dao.DAOFactory;
 import dao.book.BookDAO;
+import errors.Error;
 import servlets.wrappers.HttpServletJsonResponse;
 
 import javax.servlet.ServletException;
@@ -47,6 +48,15 @@ public class BookServlet extends HttpServlet {
                     GoogleBook book = bookDAO.getBookDetails(query);
                     jsonResponse.sendJsonObject(book);
                 }
+                break;
+            case "searchOwned":
+                if (query != null) {
+                    List<GoogleBook> books = bookDAO.findOwnedBooks(query);
+                    jsonResponse.sendJsonObject(books);
+                }
+                break;
+            default:
+                jsonResponse.sendJsonError(new Error("Requete Invalide"), 400);
                 break;
         }
 

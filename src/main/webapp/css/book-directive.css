@@ -21,7 +21,7 @@ book .bookInfo {
 }
 
 book .bookThumbnail {
-    height: 230px;
+    width: 150px;
     border: 1px solid lightgray;
     margin-top: 8px;
 }

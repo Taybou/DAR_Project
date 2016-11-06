@@ -1,0 +1,67 @@
+<div class="user-profile-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="user-profile">
+                    <div class="user-info profile-image">
+                        <img src="{{viewUserProfileCtrl.user.profilePictureUrl || 'images/default-user-image.png'}}"
+                             alt="profile image">
+                    </div>
+                    <div class="user-info username">
+                        <span class="info-value">{{viewUserProfileCtrl.user.userName}}</span>
+                    </div>
+
+                    <div class="user-info">
+                        <span class="info-title">Prénom : </span>
+                        <span class="info-value">{{viewUserProfileCtrl.user.firstName}}</span>
+                    </div>
+                    <div class="user-info">
+                        <span class="info-title">Nom : </span>
+                        <span class="info-value">{{viewUserProfileCtrl.user.lastName}}</span>
+                    </div>
+                    <div class="user-info gender">
+                        <span class="info-title">Sexe : </span>
+                        <span class="info-value">
+                            {{viewUserProfileCtrl.gender[viewUserProfileCtrl.user.gender] || 'Non disponible'}}
+                        </span>
+                    </div>
+                    <div class="user-info">
+                        <span class="info-title">Adresse : </span>
+                        <span class="info-value">{{viewUserProfileCtrl.user.address || 'Non disponible'}}</span>
+                    </div>
+                    <div class="user-info description">
+                        <div class="info-title">Description :</div>
+                        <p class="info-value">
+                            {{viewUserProfileCtrl.user.description || 'Aucune'}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="user-books">
+                    <h1>
+                        <i class="fa fa-book"></i>
+                        Livres
+                    </h1>
+                    <div class="loading-books" ng-show="viewUserProfileCtrl.loadingBooks">
+                        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                    </div>
+                    <div class="book-list" ng-hide="viewUserProfileCtrl.loadingBooks">
+                        <div ng-repeat="book in viewUserProfileCtrl.books"
+                             ng-if="book!==null"
+                             class="book">
+                        <span class="book-image">
+                            <img ng-src="{{book.volumeInfo.imageLinks.thumbnail || 'images/default-book.jpg'}}" alt="book image">
+                        </span>
+                            <span class="book-title">
+                                <a href="#/book/{{book.volumeInfo.industryIdentifiers[0].identifier}}" target="_blank">
+                                    {{book.volumeInfo.title}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

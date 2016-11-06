@@ -54,7 +54,7 @@ public class BookAPIAccess {
                     .asObject(BookSearchResult.class);
 
             BookSearchResult result = response.getBody();
-            if (result.getTotalItems() == 0) {
+            if (result == null || result.getTotalItems() == 0) {
                 return null;
             }
             else {

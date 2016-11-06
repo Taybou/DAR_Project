@@ -49,6 +49,15 @@ public class UserDAO {
         return datastore.get(User.class, userName);
     }
 
+    public List<User> getUserByISBN(String isbn) {
+
+        Query<User> userQuery = datastore.createQuery(User.class);
+
+        userQuery.field("booksIsbnList").contains(isbn);
+
+        return userQuery.asList();
+    }
+
     public void addBook(User user) {
         // Add books of the user
         // by adding a list of isbn to the user owner
@@ -88,7 +97,11 @@ public class UserDAO {
         List<String> list = query.get().getBooksIsbnList();
         for (int i = 0; i < list.size(); i++) {
             GoogleBook book = bookAPIAccess.getBook(list.get(i));
-            booksList.add(book);
+            if (book != null) {
+                book.getVolumeInfo().getIndustryIdentifiers().get(0).setType("ISBN_13");
+                book.getVolumeInfo().getIndustryIdentifiers().get(0).setIdentifier(list.get(i));
+                booksList.add(book);
+            }
         }
 
         return booksList;

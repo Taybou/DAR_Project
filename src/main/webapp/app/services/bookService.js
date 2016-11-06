@@ -51,5 +51,26 @@ angular.module('booxchangeApp')
             );
         };
 
+        this.getOwnedBooks = function (query, onSuccess, onError) {
+            $http({
+                method: 'GET',
+                url: '/api/books',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                params: {
+                    query: query,
+                    action: 'searchOwned'
+                }
+            }).then(
+                function success(response) {
+                    onSuccess(response);
+                },
+                function error(response) {
+                    onError(response);
+                }
+            );
+        };
+
         return this;
     }]);

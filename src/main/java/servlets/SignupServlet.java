@@ -4,9 +4,9 @@ import bean.User;
 import dao.DAOFactory;
 import dao.user.UserDAO;
 import errors.Error;
-import filters.AuthorizationFilter;
 import servlets.wrappers.HttpServletJsonRequest;
 import servlets.wrappers.HttpServletJsonResponse;
+import validators.UserValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,34 +33,49 @@ public class SignupServlet extends HttpServlet {
 
         HttpServletJsonRequest request = (HttpServletJsonRequest) req;
         HttpServletJsonResponse response = (HttpServletJsonResponse) resp;
-        HttpSession session = request.getSession();
 
         Map<String, Object> signupPost = request.getJsonMap();
-        // We will not use server side validation on SignUp post data
+
         UserDAO userDAO = DAOFactory.getUserDAO();
-        //Checking if user exists
-        User user = userDAO.getUserByUserName((String) signupPost.get("userName"));
 
-        if (user != null) {
-            //If exists : throw error
-            session.setAttribute(AuthorizationFilter.USER_SESSION, null);
-            Error error = new Error("The user name is taken");
-            response.sendJsonError(error, 400);
-        } else {
-            //If not exists : create a user
-            user = new User();
-            user.setUserName((String) signupPost.get("userName"));
-            user.setPassword((String) signupPost.get("password"));
-            user.setEmail((String) signupPost.get("email"));
-            user.setFirstName((String) signupPost.get("firstName"));
-            user.setLastName((String) signupPost.get("lastName"));
+        Map<String, Object> errors = new HashMap<>();
 
+        // Creating a user
+        User user = new User();
+        user.setUserName((String) signupPost.get("userName"));
+        user.setPassword((String) signupPost.get("password"));
+        user.setEmail((String) signupPost.get("email"));
+        user.setFirstName((String) signupPost.get("firstName"));
+        user.setLastName((String) signupPost.get("lastName"));
+
+        //Validating the user
+        UserValidator.validateUser(user, errors);
+
+        // Checking if the user exists in database
+        User existantUser = userDAO.getUserByUserName((String) signupPost.get("userName"));
+
+        if (existantUser != null) {
+            //If exists
+            Error error = new Error("Le nom d'utilisateur existe deja");
+            errors.put("userName", error);
+        }
+
+        //Checking if password and confirmed Password are equals
+        if (!signupPost.get("password").equals(signupPost.get("confirmedPassword"))) {
+            Error error = new Error("Les mots de passe ne sont pas identiques");
+            errors.put("confirmedPassword", error);
+        }
+
+        if (errors.isEmpty()) {
+            // There is no Errors
             // Add the user:
             userDAO.addUser(user);
-            // Creating a session for the user (if you want to connect the user on signup)
-            //session.setAttribute(AuthorizationFilter.USER_SESSION, user);
             // Return the created User:
             response.sendJsonObject(user.getUserName());
         }
+        else {
+            response.sendJsonMapError(errors, 400);
+        }
     }
+
 }

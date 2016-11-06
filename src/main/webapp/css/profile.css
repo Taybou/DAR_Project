@@ -1,0 +1,113 @@
+.user-profile-view {
+    background-color: whitesmoke;
+    padding-top: 20pt;
+    padding-bottom: 60pt;
+    width: 100%;
+}
+
+.user-profile {
+    border: 1pt solid lightgrey;
+    margin-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10pt;
+
+    background-color: white;
+}
+
+.user-profile .profile-image {
+    text-align: center;
+}
+
+.user-profile .profile-image img {
+    display: inline;
+    border: 2pt lightgrey solid;
+    border-radius: 50%;
+
+    width: 100px;
+}
+
+.user-info {
+    margin: 15px;
+}
+
+.user-info .info-title {
+    font-weight: bold;
+    font-size: 11pt;
+}
+
+.user-info.username {
+    text-align: center;
+}
+
+.user-info.username .info-value {
+    font-weight: bold;
+    font-size: 22pt;
+}
+
+.edit-button {
+    text-align: right;
+}
+
+.update-user-form {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.user-books, .add-books {
+    background-color: white;
+    border: 1px whitesmoke solid;
+    padding: 5pt 10pt 15pt;
+
+    margin-top: 10pt;
+}
+
+.user-books .loading-books, .add-books .loading-search {
+    text-align: center;
+}
+
+.add-books h1, .user-books h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20pt;
+}
+
+.book-list .book {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-top: 1px lightgrey solid;
+    background-color: white;
+    padding-top: 3pt;
+    padding-bottom: 3pt;
+    margin-top: 10pt;
+}
+
+.book-list .book .book-image {
+    flex-grow: 1;
+    margin-right: 5pt;
+}
+
+.book-list .book .book-image img {
+    width: 50pt;
+}
+
+.book-list .book .book-title {
+    font-size: 12pt;
+    color: black;
+    flex-grow: 4;
+}
+
+.book-list .book .book-title a {
+    color: black;
+}
+
+.book-list .book .book-title a:hover {
+    text-decoration: none;
+    color: #101010;
+}
+.book-list .book .book-remove {
+    text-align: right;
+    flex-grow: 2;
+}

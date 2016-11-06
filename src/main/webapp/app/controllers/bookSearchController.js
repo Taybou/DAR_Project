@@ -12,8 +12,7 @@ angular.module('booxchangeApp')
 
             notificationService.autoUpdate();
 
-
-            var onSuccess = function (response, action) {
+            var onSuccess = function (response) {
                 vm.loading = false;
                 vm.books = response.data;
             };
