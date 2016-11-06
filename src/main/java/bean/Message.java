@@ -26,7 +26,7 @@ public class Message {
         this.timeStamp = (Calendar.getInstance()).getTime();
         this.from = from;
         this.to = to;
-        this.content = content; // TODO maybe parse the shit out of it
+        this.content = content; // TODO maybe parse it
     }
 
     public Date getTimeStamp() {

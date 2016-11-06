@@ -13,146 +13,74 @@ angular.module('booxchangeApp').config(['$resourceProvider', function ($resource
 
 angular.module('booxchangeApp')
     .controller('messageController', [
-            "$resource",
-            '$http',
             '$routeParams',
-            function ( $resource, $http, $routeParams) {
+        'notificationService',
+        'messageService',
+        function ($routeParams, notificationService, messageService) {
                 var vm = this;
+
                 vm.username = "";
-                vm.myUsername = $routeParams.username;
                 vm.contacts = {};
-                vm.getContacts = function () {
-                    var Users = $resource('/api/users?relatedTo=:sender', {'get': {method: 'GET'}});
-                    vm.contacts = Users.get({sender: vm.myUsername}, function (response) {
-                        var result = [];
+            vm.contactsWithNew = {};
 
-                        console.log(response);
-                        for (var user in response) {
-                            if (response.hasOwnProperty(user) && response[user].userName != undefined  ) {
-                                console.log(user);
-                                response[user].firstName = response[user].firstName.toUpperCase()[0] + response[user].firstName.substring(1);
-                                response[user].lastName = response[user].lastName.toUpperCase()[0] + response[user].lastName.substring(1);
-                                result.push(response[user]);
-                            }
-                        }
+            vm.fetchMsg = function (username) {
 
-                        console.log(result);
-                        console.log(result[0]);
-                        vm.fetchMsg(result[0]);
-                        return result;
-                    });
-                };
+                // vm.msgNotificationExist = false;
+                // vm.msgNotificationNumber = notifsNum;
 
-                vm.fetchMsg = function (username) {
                     vm.username = username || vm.username;
                     username = vm.username;
-                    var localMyUsername = vm.myUsername;
-                    var Message = $resource('/api/messages?sender=:sender&receiver=:receiver', {
-                        'query': {
-                            method: 'GET',
-                            isArray: true
-                        }
-                    });
-                    vm.messages = Message.query({sender: localMyUsername, receiver: username}, function (response) {
-                        console.log(response);
-                        for (var index in response) {
-                            var value = response[index];
-                            if (value.timeStamp !== undefined) {
-                                value.time = (new Date(value.timeStamp)).toDateString();
-                                value.moment = moment(value.timeStamp).fromNow();
-                                if (value.from.userName === localMyUsername) {
-                                    value.pullDirection = "right";
-                                    value.inverseDirection = "left";
-                                    value.color = "55C1E7";
-                                } else {
-                                    value.pullDirection = "left";
-                                    value.inverseDirection = "right";
-                                    value.color = "FA6F57";
-                                }
-                                value.initials = value.from.firstName.toUpperCase()[0] + value.from.lastName.toUpperCase()[0];
-                            }
-                            console.log("Index = " + index + " value = " + value);
-                        }
+                vm.messages = messageService.getMessages(vm.username, function () {
 
                         for (var user in vm.contacts) {
-                            console.log(vm.contacts[user].userName)
                             if (vm.contacts[user].userName === username) {
                                 vm.contacts[user].active = "true";
                             } else {
                                 vm.contacts[user].active = undefined;
                             }
                         }
-                        console.log(username);
-                        console.log(vm.contacts);
-                        // for(var msg in response) {
-                        //     console.log(msg);
-                        //     msg.time = (new Date(msg.timeStamp)).toTimeString();
-                        //     msg.moment = moment(msg.time);
-                        // }
-                        return response;
+                    vm.updateContactsNotification();
                     });
-
-                    // $http({
-                    //     method:'GET',
-                    //     url: '/api/messages',
-                    //     headers: {
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     data: {
-                    //         sender : vm.myUsername,
-                    //         receiver : vm.username
-                    //     }
-                    // }).then(
-                    //     function success(response) {
-                    //         console.log(response)
-                    //     },
-                    //     function error(response) {
-                    //         console.log(response);
-                    //     }
-                    // );
-
                 };
+
                 vm.sendMsg = function () {
-                    // var Message = $resource('/api/messages?from=:myUserName&to=:userName&content=:msg', {});
-                    // Message.post(
-                    //     {
-                    //         myUsername : vm.myUserName,
-                    //         userName : vm.userName,
-                    //         msg : vm.message
-                    //     }, function () {
-                    //         vm.fetchMsg();
-                    //         vm.message = "";
-                    //     });
-                    if (vm.username != "")
-                        $http({
-                            method: 'POST',
-                            url: '/api/messages',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            data: {
-                                sender: vm.myUsername,
-                                receiver: vm.username,
-                                msg: vm.message
-                            }
-                        }).then(
+                    if (vm.username != "") {
+                        messageService.sendMessage(
+                            {username: vm.username, message: vm.message},
                             function success(response) {
-                                console.log(response);
                                 vm.fetchMsg();
                                 vm.message = "";
                             },
                             function error(response) {
-                                console.log(response);
+                                console.log("message not sent");
                             }
                         );
-
+                    }
                 };
 
-                /**
-                 * temporary
-                 */
-                //vm.myUsername = "ramo";
-                vm.getContacts();
+            vm.updateContactsNotification = function () {
+                return messageService.updateContactsWithNew(function onSuccess(response) {
+
+                    for (var user in vm.contacts) {
+
+                        if (response[vm.contacts[user].userName] != undefined) {
+                            vm.contacts[user].newMsg = response[vm.contacts[user].userName];
+                        } else {
+                            vm.contacts[user].newMsg = undefined;
+                        }
+                    }
+                    return vm.contacts;
+                });
+
+            }
+
+            // calling the getContacts to initialize the view
+            // notificationService.stopAutoUpdate();
+            // notificationService.removeMessageNotificaiton();
+            vm.contacts = messageService.getContacts(function () {
+                vm.updateContactsNotification();
+                setInterval(vm.updateContactsNotification, 1000);
+            });
 
 
             }

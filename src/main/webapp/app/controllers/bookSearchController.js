@@ -5,10 +5,13 @@
 angular.module('booxchangeApp')
     .controller('BookSearchController', [
         'bookService',
-        function (bookService) {
-
+        'notificationService',
+        function (bookService, notificationService) {
             var vm = this;
             vm.books = null;
+
+            notificationService.autoUpdate();
+
 
             var onSuccess = function (response, action) {
                 vm.loading = false;

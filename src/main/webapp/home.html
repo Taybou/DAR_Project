@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/search.css">
     <link rel="stylesheet" href="css/book-directive.css">
-    <link rel="stylesheet" href="../css/messages.css">
-    <link rel="stylesheet" href="../css/chat.css">
+    <link rel="stylesheet" href="css/messages.css">
+    <link rel="stylesheet" href="css/chat.css">
     <!--****************************-->
 
     <!-- Loading AngularJS Modules -->
@@ -26,7 +26,7 @@
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
-    <script src="../bower_components/moment/moment.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <!-- ***************************************************** -->
 
     <!-- Loading AngularJS External Modules -->
@@ -39,6 +39,8 @@
     <!-- Services -->
     <script src="app/services/bookService.js"></script>
     <script src="app/services/userService.js"></script>
+    <script src="app/services/notificationService.js"></script>
+    <script src="app/services/messageService.js"></script>
     <!-- Directives -->
     <script src="app/directives/bookDirective.js"></script>
     <!-- Controllers-->
@@ -59,9 +61,23 @@
         <div class="collapse navbar-collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
 
-                <li><a href="#"><i class="fa fa-2x fa-bell-o" aria-hidden="true"></i></a></li>
-                <li><a href="#/messages/ramo"><i class="fa fa-2x fa-envelope-o" aria-hidden="true"></i></a></li>
-                <li><a href="#"><i class="fa fa-2x fa-user-circle-o" aria-hidden="true"></i> Profile</a></li>
+                <li>
+                    <a href="#"><i class="fa fa-2x fa-bell-o" aria-hidden="true"
+                                   ng-class="{ 'alerted': exchangeNotifsNum>0 }"
+                    ></i></a>
+                    <span ng-show="exchangeNotifsNum>0" style="color:#d35400">{{exchangeNotifsNum}}</span>
+                </li>
+                <li>
+                    <a href="#/messages">
+                        <i class="fa fa-2x fa-envelope-o" aria-hidden="true"
+                           ng-class="{ 'alerted': msgNotifsNum>0 }"
+                        ></i>
+                        <span ng-show="msgNotifsNum>0" style="color:#d35400">{{msgNotifsNum}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-2x fa-user-circle-o" aria-hidden="true"></i> Profile</a>
+                </li>
             </ul>
         </div>
     </div>

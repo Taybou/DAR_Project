@@ -21,7 +21,7 @@ angular.module('booxchangeApp', [
                     controller: 'BookController',
                     controllerAs: 'bookCtrl'
                 })
-                .when('/messages/:username', {
+                .when('/messages', {
                     templateUrl: 'views/messages.html',
                     controller: 'messageController',
                     controllerAs: 'MsgCtrl'
@@ -41,7 +41,6 @@ angular.module('booxchangeApp', [
                     controller: 'ExchangeController',
                     controllerAs: 'exchangeCtrl'
                 })
-
                 .otherwise('/home');
         }
     ]);

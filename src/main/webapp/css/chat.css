@@ -44,3 +44,7 @@
 .messagesView .panel-primary {
     border-color: #CCC;
 }
+
+.fa.alerted {
+    color: #d35400;
+}
