@@ -4,7 +4,7 @@
 
 
 angular.module('booxchangeApp')
-    .factory('notificationService', ['$http', "$rootScope", function ($http, $rootScope) {
+    .factory('notificationService', ['$http', function ($http) {
 
         this.getMessagesNotification = function (query, onSuccess, onError) {
             $http({
@@ -26,7 +26,7 @@ angular.module('booxchangeApp')
             );
         };
 
-        this.updateNotifications = function () {
+        this.updateMessagesNotifications = function (onSuccess, onError) {
             //console.log(" updating .... ");
 
             $http({
@@ -40,13 +40,17 @@ angular.module('booxchangeApp')
                 }
             }).then(
                 function success(response) {
-                    $rootScope.msgNotifsNum = response.data;
+                    //vm.msgNotifsNum = response.data;
+                    onSuccess(response.data);
                 },
                 function error(response) {
-                    $rootScope.msgNotifsNum = 0;
+                    //vm.msgNotifsNum = 0;
+                    if (onError != undefined) onError(response);
                     console.log(" error " + response);
                 }
             );
+        };
+        this.updateExchangesNotifications = function (onSuccess, onError) {
 
             $http({
                 method: 'GET',
@@ -59,27 +63,28 @@ angular.module('booxchangeApp')
                 }
             }).then(
                 function success(response) {
-                    $rootScope.exchangeNotifsNum = response.data;
+                    //vm.exchangeNotifsNum = response.data;
+                    onSuccess(response.data);
                 },
                 function error(response) {
-                    $rootScope.exchangeNotifsNum = 0;
+                    //vm.exchangeNotifsNum = 0;
+                    if (onError != undefined) onError(response);
                     console.log(" error " + response);
                 }
             );
         };
 
-        this.removeMessageNotificaiton = function () {
-            $rootScope.msgNotifsNum = 0;
-        };
-        this.removeExchangeNotificaiton = function () {
-            $rootScope.exchangeNotifsNum = 0;
-        };
-
-        this.autoUpdate = function () {
+        this.autoUpdate = function (onSuccessMsg, onSuccessExchange) {
             //console.log("auto update activated");
             this.stopAutoUpdate();
-            this.updateNotifications();
-            this.interval = setInterval(this.updateNotifications, 1000);
+            var updtMSG = this.updateMessagesNotifications;
+            var updtEXC = this.updateExchangesNotifications;
+            this.updateMessagesNotifications(onSuccessMsg);
+            this.updateExchangesNotifications(onSuccessExchange);
+            this.interval = setInterval(function () {
+                updtMSG(onSuccessMsg);
+                updtEXC(onSuccessExchange);
+            }, 1000);
         };
 
         this.stopAutoUpdate = function () {

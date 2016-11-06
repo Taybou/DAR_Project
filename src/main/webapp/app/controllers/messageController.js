@@ -17,10 +17,10 @@ angular.module('booxchangeApp')
         'notificationService',
         'messageService',
         function ($routeParams, notificationService, messageService) {
-                var vm = this;
+            var vm = this;
 
-                vm.username = "";
-                vm.contacts = {};
+            vm.username = "";
+            vm.contacts = {};
             vm.contactsWithNew = {};
 
             vm.fetchMsg = function (username) {
@@ -43,7 +43,7 @@ angular.module('booxchangeApp')
                     });
                 };
 
-                vm.sendMsg = function () {
+            vm.sendMsg = function () {
                     if (vm.username != "") {
                         messageService.sendMessage(
                             {username: vm.username, message: vm.message},

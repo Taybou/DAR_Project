@@ -52,6 +52,7 @@
     <script src="app/controllers/bookController.js"></script>
     <script src="app/controllers/messageController.js"></script>
     <script src="app/controllers/userProfileController.js"></script>
+    <script src="app/controllers/notificationController.js"></script>
     <!--****************************************************** -->
 
 </head>
@@ -63,21 +64,23 @@
             <a class="navbar-brand" href="#">BooXChange</a>
         </div>
 
-        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="navbar-collapse-1"
+             ng-controller="NotificationController as NotifCtrl">
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
                     <a href="#"><i class="fa fa-2x fa-bell-o" aria-hidden="true"
-                                   ng-class="{ 'alerted': exchangeNotifsNum>0 }"
+                                   ng-class="{ 'alerted': NotifCtrl.exchangeNotifsNum>0 }"
                     ></i></a>
-                    <span ng-show="exchangeNotifsNum>0" style="color:#d35400">{{exchangeNotifsNum}}</span>
+                    <span ng-show="NotifCtrl.exchangeNotifsNum>0"
+                          style="color:#d35400">{{NotifCtrl.exchangeNotifsNum}}</span>
                 </li>
                 <li>
                     <a href="#/messages">
                         <i class="fa fa-2x fa-envelope-o" aria-hidden="true"
-                           ng-class="{ 'alerted': msgNotifsNum>0 }"
+                           ng-class="{ 'alerted': NotifCtrl.msgNotifsNum>0 }"
                         ></i>
-                        <span ng-show="msgNotifsNum>0" style="color:#d35400">{{msgNotifsNum}}</span>
+                        <span ng-show="NotifCtrl.msgNotifsNum>0" style="color:#d35400">{{NotifCtrl.msgNotifsNum}}</span>
                     </a>
                 </li>
                 <li>
