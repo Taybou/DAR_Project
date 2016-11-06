@@ -47,6 +47,7 @@ angular.module('booxchangeApp')
                     console.log(" error " + response);
                 }
             );
+
             $http({
                 method: 'GET',
                 headers: {
@@ -65,14 +66,14 @@ angular.module('booxchangeApp')
                     console.log(" error " + response);
                 }
             );
-        }
+        };
 
         this.removeMessageNotificaiton = function () {
             $rootScope.msgNotifsNum = 0;
-        }
+        };
         this.removeExchangeNotificaiton = function () {
             $rootScope.exchangeNotifsNum = 0;
-        }
+        };
 
         this.autoUpdate = function () {
             //console.log("auto update activated");
@@ -86,7 +87,7 @@ angular.module('booxchangeApp')
                 clearInterval(this.interval);
                 this.interval = undefined;
             }
-        }
+        };
         return this;
     }]);
 

@@ -69,6 +69,7 @@ public class User {
     private List<String> booksIsbnList;
 
     public User() {
+        this.booksIsbnList = new ArrayList<>();
     }
 
     public User(User user) {
