@@ -5,8 +5,10 @@
 angular.module('booxchangeApp')
     .controller('UserController', [
         '$routeParams',
+        '$uibModal',
         'userService',
-        function ($routeParams, userService) {
+
+        function ($routeParams, $uibModal, userService) {
 
             var vm = this;
             vm.ISBN = $routeParams.bookISBN;
@@ -37,6 +39,7 @@ angular.module('booxchangeApp')
             vm.getBooks = function () {
                 userService.getBooks(vm.ID, vm.ISBN, onSuccess, onError);
             }
+
 
             return vm;
         }

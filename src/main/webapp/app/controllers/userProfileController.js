@@ -131,9 +131,12 @@ angular.module('booxchangeApp')
         }
     ])
     .controller('ViewUserProfileController', [
+        '$scope',
         '$routeParams',
+        '$uibModal',
         'userService',
-        function ($routeParams, userService) {
+        'messageService',
+        function ($scope, $routeParams, $uibModal, userService, messageService) {
 
             var vm = this;
             vm.error = null;
@@ -170,6 +173,35 @@ angular.module('booxchangeApp')
                     vm.error = error;
                 }
             );
+
+            vm.openMsg = function () {
+                vm.modalMsg = $uibModal.open({
+                    templateUrl: 'SendMessageModal.html',
+                    scope: $scope
+                });
+            };
+
+            vm.closeMsg = function () {
+                vm.message = undefined;
+                vm.modalMsg.dismiss();
+            };
+
+            vm.saveMsg = function () {
+                vm.sendingMessageLoading = true;
+                messageService.sendMessage(
+                    {
+                        username: vm.user.userName,
+                        message: vm.message
+                    },
+                    function onSuccess() {
+                        vm.sendingMessageLoading = undefined;
+                        vm.closeMsg();
+                    },
+                    function onError() {
+
+                    }
+                )
+            };
 
             return vm;
         }

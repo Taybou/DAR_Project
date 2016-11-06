@@ -11,7 +11,6 @@ angular.module('booxchangeApp')
             vm.exchangeNotifsNum = 0;
             notificationService.autoUpdate(
                 function onSuccessMsg(responseData) {
-                    console.log(responseData);
                     vm.msgNotifsNum = responseData;
                 },
                 function onSuccessExchange(responseData) {
