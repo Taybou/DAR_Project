@@ -44,7 +44,7 @@ public class MessageDAO {
         Query<Message> messageQuery = datastore.createQuery(Message.class);
         messageQuery.or(messageQuery.criteria("to").equal(user), messageQuery.criteria("from").equal(user));
         messageQuery.order("-timeStamp");
-        messageQuery.limit(20);
+        //messageQuery.limit(50);
         return messageQuery.asList();
     }
 

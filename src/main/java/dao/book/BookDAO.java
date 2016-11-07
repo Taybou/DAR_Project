@@ -1,7 +1,6 @@
 package dao.book;
 
 
-import bean.User;
 import bean.googlebooks.GoogleBook;
 
 import java.util.List;
@@ -26,5 +25,11 @@ public interface BookDAO {
      */
     public List<GoogleBook> findBooks(String query);
 
-    public void addBooks(User user);
+    /**
+     * find books that are owned by actual users in BooXchange
+     *
+     * @return List<GoogleBook>
+     */
+
+    public List<GoogleBook> findOwnedBooks(String query);
 }

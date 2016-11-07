@@ -1,0 +1,95 @@
+<section class="messagesView">
+
+    <div class="container app">
+        <div class="main">
+            <div class="container">
+                <div class="messages">
+                    <h1>Messages <span class="icon icon-arrow-down"></span></h1>
+                    <ul class="message-list">
+                        <li class="{{user.active? 'active' : 'new'}}" ng-repeat="user in MsgCtrl.contacts"
+                            ng-click="MsgCtrl.fetchMsg(user.userName)">
+
+                            <div class="preview">
+                                <h3>{{user.firstName}} {{ user.lastName}} <span
+                                        ng-show="user.newMsg"> ({{user.newMsg}})</span></h3>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <section class="message">
+                    <div class="container">
+                        <div class="row">
+                            <div style="height: 100%;">
+                                <div class="panel panel-primary" style="height: 87%;">
+                                    <div class="panel-body" style="height: 100%;">
+                                        <ul class="chat">
+                                            <li ng-repeat="msg in MsgCtrl.messages"
+                                                class="{{msg.pullDirection}} clearfix">
+                                                <span class="chat-img pull-{{msg.pullDirection}}">
+                                                    <img src="http://placehold.it/50/{{msg.color}}/fff&text={{msg.initials}}"
+                                                         alt="User Avatar" class="img-circle"/>
+
+                                                </span>
+                                                <div class="chat-body clearfix">
+                                                    <div class="header">
+                                                        <small class="primary-font pull-{{msg.pullDirection}}">
+                                                            <a>@{{msg.from.userName}}</a>
+                                                        </small>
+                                                        <small class="pull-{{msg.inverseDirection}} text-muted">
+                                                            <span class="glyphicon glyphicon-time"></span>{{msg.moment}}
+                                                        </small>
+                                                    </div>
+                                                    <br>
+                                                    <p>
+                                                        {{msg.content}}
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <form novalidate>
+                                            <div class="input-group input-group-lg">
+                                                <input ng-model="MsgCtrl.message" id="btn-input" type="text"
+                                                       class="form-control input-sm"
+                                                       placeholder="Type your message here..."/>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-warning btn-sm" ng-click="MsgCtrl.sendMsg()" id="btn-chat">
+                                                        Send
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--<div class="body">-->
+                    <!--<ul>-->
+                    <!--<li  ng-repeat="msg in messages">[{{msg.moment}}] {{ msg.from.userName}} : {{msg.content}} </li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                    <!--<div class="action">-->
+
+                    <!--<div class="input-group">-->
+                    <!--<input type="text" class="form-control" placeholder="Message" ng-model="message">-->
+                    <!--<span class="input-group-btn">-->
+                    <!--<button class="btn btn-info" ng-click="sendMsg()" type="button">-->
+                    <!--<span class="glyphicon glyphicon-send"></span>-->
+                    <!--Send-->
+                    <!--</button>-->
+                    <!--</span>-->
+                    <!--</div>-->
+
+                    <!--</button>-->
+                    <!--</div>-->
+                </section>
+            </div>
+        </div>
+    </div>
+
+</section>

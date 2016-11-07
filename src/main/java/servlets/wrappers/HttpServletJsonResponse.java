@@ -41,4 +41,9 @@ public class HttpServletJsonResponse extends HttpServletResponseWrapper {
         this.setStatus(statusCode);
         this.sendJsonObject(error);
     }
+
+    public void sendJsonMapError(Map<String, Object> errors, int statusCode) throws IOException {
+        this.setStatus(statusCode);
+        this.sendJsonMap(errors);
+    }
 }

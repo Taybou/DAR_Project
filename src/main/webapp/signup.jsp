@@ -42,7 +42,7 @@
 
             <form novalidate class="form-horizontal" name="userForm">
 
-                <div class="form-group" ng-class="{ 'has-error' : userForm.firstName.$invalid && userForm.firstName.$dirty }">
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.firstName.$invalid && userForm.firstName.$dirty) || signupCtrl.error.firstName }">
                     <label for="firstname" class="cols-sm-2 control-label">Prénom</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{ 'has-error' : userForm.lastName.$invalid && userForm.lastName.$dirty }">
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.lastName.$invalid && userForm.lastName.$dirty) || signupCtrl.error.lastName }">
                     <label for="lastname" class="cols-sm-2 control-label">Nom</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && userForm.email.$dirty }">
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.email.$invalid && userForm.email.$dirty) || signupCtrl.error.email }">
                     <label for="email" class="cols-sm-2 control-label">Email</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
@@ -88,7 +88,7 @@
 
                 <div class="alert alert-danger" role="alert" ng-show="userForm.email.$invalid && userForm.email.$dirty"> Veuillez entrer une adresse email valide </div>
 
-                <div class="form-group" ng-class="{ 'has-error' : userForm.userName.$invalid && userForm.userName.$dirty }">
+                <div class="form-group" ng-class="{ 'has-error' : (userForm.userName.$invalid && userForm.userName.$dirty) || signupCtrl.error.userName }">
                     <label for="username" class="cols-sm-2 control-label">Nom d'utilisateur</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
@@ -117,14 +117,14 @@
                 </div>
 
                 <div class="form-group"
-                     ng-class="{ 'has-error' : (signupCtrl.user.password !== signupCtrl.confirmedPassword || userForm.confirmedPassword.$invalid) && userForm.confirmedPassword.$dirty}">
+                     ng-class="{ 'has-error' : (signupCtrl.user.password !== signupCtrl.user.confirmedPassword || userForm.confirmedPassword.$invalid) && userForm.confirmedPassword.$dirty}">
                     <label for="confirm" class="cols-sm-2 control-label">Confirmer le mot de passe</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                             <input type="password" name="confirmedPassword"
                                    required class="form-control"
-                                   ng-model="signupCtrl.confirmedPassword"
+                                   ng-model="signupCtrl.user.confirmedPassword"
                                    id="confirm"  placeholder="Confirmer le Mot de passe"/>
                         </div>
                     </div>
@@ -141,7 +141,12 @@
                 <div class="alert alert-danger"
                      role="alert"
                      ng-show="signupCtrl.error">
-                    {{signupCtrl.error.message}}
+                    <span ng-show="signupCtrl.error.message">{{signupCtrl.error.message}}</span>
+                    <ul ng-hide="signupCtrl.error.message">
+                        <li ng-repeat="error in signupCtrl.error">
+                            {{error.message}}
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="alert alert-success"
@@ -155,7 +160,6 @@
                     <a href="/signin">Connexion</a>
                 </div>
             </form>
-
         </div>
         <div class="col-sm-3"></div>
         

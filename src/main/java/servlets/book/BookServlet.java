@@ -1,9 +1,9 @@
 package servlets.book;
 
-import bean.User;
 import bean.googlebooks.GoogleBook;
 import dao.DAOFactory;
 import dao.book.BookDAO;
+import errors.Error;
 import servlets.wrappers.HttpServletJsonResponse;
 
 import javax.servlet.ServletException;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,44 +35,30 @@ public class BookServlet extends HttpServlet {
 
         String query = request.getParameter("query");
         String action = request.getParameter("action");
-        //String id = request.getParameter("id");
 
         switch (action) {
             case "search":
                 if (query != null) {
                     List<GoogleBook> books = bookDAO.findBooks(query);
                     jsonResponse.sendJsonObject(books);
-                    response = jsonResponse;
                 }
                 break;
-
-            case "add":
-                String userName = request.getParameter("userName");
-                List booksIsbnList = new ArrayList();
-                booksIsbnList.add(query);
-                User user = new User(userName, booksIsbnList);
-
-                bookDAO.addBooks(user);
-
-                jsonResponse.sendJsonObject("successfully added");
-                response = jsonResponse;
-                break;
-
             case "details":
                 if (query != null) {
                     GoogleBook book = bookDAO.getBookDetails(query);
                     jsonResponse.sendJsonObject(book);
-                    response = jsonResponse;
                 }
                 break;
-
+            case "searchOwned":
+                if (query != null) {
+                    List<GoogleBook> books = bookDAO.findOwnedBooks(query);
+                    jsonResponse.sendJsonObject(books);
+                }
+                break;
+            default:
+                jsonResponse.sendJsonError(new Error("Requete Invalide"), 400);
+                break;
         }
 
-//        if (id != null) {
-//            GoogleBook book = bookAPIAccess.getBook(id);
-//            jsonResponse.sendJsonObject(book);
-//        }
     }
-
-
 }

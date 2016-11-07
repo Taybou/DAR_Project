@@ -9,6 +9,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.ValidationExtension;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -46,6 +47,7 @@ final public class MorphiaDataStore {
             Morphia morphia = new Morphia();
 //            Mapping the beans
             morphia.mapPackage("src/bean");
+            new ValidationExtension(morphia);
 //            Creating a MongoDB instance
 
             String environment;

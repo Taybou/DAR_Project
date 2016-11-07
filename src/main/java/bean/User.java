@@ -1,7 +1,15 @@
 package bean;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.URL;
 import org.mongodb.morphia.annotations.*;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,19 +28,61 @@ public class User {
     * The userName is considered as a unique identifier for users
     * */
     @Id
+    @NotNull(message = "Le nom d'utilisateur est obligatoire")
+    @NotBlank(message = "Le nom d'utilisateur est obligatoire")
+    @SafeHtml(message = "Nom d'utilisateur non valide")
+    @Size(min = 2, max = 30, message = "Le nom d'utilisateur doit contenir au moins 2 caractères et au plus 30")
     private String userName;
-
+    @NotNull(message = "Le nom est obligatoire")
+    @NotBlank(message = "Le nom est obligatoire")
+    @SafeHtml(message = "Nom non valide")
+    @Size(min = 2, max = 30, message = "Le nom doit contenir au moins 2 caractères et au plus 30")
     private String lastName;
+    @NotNull(message = "Le prenom est obligatoire")
+    @NotBlank(message = "Le prenom est obligatoire")
+    @SafeHtml(message = "Prenom non valide")
+    @Size(min = 2, max = 30, message = "Le prenom doit contenir au moins 2 caractères et au plus 30")
     private String firstName;
+    @NotNull(message = "L'email est obligatoire")
+    @NotBlank(message = "L'email est obligatoire")
+    @Email(message = "Email non valide")
     private String email;
+    @Size(min = 6, message = "Le mot de passe doit contenir plus de 6 caractères")
+    @NotNull(message = "Le mot de passe est obligatoire")
+    @NotBlank(message = "Le mot de passe est obligatoire")
+    @SafeHtml(message = "Mot de passe non valide")
     private String password;
-    private Gender gender;
+    @Pattern(regexp = "Male|Female", message = "Valeurs acceptées : \"Femme\", \"Homme\".")
+    @SafeHtml(message = "Sexe non valide")
+    private String gender;
+    @SafeHtml(message = "Adresse non valide")
+    @Size(max = 255)
     private String address;
+    @URL(message = "Lien non valide")
+    @SafeHtml(message = "Lien non valide")
     private String profilePictureUrl;
+
+    @Size(max = 512)
+    @SafeHtml(message = "Description non valide")
+    private String description;
 
     private List<String> booksIsbnList;
 
     public User() {
+        this.booksIsbnList = new ArrayList<>();
+    }
+
+    public User(User user) {
+        this.userName = user.getUserName();
+        this.lastName = user.getLastName();
+        this.firstName = user.getFirstName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.gender = user.getGender();
+        this.address = user.getAddress();
+        this.profilePictureUrl = user.getProfilePictureUrl();
+        this.description = user.getDescription();
+        this.booksIsbnList = user.getBooksIsbnList();
     }
 
     public User(String userName, String lastName, String firstName, String email, String password) {
@@ -41,6 +91,11 @@ public class User {
         this.firstName = firstName;
         this.email = email;
         this.password = password;
+        this.gender = null;
+        this.address = null;
+        this.profilePictureUrl = null;
+        this.description = null;
+        this.booksIsbnList = new ArrayList<>();
     }
 
     public User(String userName, List<String> booksIsbnList) {
@@ -72,11 +127,11 @@ public class User {
         this.email = email;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -120,5 +175,12 @@ public class User {
         this.userName = userName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
 

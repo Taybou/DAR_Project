@@ -23,3 +23,4 @@ src/main/webapp/node_modules
 /.idea/inspectionProfiles/
 /.idea/libraries/
 /target/
+/webapp/

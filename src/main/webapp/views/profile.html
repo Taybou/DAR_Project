@@ -1,0 +1,234 @@
+<div class="user-profile-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="user-profile">
+                    <div class="user-info profile-image">
+                        <img src="{{userProfileCtrl.user.profilePictureUrl || 'images/default-user-image.png'}}"
+                             alt="profile image">
+                    </div>
+                    <div class="user-info username">
+                        <span class="info-value">{{userProfileCtrl.user.userName}}</span>
+                    </div>
+
+                    <div class="user-info">
+                        <span class="info-title">Prénom : </span>
+                        <span class="info-value">{{userProfileCtrl.user.firstName}}</span>
+                    </div>
+                    <div class="user-info">
+                        <span class="info-title">Nom : </span>
+                        <span class="info-value">{{userProfileCtrl.user.lastName}}</span>
+                    </div>
+                    <div class="user-info gender">
+                        <span class="info-title">Sexe : </span>
+                        <span class="info-value">
+                            {{userProfileCtrl.gender[userProfileCtrl.user.gender] || 'Non disponible'}}
+                        </span>
+                    </div>
+                    <div class="user-info">
+                        <span class="info-title">Adresse : </span>
+                        <span class="info-value">{{userProfileCtrl.user.address || 'Non disponible'}}</span>
+                    </div>
+                    <div class="user-info description">
+                        <div class="info-title">Description :</div>
+                        <p class="info-value">
+                            {{userProfileCtrl.user.description || 'Aucune'}}
+                        </p>
+                    </div>
+                    <div class="edit-button">
+                        <button class="btn btn-success" ng-click="userProfileCtrl.open()">Editer</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="add-books">
+                    <h1>
+                        <i class="fa fa-plus-circle"></i>
+                        Ajouter des livres
+                    </h1>
+                    <form novalidate>
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control"
+                                   ng-model="userProfileCtrl.query"
+                                   placeholder="Rechercher un livre">
+
+                            <span class="input-group-btn">
+                                <button class="btn" ng-click="userProfileCtrl.findBook()"
+                                        ng-disabled="userProfileCtrl.loadingSearch">
+                                    <i class='fa fa-1x fa-circle-o-notch fa-spin' ng-show="userProfileCtrl.loadingSearch"></i>
+                                    <i class="fa fa-1x fa-search" ng-hide="userProfileCtrl.loadingSearch"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                    <div class="loading-search" ng-show="userProfileCtrl.loadingSearch">
+                        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                    </div>
+                    <div class="profile-search-result" ng-hide="userProfileCtrl.loadingSearch">
+                        <div class="book-list">
+                            <div ng-repeat="book in userProfileCtrl.foundBooks"
+                                 ng-if="book!==null"
+                                 class="book">
+                                <span class="book-image">
+                                    <img ng-src="{{book.volumeInfo.imageLinks.thumbnail || 'images/default-book.jpg'}}" alt="book image">
+                                </span>
+                                <span class="book-title">
+                                    <a href="#/book/{{book.volumeInfo.industryIdentifiers[0].identifier}}" target="_blank">
+                                        {{book.volumeInfo.title}}
+                                    </a>
+                                </span>
+                                <span class="book-remove">
+                                    <button class="btn btn-xs btn-success" ng-click="userProfileCtrl.addBook(book)">Ajouter</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-books">
+                    <h1>
+                        <i class="fa fa-book"></i>
+                        Livres
+                    </h1>
+                    <div class="loading-books" ng-show="userProfileCtrl.loadingBooks">
+                        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                    </div>
+                    <div class="book-list" ng-hide="userProfileCtrl.loadingBooks">
+                        <div ng-repeat="book in userProfileCtrl.books"
+                             ng-if="book!==null"
+                             class="book">
+                            <span class="book-image">
+                                <img ng-src="{{book.volumeInfo.imageLinks.thumbnail || 'images/default-book.jpg'}}" alt="book image">
+                            </span>
+                            <span class="book-title">
+                                <a href="#/book/{{book.volumeInfo.industryIdentifiers[0].identifier}}" target="_blank">
+                                    {{book.volumeInfo.title}}
+                                </a>
+                            </span>
+                            <span class="book-remove">
+                                <button class="btn btn-xs btn-danger" ng-click="userProfileCtrl.deleteBook(book)">Supprimer</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Editer votre profile</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <form novalidate class="form-horizontal update-user-form" name="userForm">
+                    <div class="modal-body" id="modal-body">
+
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : (userForm.firstName.$invalid && userForm.firstName.$dirty) || userProfileCtrl.updateUser.errors.firstName }">
+                            <label for="firstname" class="cols-sm-2 control-label">Prénom</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"
+                                                                       aria-hidden="true"></i></span>
+                                    <input type="text" name="firstName"
+                                           required class="form-control"
+                                           ng-model="userProfileCtrl.updatedUser.firstName"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           id="firstname" placeholder="Entrer votre Prénom"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : (userForm.lastName.$invalid && userForm.lastName.$dirty) || userProfileCtrl.updateUser.errors.lastName }">
+                            <label for="lastname" class="cols-sm-2 control-label">Nom</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"
+                                                                       aria-hidden="true"></i></span>
+                                    <input type="text" name="lastName"
+                                           required class="form-control"
+                                           ng-model="userProfileCtrl.updatedUser.lastName"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           id="lastname"
+                                           placeholder="Entrer votre Nom"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : userProfileCtrl.updateUser.errors.gender}">
+                            <label class="cols-sm-2 control-label">Sexe</label>
+                            <div class="cols-md-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions"
+                                           ng-model="userProfileCtrl.updatedUser.gender"
+                                           id="male" value="Male"> Homme
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions"
+                                           ng-model="userProfileCtrl.updatedUser.gender"
+                                           id="female" value="Female"> Femme
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : (userForm.address.$invalid && userForm.address.$dirty) || userProfileCtrl.updateUser.errors.address}">
+                            <label for="address" class="cols-sm-2 control-label">Adresse</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-map-marker"
+                                                                       aria-hidden="true"></i></span>
+                                    <input type="text" name="address"
+                                           class="form-control"
+                                           ng-model="userProfileCtrl.updatedUser.address"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           id="address"
+                                           placeholder="Entrer votre Adresse"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : (userForm.description.$invalid && userForm.description.$dirty) || userProfileCtrl.updateUser.errors.description }">
+                            <label for="description" class="cols-sm-2 control-label">Description</label>
+                            <div class="cols-sm-10">
+                                <textarea name="description"
+                                          id="description"
+                                          class="form-control"
+                                          ng-model="userProfileCtrl.updatedUser.description"
+                                          ng-model-options="{ updateOn: 'blur' }"
+                                          placeholder="Entrer une description">
+
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-danger"
+                             role="alert"
+                             ng-show="userProfileCtrl.updateUser.errors">
+                            <ul>
+                                <li ng-repeat="error in userProfileCtrl.updateUser.errors">
+                                    {{error.message}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary"
+                                type="button"
+                                ng-disabled="userForm.$invalid || userProfileCtrl.updateUser.loading"
+                                ng-click="userProfileCtrl.save()">
+                            <i class='fa fa-circle-o-notch fa-spin' ng-show="userProfileCtrl.updateUser.loading"></i> Save
+                        </button>
+                        <button class="btn btn-warning" type="button" ng-click="userProfileCtrl.close()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>
+
+

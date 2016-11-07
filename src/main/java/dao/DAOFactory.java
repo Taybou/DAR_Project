@@ -1,6 +1,7 @@
 package dao;
 
 import dao.book.BookDAOImpl;
+import dao.exchange.ExchangeDAO;
 import dao.user.UserDAO;
 
 /**
@@ -11,6 +12,10 @@ public final class DAOFactory {
 
     public static UserDAO getUserDAO() {
         return new UserDAO();
+    }
+
+    public static ExchangeDAO getExchangeDAO() {
+        return new ExchangeDAO();
     }
 
     public static BookDAOImpl getBookDAO() {

@@ -1,15 +1,15 @@
 package dao.book;
 
-import bean.User;
 import bean.googlebooks.GoogleBook;
 import bean.googlebooks.IndustryIdentifier;
 import bean.googlebooks.VolumeInfo;
+import dao.DAOFactory;
 import dao.MorphiaDataStore;
+import dao.user.UserDAO;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,13 +18,11 @@ import java.util.List;
  */
 public class BookDAOImpl implements BookDAO {
 
-    private Datastore datastore = null;
-    private BookRestService bookRestService = null;
+    private Datastore datastore;
     private BookAPIAccess bookAPIAccess;
 
     public BookDAOImpl() {
         datastore = MorphiaDataStore.getDataStore();
-        bookRestService = new BookRestService();
         bookAPIAccess = new BookAPIAccess();
     }
 
@@ -65,28 +63,44 @@ public class BookDAOImpl implements BookDAO {
             }
         }
 
-        return booksList;
+        return updateUserCount(booksList);
     }
 
     @Override
-    public void addBooks(User user) {
-        // Add books of the user
-        // by adding a list of isbn to the user owner
+    public List<GoogleBook> findOwnedBooks(String query) {
 
-        Query<User> query = datastore.createQuery(User.class).field("userName").equal(user.getUserName());
-        List list = query.get().getBooksIsbnList();
-        if (list == null) {
-            list = new ArrayList();
-        }
-        for (int i = 0; i < user.getBooksIsbnList().size(); i++) {
-            list.add(user.getBooksIsbnList().get(i));
-        }
-        for (int i = 0; i < list.size(); i++) {
-            UpdateOperations<User> userUpdateOperations = datastore.createUpdateOperations(User.class).add("booksIsbnList", list.get(i));
-            datastore.update(query, userUpdateOperations);
-        }
-        // System.out.println("bbbb ");
+        UserDAO userDAO = DAOFactory.getUserDAO();
 
+        List<GoogleBook> books = this.findBooks(query);
+        List<GoogleBook> filteredBooks = new ArrayList<>();
+
+
+        for (GoogleBook book : books) {
+
+            int userCount = userDAO.getUserByISBN(book.getVolumeInfo()
+                    .getIndustryIdentifiers().get(0)
+                    .getIdentifier()).size();
+
+            if (userCount != 0) {
+                book.setUserCount(userCount);
+                filteredBooks.add(book);
+            }
+        }
+
+        return filteredBooks;
     }
 
+    private List<GoogleBook> updateUserCount(List<GoogleBook> books) {
+
+        UserDAO userDAO = DAOFactory.getUserDAO();
+
+        for (GoogleBook book : books) {
+            int userCount = userDAO.getUserByISBN(book.getVolumeInfo()
+                    .getIndustryIdentifiers().get(0)
+                    .getIdentifier()).size();
+            book.setUserCount(userCount);
+        }
+
+        return books;
+    }
 }

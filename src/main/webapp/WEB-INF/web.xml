@@ -46,16 +46,6 @@
     </servlet>
 
     <servlet>
-        <servlet-name>BookDetails</servlet-name>
-        <jsp-file>/booksDetails.jsp</jsp-file>
-    </servlet>
-
-    <servlet>
-        <servlet-name>Books</servlet-name>
-        <jsp-file>/books.jsp</jsp-file>
-    </servlet>
-
-    <servlet>
         <servlet-name>Users</servlet-name>
         <servlet-class>servlets.UsersServlet</servlet-class>
     </servlet>
@@ -78,9 +68,14 @@
         <servlet-name>bookServlet</servlet-name>
         <servlet-class>servlets.book.BookServlet</servlet-class>
     </servlet>
-
-
-
+    <servlet>
+        <servlet-name>exchangeServlet</servlet-name>
+        <servlet-class>servlets.ExchangeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Notifications</servlet-name>
+        <servlet-class>servlets.NotificationsServlet</servlet-class>
+    </servlet>
 
     <!-- Servlets Mapping-->
 
@@ -100,18 +95,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>Books</servlet-name>
-        <url-pattern>/books</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
         <servlet-name>Users</servlet-name>
         <url-pattern>/api/users</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>BookDetails</servlet-name>
-        <url-pattern>/bookDetails</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -133,6 +118,14 @@
         <servlet-name>bookServlet</servlet-name>
         <url-pattern>/api/books</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>exchangeServlet</servlet-name>
+        <url-pattern>/api/exchanges</url-pattern>
+    </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>Notifications</servlet-name>
+        <url-pattern>/api/notifications</url-pattern>
+    </servlet-mapping>
 
 </web-app>
