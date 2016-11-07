@@ -50,7 +50,7 @@
                             <input type="text" name="userName"
                                    required class="form-control"
                                    ng-model="signinCtrl.userData.userName"
-                                   id="username"  placeholder="Entrer un Nom d'Utilisateur"/>
+                                   notificationId="username"  placeholder="Entrer un Nom d'Utilisateur"/>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                             <input type="password" name="password"
                                    required class="form-control"
                                    ng-model="signinCtrl.userData.password"
-                                   id="password"  placeholder="Entrer un Mot de passe"/>
+                                   notificationId="password"  placeholder="Entrer un Mot de passe"/>
                         </div>
                     </div>
                 </div>

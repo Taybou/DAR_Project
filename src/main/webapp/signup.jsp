@@ -51,7 +51,7 @@
                                    required class="form-control"
                                    ng-model="signupCtrl.user.firstName"
                                    ng-model-options="{ updateOn: 'blur' }"
-                                   id="firstname"  placeholder="Entrer votre Nom"/>
+                                   notificationId="firstname"  placeholder="Entrer votre Nom"/>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                                    required class="form-control"
                                    ng-model="signupCtrl.user.lastName"
                                    ng-model-options="{ updateOn: 'blur' }"
-                                   id="lastname"
+                                   notificationId="lastname"
                                    placeholder="Enter votre Prénom"/>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                                    required class="form-control"
                                    ng-model="signupCtrl.user.email"
                                    ng-model-options="{ updateOn: 'blur' }"
-                                   id="email"
+                                   notificationId="email"
                                    placeholder="Entrer votre Email"/>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                                    required class="form-control"
                                    ng-model="signupCtrl.user.userName"
                                    ng-model-options="{ updateOn: 'blur' }"
-                                   id="username"  placeholder="Entrer un Nom d'Utilisateur"/>
+                                   notificationId="username"  placeholder="Entrer un Nom d'Utilisateur"/>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                                    required class="form-control"
                                    ng-model="signupCtrl.user.password"
                                    ng-model-options="{ updateOn: 'blur' }"
-                                   id="password"  placeholder="Entrer un Mot de passe"/>
+                                   notificationId="password"  placeholder="Entrer un Mot de passe"/>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                             <input type="password" name="confirmedPassword"
                                    required class="form-control"
                                    ng-model="signupCtrl.user.confirmedPassword"
-                                   id="confirm"  placeholder="Confirmer le Mot de passe"/>
+                                   notificationId="confirm"  placeholder="Confirmer le Mot de passe"/>
                         </div>
                     </div>
                 </div>

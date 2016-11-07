@@ -48,4 +48,16 @@ public class SigninServlet extends HttpServlet {
             response.sendJsonError(error, 400);
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        HttpServletJsonRequest request = (HttpServletJsonRequest) req;
+        HttpServletJsonResponse response = (HttpServletJsonResponse) resp;
+        HttpSession session = request.getSession();
+
+        session.removeAttribute(AuthorizationFilter.USER_SESSION);
+
+        response.sendJsonObject("Vous etes Deconnecte");
+    }
 }

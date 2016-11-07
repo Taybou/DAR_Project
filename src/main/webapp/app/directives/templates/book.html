@@ -21,6 +21,14 @@
                class="btn btn-success pull-right">
                 Details
             </a>
+            <a ng-show="hasAlert({bookISBN: book.volumeInfo.industryIdentifiers[0].identifier})" ng-click="deleteAlert({bookISBN: book.volumeInfo.industryIdentifiers[0].identifier})" class="btn btn-danger pull-right">
+                <i class="fa fa-bell-o"></i>
+                Supprimer l'Alerte
+            </a>
+            <a ng-hide="hasAlert({bookISBN: book.volumeInfo.industryIdentifiers[0].identifier})" ng-click="createAlert({bookISBN: book.volumeInfo.industryIdentifiers[0].identifier})" class="btn btn-success pull-right">
+                <i class="fa fa-bell-o"></i>
+                Ajouter une Alerte
+            </a>
         </div>
     </div>
 </div>

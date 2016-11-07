@@ -1,7 +1,9 @@
 package dao;
 
+import dao.alert.AlertDAO;
 import dao.book.BookDAOImpl;
 import dao.exchange.ExchangeDAO;
+import dao.message.NotificationDAO;
 import dao.user.UserDAO;
 
 /**
@@ -21,4 +23,8 @@ public final class DAOFactory {
     public static BookDAOImpl getBookDAO() {
         return new BookDAOImpl();
     }
+
+    public static AlertDAO getAlertDAO() { return new AlertDAO();}
+
+    public static NotificationDAO getNotificationDAO() {return new NotificationDAO();};
 }

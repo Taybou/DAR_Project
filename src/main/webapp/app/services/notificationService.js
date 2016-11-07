@@ -46,11 +46,11 @@ angular.module('booxchangeApp')
                 function error(response) {
                     //vm.msgNotifsNum = 0;
                     if (onError != undefined) onError(response);
-                    console.log(" error " + response);
                 }
             );
         };
-        this.updateExchangesNotifications = function (onSuccess, onError) {
+
+        /*this.updateExchangesNotifications = function (onSuccess, onError) {
 
             $http({
                 method: 'GET',
@@ -72,18 +72,59 @@ angular.module('booxchangeApp')
                     console.log(" error " + response);
                 }
             );
+        };*/
+
+        this.getAlertNotifications = function (onSuccess, onError) {
+            $http({
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/api/notifications',
+                params: {
+                    type: 'alert'
+                }
+            }).then(
+                function success(response) {
+                    onSuccess(response.data);
+                },
+                function error(response) {
+                    onError(response.data);
+                }
+            );
+        };
+
+        this.deleteNotification = function (notification, onSuccess, onError) {
+            $http({
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/api/notifications',
+                params: {
+                    id: notification.notificationId
+                },
+                data: {}
+            }).then(
+                function success(response) {
+                    onSuccess(response.data);
+                },
+                function error(response) {
+                    onError(response.data);
+                }
+            );
         };
 
         this.autoUpdate = function (onSuccessMsg, onSuccessExchange) {
             //console.log("auto update activated");
             this.stopAutoUpdate();
             var updtMSG = this.updateMessagesNotifications;
-            var updtEXC = this.updateExchangesNotifications;
+            //var updtEXC = this.updateExchangesNotifications;
             this.updateMessagesNotifications(onSuccessMsg);
-            this.updateExchangesNotifications(onSuccessExchange);
+            //this.updateExchangesNotifications(onSuccessExchange);
             this.interval = setInterval(function () {
                 updtMSG(onSuccessMsg);
-                updtEXC(onSuccessExchange);
+                //updtEXC(onSuccessExchange);
             }, 1000);
         };
 

@@ -4,18 +4,61 @@
 
 angular.module('booxchangeApp')
     .controller('NotificationController', [
+        '$location',
         'notificationService',
-        function (notificationService) {
+        'bookService',
+        function ($location, notificationService, bookService) {
             var vm = this;
             vm.msgNotifsNum = 0;
-            vm.exchangeNotifsNum = 0;
+
+            vm.alertNotifications = [];
+            vm.alertBooks = [];
+
             notificationService.autoUpdate(
                 function onSuccessMsg(responseData) {
                     vm.msgNotifsNum = responseData;
-                },
-                function onSuccessExchange(responseData) {
-                    vm.exchangeNotifsNum = responseData;
                 }
             );
+
+            vm.getAlertNotifications = function () {
+                vm.loadingAlerts = true;
+                notificationService.getAlertNotifications(
+                    function (notifications) {
+                        vm.alertNotifications = notifications;
+                        vm.loadingAlerts = false;
+                        vm.loadAlertBooks();
+                    });
+            };
+
+            vm.loadAlertBooks = function () {
+                vm.loadingBooks= true;
+                vm.alertBooks = [];
+                vm.alertNotifications.forEach(function (notification) {
+                    bookService.getBook(notification.bookISBN, function (response) {
+                        var book = response.data;
+                        book.bookISBN = notification.bookISBN;
+                        vm.alertBooks.push(response.data);
+                        if (vm.alertBooks.length === vm.alertNotifications.length) {
+                            vm.loadingBooks = false;
+                        }
+                    })
+                });
+            };
+
+            vm.seeAlertNotification = function (book) {
+                var foundNotif = vm.alertNotifications.find(function (notification) {
+                    return (notification.bookISBN === book.bookISBN);
+                });
+                notificationService.deleteNotification(foundNotif,
+                    function () {
+                        $location.path('/book/' + book.bookISBN);
+                        vm.getAlertNotifications();
+                    }
+                );
+            };
+
+            setInterval(vm.getAlertNotifications, 60000);
+
+            vm.getAlertNotifications();
         }
     ]);

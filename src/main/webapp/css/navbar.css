@@ -26,3 +26,33 @@ Follow me on Twitter @maridlcrmn
     .navbar .nav-collapse .navbar-form { margin: 0; }
     .nav-collapse>li { float: none; }
 }
+
+.navbar-nav>li>.dropdown-menu {
+    min-width: 300pt;
+}
+
+.alert-notification {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    margin: 5pt;
+    padding: 5pt;
+
+    border-bottom: 1pt solid lightgray;
+}
+
+.alert-notification .alert-book-image {
+    flex-grow: 1;
+    margin-right: 5pt;
+}
+.alert-notification .alert-book-image img {
+    width: 30pt;
+}
+
+.alert-book-text {
+    flex-grow: 3;
+}
+
+.alert-loading {
+    text-align: center;
+}

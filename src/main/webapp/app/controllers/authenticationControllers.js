@@ -1,12 +1,12 @@
 /**
-    * BooXchange Project
-    * Created by Al on 14-Oct-16.
-    */
+ * BooXchange Project
+ * Created by Al on 14-Oct-16.
+ */
 
 angular.module('authApp')
-            .controller('SignupController', [
-                'authenticationService',
-                function (authenticationService) {
+    .controller('SignupController', [
+        'authenticationService',
+        function (authenticationService) {
 
             var vm = this;
             vm.createdUser = null;
@@ -29,7 +29,7 @@ angular.module('authApp')
             };
 
             return vm;
-    }])
+        }])
     .controller('SigninController', [
         'authenticationService',
         '$window',
@@ -50,6 +50,31 @@ angular.module('authApp')
                 vm.loading = true;
                 vm.error = null;
                 authenticationService.authenticateUser(vm.userData, onSuccess, onError);
+            };
+
+            return vm;
+        }
+    ])
+    .controller('SignoutController', [
+        'authenticationService',
+        '$window',
+        function (authenticationService, $window) {
+
+            var vm = this;
+
+            var onError = function (error) {
+                vm.error = error;
+                vm.loading = false;
+            };
+
+            var onSuccess = function () {
+                $window.location.href = '/signin';
+            };
+
+            vm.signout = function () {
+                vm.loading = true;
+                vm.error = null;
+                authenticationService.signout(onSuccess, onError);
             };
 
             return vm;

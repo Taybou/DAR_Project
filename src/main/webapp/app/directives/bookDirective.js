@@ -7,7 +7,10 @@ angular.module('booxchangeApp')
         return {
             restrict: 'E',
             scope: {
-                book: '=book'
+                book: '=book',
+                createAlert: '&',
+                hasAlert: '&',
+                deleteAlert: '&'
             },
             templateUrl: 'app/directives/templates/book.html'
         }

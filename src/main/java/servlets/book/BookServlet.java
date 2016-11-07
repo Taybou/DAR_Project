@@ -59,6 +59,7 @@ public class BookServlet extends HttpServlet {
                 jsonResponse.sendJsonError(new Error("Requete Invalide"), 400);
                 break;
         }
-
     }
+
+
 }

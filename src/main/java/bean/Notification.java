@@ -15,8 +15,9 @@ public class Notification {
     @Reference
     User from;
     Type type;
+    private String bookISBN;
     @Id
-    private String id;
+    private String notificationId;
 
     public Notification() {
     }
@@ -38,6 +39,8 @@ public class Notification {
             return Type.Message;
         } else if (str.compareToIgnoreCase("exchange") == 0) {
             return Type.Exchange;
+        } else if (str.compareToIgnoreCase("alert") == 0) {
+            return Type.Alert;
         } else return null;
     }
 
@@ -53,8 +56,37 @@ public class Notification {
         return from;
     }
 
-    enum Type {
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setFrom(User from) {
+        this.from = from;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getBookISBN() {
+        return bookISBN;
+    }
+
+    public void setBookISBN(String bookISBN) {
+        this.bookISBN = bookISBN;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    public enum Type {
         Message,
-        Exchange
+        Exchange,
+        Alert
     }
 }
