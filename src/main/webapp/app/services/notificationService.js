@@ -36,6 +36,7 @@ angular.module('booxchangeApp')
                 },
                 url: '/api/notifications',
                 params: {
+                    action: 'count',
                     type: 'message'
                 }
             }).then(

@@ -26,10 +26,11 @@ angular.module('booxchangeApp')
                     vm.error = response.data;
                 });
 
-            userService.getUsersByIsbn(vm.ISBN,
+            userService.getProfilesByIsbn(vm.ISBN,
                 function (response) {
                     vm.loadingUsers = false;
                     vm.users = response.data;
+
 
                 },
                 function (response) {

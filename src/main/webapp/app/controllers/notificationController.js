@@ -31,7 +31,7 @@ angular.module('booxchangeApp')
             };
 
             vm.loadAlertBooks = function () {
-                vm.loadingBooks= true;
+                vm.loadingBooks = true && vm.alertNotifications.length > 0;
                 vm.alertBooks = [];
                 vm.alertNotifications.forEach(function (notification) {
                     bookService.getBook(notification.bookISBN, function (response) {

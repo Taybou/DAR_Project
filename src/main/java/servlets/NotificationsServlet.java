@@ -40,6 +40,7 @@ public class NotificationsServlet extends HttpServlet {
         User user = (User) session.getAttribute(AuthorizationFilter.USER_SESSION);
         String type = req.getParameter("type");
         String from = req.getParameter("from");
+        String action = req.getParameter("action");
 
         HttpServletJsonResponse jsonResponse = new HttpServletJsonResponse(resp);
 
@@ -52,19 +53,22 @@ public class NotificationsServlet extends HttpServlet {
                 jsonResponse.sendError(500, "Not implemented");
                 break;
             case "message":
-                if (from != null) {
-                    UserDAO userDAO = new UserDAO();
-                    User fromu = userDAO.getUserByUserName(from);
-                    if (fromu != null) {
-                        long result = notificationDAO.getNotificationsNumber(user, type, fromu);
-                        jsonResponse.sendJsonObject(result);
+                if (action.compareToIgnoreCase("count") == 0) {
+                    if (from != null) {
+                        UserDAO userDAO = new UserDAO();
+                        User fromu = userDAO.getUserByUserName(from);
+                        if (fromu != null) {
+                            long result = notificationDAO.getNotificationsNumber(user, type, fromu);
+                            jsonResponse.sendJsonObject(result);
+                        } else {
+                            jsonResponse.sendError(404, "from User Not Found");
+                        }
                     } else {
-                        jsonResponse.sendError(404, "from User Not Found");
+                        long result = notificationDAO.getNotificationsNumber(user, type);
+                        jsonResponse.sendJsonObject(result);
                     }
-                }
-                else {
-                    long result = notificationDAO.getNotificationsNumber(user, type);
-                    jsonResponse.sendJsonObject(result);
+                } else {
+                    jsonResponse.sendError(400, "requete non valide");
                 }
                 break;
             default:

@@ -9,7 +9,6 @@ angular.module('booxchangeApp')
 
         userService.user = null;
 
-
         userService.getUser = function (onSuccess, onError) {
             if (userService.user !== null) {
                 onSuccess(userService.user);
@@ -146,8 +145,8 @@ angular.module('booxchangeApp')
             );
         };
 
-        userService.getUsersByIsbn = function (isbn, onSuccess, onError) {
-            var Users = $resource('/api/users?action=getProfilesByISBN&isbn=:receiver', {
+        userService.getProfilesByIsbn = function (isbn, onSuccess, onError) {
+            var Users = $resource('/api/users?action=getProfilesByISBN&isbn=:isbn', {
                 'query': {
                     method: 'GET',
                     isArray: true

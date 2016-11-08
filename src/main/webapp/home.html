@@ -91,6 +91,9 @@
                             </span>
                             <span class="alert-book-text">Le livre <span class="alert-book-title">{{book.volumeInfo.title}}</span> est disponible</span>
                         </li>
+                        <li class="alert-notification"
+                            ng-show="NotifCtrl.alertBooks.length == 0 && !NotifCtrl.loadingBooks"><p> Aucune nouvelle
+                            alerte </p></li>
                     </ul>
                 </li>
                 <li>
