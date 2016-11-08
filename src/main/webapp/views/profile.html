@@ -4,7 +4,7 @@
             <div class="col-md-6">
                 <div class="user-profile">
                     <div class="user-info profile-image">
-                        <img src="{{userProfileCtrl.user.profilePictureUrl || 'images/default-user-image.png'}}"
+                        <img ng-src="{{userProfileCtrl.user.profilePictureUrl || 'images/default-user-image.png'}}"
                              alt="profile image">
                     </div>
                     <div class="user-info username">
@@ -115,14 +115,14 @@
         </div>
     </div>
 
-    <script type="text/ng-template" notificationId="myModalContent.html">
+    <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
-            <h3 class="modal-title" notificationId="modal-title">Editer votre profile</h3>
+            <h3 class="modal-title" id="modal-title">Editer votre profile</h3>
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <form novalidate class="form-horizontal update-user-form" name="userForm">
-                    <div class="modal-body" notificationId="modal-body">
+                    <div class="modal-body" id="modal-body">
 
                         <div class="form-group"
                              ng-class="{ 'has-error' : (userForm.firstName.$invalid && userForm.firstName.$dirty) || userProfileCtrl.updateUser.errors.firstName }">
@@ -135,7 +135,7 @@
                                            required class="form-control"
                                            ng-model="userProfileCtrl.updatedUser.firstName"
                                            ng-model-options="{ updateOn: 'blur' }"
-                                           notificationId="firstname" placeholder="Entrer votre Prénom"/>
+                                           id="firstname" placeholder="Entrer votre Prénom"/>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                                            required class="form-control"
                                            ng-model="userProfileCtrl.updatedUser.lastName"
                                            ng-model-options="{ updateOn: 'blur' }"
-                                           notificationId="lastname"
+                                           id="lastname"
                                            placeholder="Entrer votre Nom"/>
                                 </div>
                             </div>
@@ -164,12 +164,12 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="inlineRadioOptions"
                                            ng-model="userProfileCtrl.updatedUser.gender"
-                                           notificationId="male" value="Male"> Homme
+                                           id="male" value="Male"> Homme
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="inlineRadioOptions"
                                            ng-model="userProfileCtrl.updatedUser.gender"
-                                           notificationId="female" value="Female"> Femme
+                                           id="female" value="Female"> Femme
                                 </label>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
                                            class="form-control"
                                            ng-model="userProfileCtrl.updatedUser.address"
                                            ng-model-options="{ updateOn: 'blur' }"
-                                           notificationId="address"
+                                           id="address"
                                            placeholder="Entrer votre Adresse"/>
                                 </div>
                             </div>
@@ -196,7 +196,7 @@
                             <label for="description" class="cols-sm-2 control-label">Description</label>
                             <div class="cols-sm-10">
                                 <textarea name="description"
-                                          notificationId="description"
+                                          id="description"
                                           class="form-control"
                                           ng-model="userProfileCtrl.updatedUser.description"
                                           ng-model-options="{ updateOn: 'blur' }"

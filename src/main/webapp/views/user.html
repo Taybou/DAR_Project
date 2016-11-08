@@ -72,21 +72,21 @@
         </div>
     </div>
 
-    <script type="text/ng-template" notificationId="SendMessageModal.html">
+    <script type="text/ng-template" id="SendMessageModal.html">
         <div class="modal-header">
-            <h3 class="modal-title" notificationId="modal-title">Envoyez un message à @{{viewUserProfileCtrl.user.userName}}</h3>
+            <h3 class="modal-title" id="modal-title">Envoyez un message à @{{viewUserProfileCtrl.user.userName}}</h3>
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
                 <form novalidate class="form-horizontal update-user-form" name="messageForm">
-                    <div class="modal-body" notificationId="modal-body">
+                    <div class="modal-body" id="modal-body">
 
                         <div class="form-group"
                              ng-class="{ 'has-error' : (viewUserProfileCtrl.message == '' && messageForm.message.$dirty) }">
                             <label for="message" class="cols-sm-2 control-label">Message</label>
                             <div class="cols-sm-10">
                                 <textarea name="message"
-                                          notificationId="message"
+                                          id="message"
                                           class="form-control"
                                           ng-model="viewUserProfileCtrl.message"
                                           ng-model-options="{ getterSetter: true }"

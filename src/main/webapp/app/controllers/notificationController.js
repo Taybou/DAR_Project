@@ -41,7 +41,10 @@ angular.module('booxchangeApp')
                         if (vm.alertBooks.length === vm.alertNotifications.length) {
                             vm.loadingBooks = false;
                         }
-                    })
+                    },
+                    function (response) {
+                        vm.error = response.data;
+                    });
                 });
             };
 
@@ -57,7 +60,7 @@ angular.module('booxchangeApp')
                 );
             };
 
-            setInterval(vm.getAlertNotifications, 60000);
+            setInterval(vm.getAlertNotifications, 30000);
 
             vm.getAlertNotifications();
         }
