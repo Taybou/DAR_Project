@@ -4,7 +4,7 @@
  */
 
 angular.module('booxchangeApp', [
-        'ngRoute', 'ngResource', 'ui.bootstrap'
+        'ngRoute', 'ngResource', 'ui.bootstrap', 'authApp'
     ])
     .config([
         '$routeProvider',

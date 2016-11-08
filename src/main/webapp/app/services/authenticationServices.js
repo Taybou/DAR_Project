@@ -44,5 +44,26 @@ angular.module('authApp')
             );
         };
 
+        this.signout = function (onSuccess, onError) {
+            $http({
+                method:'DELETE',
+                url: '/api/signin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                params: {
+                    action: 'signout'
+                },
+                data: {}
+            }).then(
+                function success(response) {
+                    onSuccess(response.data);
+                },
+                function error(response) {
+                    onError(response.data);
+                }
+            );
+        };
+
         return this;
     }]);

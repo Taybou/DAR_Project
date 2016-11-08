@@ -1,8 +1,10 @@
 package dao.message;
 
+import bean.Alert;
 import bean.Notification;
 import bean.User;
 import dao.MorphiaDataStore;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
@@ -69,5 +71,9 @@ public class NotificationDAO {
                 notificationQuery.criteria("type").equal(Notification.toType(type))
         );
         datastore.delete(notificationQuery);
+    }
+
+    public void deleteNotification(String notificationId) {
+        datastore.delete(Notification.class, new ObjectId(notificationId));
     }
 }
