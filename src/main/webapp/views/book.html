@@ -1,16 +1,28 @@
 <section class="book-view">
     <div class="container">
         <div class="row">
-            <div class="col-md-offset-1 col-md-2">
-                <div class="book-image"><img src="{{bookCtrl.book.volumeInfo.imageLinks.thumbnail}}" class="img-responsive" ></div>
-            </div>
-            {{bookCtrl.book.volumeInfo.thumbnail}}
+            <!--<div class="col-md-offset-1 col-md-2">-->
+            <!--<div class="book-image">-->
+            <!--<img src="{{bookCtrl.book.volumeInfo.imageLinks.thumbnail}}" class="img-responsive" >-->
+            <!--</div>-->
+            <!--</div>-->
+
             <div class="col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3>{{bookCtrl.book.volumeInfo.title}}</h3>
+                    <div class="panel-heading">
                         <span>
-                            by <span ng-repeat="author in bookCtrl.book.volumeInfo.authors"> {{author}} </span>.
+                        <span class="" style="display:inline-block;margin-right:10px;">
+                            <img src="{{bookCtrl.book.volumeInfo.imageLinks.thumbnail}}" class="img-responsive">
+
                         </span>
+                        <span style="display:inline-block;">
+                                <h3>{{bookCtrl.book.volumeInfo.title}}</h3>
+                                <span>
+                                    by <span ng-repeat="author in bookCtrl.book.volumeInfo.authors"> {{author}} </span>.
+                                </span>
+                            </span>
+                            </span>
+
                     </div>
                     <div class="panel-body isbn">
                         <label>ISBN :&nbsp;&nbsp;</label><span>{{bookCtrl.ISBN}}</span><br>
@@ -24,6 +36,34 @@
                         <p>
                             {{ bookCtrl.book.volumeInfo.description || 'N/A' }}
                         </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="user-books">
+                    <h1>
+                        <i class="fa fa-book"></i>
+                        Qui le posséde ?
+                    </h1>
+                    <div class="loading-books" ng-show="bookCtrl.loadingUsers">
+                        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                    </div>
+                    <div class="user-list" ng-hide="bookCtrl.loadingUsers">
+                        <div ng-repeat="user in bookCtrl.users"
+                             ng-if="user!==null"
+                             class="user">
+                        <span class="user-image">
+                            <div class="user-info profile-image">
+                                <img ng-src="{{user.profilePictureUrl || 'images/default-user-image.png'}}"
+                                     alt="profile image">
+                            </div>
+                        </span>
+                            <span class="user-name">
+                                <a href="#/user/{{user.userName}}" target="_blank">
+                                    {{user.firstName}} {{user.lastName}}
+                                </a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

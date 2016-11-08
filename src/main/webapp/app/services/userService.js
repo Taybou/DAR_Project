@@ -3,7 +3,7 @@
  * Created by Mohamed Tayeb on 23/10/2016.
  */
 angular.module('booxchangeApp')
-    .factory('userService', ['$http', function ($http) {
+    .factory('userService', ['$http', '$resource', function ($http, $resource) {
 
         var userService = {};
 
@@ -144,6 +144,21 @@ angular.module('booxchangeApp')
                     onError(response.data);
                 }
             );
+        };
+
+        userService.getUsersByIsbn = function (isbn, onSuccess, onError) {
+            var Users = $resource('/api/users?action=getProfilesByISBN&isbn=:receiver', {
+                'query': {
+                    method: 'GET',
+                    isArray: true
+                }
+            });
+            return Users.query({isbn: isbn}, function (response) {
+                    response.data = response.data || response;
+                    onSuccess(response);
+                    return response;
+                }
+                , onError);
         };
 
         return userService;

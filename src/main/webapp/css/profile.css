@@ -73,7 +73,8 @@
     font-size: 20pt;
 }
 
-.book-list .book {
+.book-list .book,
+.user-list .user {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -84,26 +85,31 @@
     margin-top: 10pt;
 }
 
-.book-list .book .book-image {
+.book-list .book .book-image,
+.user-list .user .user-image {
     flex-grow: 1;
     margin-right: 5pt;
 }
 
-.book-list .book .book-image img {
+.book-list .book .book-image img,
+.user-list .user .user-image img {
     width: 50pt;
 }
 
-.book-list .book .book-title {
+.book-list .book .book-title,
+.user-list .user .user-name {
     font-size: 12pt;
     color: black;
     flex-grow: 4;
 }
 
-.book-list .book .book-title a {
+.book-list .book .book-title a,
+.user-list .user .user-name a {
     color: black;
 }
 
-.book-list .book .book-title a:hover {
+.book-list .book .book-title a:hover,
+.user-list .user .user-name a:hover {
     text-decoration: none;
     color: #101010;
 }

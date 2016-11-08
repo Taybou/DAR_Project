@@ -53,8 +53,7 @@ public class UsersServlet extends HttpServlet {
 
         String action = req.getParameter("action");
         String userName = req.getParameter("userName");
-        String relatedToUser = req.getParameter("relatedTo");
-
+        String isbn = req.getParameter("isbn");
         if (action != null) {
             switch (action) {
                 case "getBooks":
@@ -67,6 +66,16 @@ public class UsersServlet extends HttpServlet {
                 case "viewProfile":
                     User user1 = userDAO.getUserByUserName(userName);
                     response.sendJsonObject(UserPublicProfile.getUserProfile(user1));
+                    break;
+                case "getProfilesByISBN":
+
+                    List<User> users = userDAO.getUserByISBN(isbn);
+                    List<UserPublicProfile> publicUsers = new ArrayList<>();
+
+                    for (User u : users) {
+                        publicUsers.add(UserPublicProfile.getUserProfile(u));
+                    }
+                    response.sendJsonObject(publicUsers);
                     break;
                 default:
                     response.sendJsonError(new Error("Requete non valide"), 400);
@@ -91,7 +100,8 @@ public class UsersServlet extends HttpServlet {
 
         String action = req.getParameter("action");
         String isbn = request.getParameter("isbn");
-
+        //System.out.println("[ action : "+action);
+        //System.out.println(" isbn : "+isbn + "]");
         switch (action) {
             case "updateProfile":
                 Map<String, Object> userData = request.getJsonMap();
