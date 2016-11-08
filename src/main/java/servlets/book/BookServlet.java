@@ -46,7 +46,12 @@ public class BookServlet extends HttpServlet {
             case "details":
                 if (query != null) {
                     GoogleBook book = bookDAO.getBookDetails(query);
-                    jsonResponse.sendJsonObject(book);
+                    if (book != null) {
+                        jsonResponse.sendJsonObject(book);
+                    }
+                    else {
+                        jsonResponse.sendJsonError(new Error("Livre non trouvé"), 404);
+                    }
                 }
                 break;
             case "searchOwned":
@@ -59,6 +64,5 @@ public class BookServlet extends HttpServlet {
                 jsonResponse.sendJsonError(new Error("Requete Invalide"), 400);
                 break;
         }
-
     }
 }

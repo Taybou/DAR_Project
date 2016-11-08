@@ -40,11 +40,14 @@
     <!-- Loading Internal Angular Scripts and Modules -->
     <!-- App module -->
     <script src="app/app.js"></script>
+    <script src="app/authenticationApp.js"></script>
     <!-- Services -->
     <script src="app/services/bookService.js"></script>
     <script src="app/services/userService.js"></script>
     <script src="app/services/notificationService.js"></script>
     <script src="app/services/messageService.js"></script>
+    <script src="app/services/authenticationServices.js"></script>
+    <script src="app/services/alertsService.js"></script>
     <!-- Directives -->
     <script src="app/directives/bookDirective.js"></script>
     <!-- Controllers-->
@@ -53,10 +56,13 @@
     <script src="app/controllers/messageController.js"></script>
     <script src="app/controllers/userProfileController.js"></script>
     <script src="app/controllers/notificationController.js"></script>
+    <script src="app/controllers/authenticationControllers.js"></script>
+    <script src="app/controllers/alertsController.js"></script>
     <!--****************************************************** -->
 
 </head>
-<body>
+<body ng-controller="AlertsController as alertCtrl">
+
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
 
@@ -68,12 +74,27 @@
              ng-controller="NotificationController as NotifCtrl">
             <ul class="nav navbar-nav navbar-right">
 
-                <li>
-                    <a href="#"><i class="fa fa-2x fa-bell-o" aria-hidden="true"
-                                   ng-class="{ 'alerted': NotifCtrl.exchangeNotifsNum>0 }"
-                    ></i></a>
-                    <span ng-show="NotifCtrl.exchangeNotifsNum>0"
-                          style="color:#d35400">{{NotifCtrl.exchangeNotifsNum}}</span>
+                <li uib-dropdown>
+                    <a href id="simple-dropdown" uib-dropdown-toggle>
+                        <i class="fa fa-2x fa-bell-o" aria-hidden="true"
+                                   ng-class="{ 'alerted': NotifCtrl.alertNotifications.length>0 }"></i>
+                        <span ng-show="NotifCtrl.alertNotifications.length>0"
+                              style="color:#d35400">{{NotifCtrl.alertNotifications.length}}</span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                        <div class="alert-loading" ng-show="NotifCtrl.loadingAlerts || NotifCtrl.loadingBooks">
+                            <i class='fa fa-1x fa-circle-o-notch fa-spin' ></i>
+                        </div>
+                        <li class="alert-notification" ng-repeat="book in NotifCtrl.alertBooks" ng-click="NotifCtrl.seeAlertNotification(book)">
+                            <span class="alert-book-image">
+                                <img  ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}" alt="book image">
+                            </span>
+                            <span class="alert-book-text">Le livre <span class="alert-book-title">{{book.volumeInfo.title}}</span> est disponible</span>
+                        </li>
+                        <li class="alert-notification"
+                            ng-show="NotifCtrl.alertBooks.length == 0 && !NotifCtrl.loadingBooks"><p> Aucune nouvelle
+                            alerte </p></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#/messages">
@@ -86,6 +107,13 @@
                 <li>
                     <a href="#/profile"><i class="fa fa-2x fa-user-circle-o" aria-hidden="true"></i> Profile</a>
                 </li>
+                <li ng-controller="SignoutController as SignoutCtrl" ng-click="SignoutCtrl.signout()">
+                    <a class="signout">
+                        <i ng-show="SignoutCtrl.loading" class="fa fa-1x fa-circle-o-notch fa-spin"></i>
+                        <i ng-hide="SignoutCtrl.loading" class="fa fa-2x fa-sign-out"></i>
+                        Déconnexion
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -93,6 +121,10 @@
 
 <!-- This is the main view. it changes depending on the route-->
 <div ng-view class="main-view"></div>
+
+
+
+</div>
 
 <div class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">

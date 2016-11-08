@@ -58,38 +58,6 @@ public class UserDAO {
         return userQuery.asList();
     }
 
-    public void addBook(User user) {
-        // Add books of the user
-        // by adding a list of isbn to the user owner
-
-        Query<User> query = datastore.createQuery(User.class).field("userName").equal(user.getUserName());
-        List list = query.get().getBooksIsbnList();
-        if (list == null) {
-            list = new ArrayList();
-        }
-        for (int i = 0; i < user.getBooksIsbnList().size(); i++) {
-            list.add(user.getBooksIsbnList().get(i));
-        }
-        for (int i = 0; i < list.size(); i++) {
-            UpdateOperations<User> userUpdateOperations = datastore.createUpdateOperations(User.class).add("booksIsbnList", list.get(i));
-            datastore.update(query, userUpdateOperations);
-        }
-    }
-
-    public void deleteBook(String userName, String isbn) {
-        Query<User> query = datastore.createQuery(User.class).field("userName").equal(userName);
-        List<String> list = new ArrayList<>();
-
-        for (int i = 0; i < query.get().getBooksIsbnList().size(); i++) {
-            if (!query.get().getBooksIsbnList().get(i).equals(isbn)) {
-                list.add(query.get().getBooksIsbnList().get(i));
-            }
-        }
-        UpdateOperations<User> updateOperations = datastore.createUpdateOperations(User.class).set("booksIsbnList", list);
-        datastore.update(query, updateOperations);
-
-    }
-
     public List<GoogleBook> getBooks(String userName) {
         List<GoogleBook> booksList = new ArrayList<>();
 

@@ -77,6 +77,11 @@
         <servlet-class>servlets.NotificationsServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>AlertsServlet</servlet-name>
+        <servlet-class>servlets.AlertsServlet</servlet-class>
+    </servlet>
+
     <!-- Servlets Mapping-->
 
     <servlet-mapping>
@@ -126,6 +131,11 @@
     <servlet-mapping>
         <servlet-name>Notifications</servlet-name>
         <url-pattern>/api/notifications</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AlertsServlet</servlet-name>
+        <url-pattern>/api/alerts</url-pattern>
     </servlet-mapping>
 
 </web-app>

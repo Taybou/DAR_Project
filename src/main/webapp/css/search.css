@@ -4,6 +4,10 @@ section.home {
     background-size: cover;
 }
 
+.signout {
+    cursor: pointer;
+}
+
 
 .search-wrapper {
     position: absolute;

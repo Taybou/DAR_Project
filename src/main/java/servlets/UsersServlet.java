@@ -1,11 +1,11 @@
 package servlets;
 
-import bean.Message;
-import bean.User;
-import bean.UserPublicProfile;
+import bean.*;
 import bean.googlebooks.GoogleBook;
 import dao.DAOFactory;
+import dao.alert.AlertDAO;
 import dao.message.MessageDAO;
+import dao.message.NotificationDAO;
 import dao.user.UserDAO;
 import errors.Error;
 import filters.AuthorizationFilter;
@@ -36,10 +36,14 @@ import java.util.Map;
 
 public class UsersServlet extends HttpServlet {
 
-    UserDAO userDAO;
+    private UserDAO userDAO;
+    private AlertDAO alertDAO;
+    private NotificationDAO notificationDAO;
 
     public void init() {
         userDAO = DAOFactory.getUserDAO();
+        alertDAO = DAOFactory.getAlertDAO();
+        notificationDAO = DAOFactory.getNotificationDAO();
     }
 
     @Override
@@ -53,8 +57,7 @@ public class UsersServlet extends HttpServlet {
 
         String action = req.getParameter("action");
         String userName = req.getParameter("userName");
-        String relatedToUser = req.getParameter("relatedTo");
-
+        String isbn = req.getParameter("isbn");
         if (action != null) {
             switch (action) {
                 case "getBooks":
@@ -67,6 +70,16 @@ public class UsersServlet extends HttpServlet {
                 case "viewProfile":
                     User user1 = userDAO.getUserByUserName(userName);
                     response.sendJsonObject(UserPublicProfile.getUserProfile(user1));
+                    break;
+                case "getProfilesByISBN":
+
+                    List<User> users = userDAO.getUserByISBN(isbn);
+                    List<UserPublicProfile> publicUsers = new ArrayList<>();
+
+                    for (User u : users) {
+                        publicUsers.add(UserPublicProfile.getUserProfile(u));
+                    }
+                    response.sendJsonObject(publicUsers);
                     break;
                 default:
                     response.sendJsonError(new Error("Requete non valide"), 400);
@@ -91,7 +104,8 @@ public class UsersServlet extends HttpServlet {
 
         String action = req.getParameter("action");
         String isbn = request.getParameter("isbn");
-
+        //System.out.println("[ action : "+action);
+        //System.out.println(" isbn : "+isbn + "]");
         switch (action) {
             case "updateProfile":
                 Map<String, Object> userData = request.getJsonMap();
@@ -118,6 +132,7 @@ public class UsersServlet extends HttpServlet {
             case "addBook":
                 user.getBooksIsbnList().add(isbn);
                 userDAO.addUser(user);
+                this.createAddBookNotification(user, isbn);
                 response.sendJsonObject(UserPublicProfile.getUserProfile(user));
                 break;
             case "deleteBook":
@@ -128,6 +143,21 @@ public class UsersServlet extends HttpServlet {
             default:
                 response.sendJsonError(new Error("Requete non valide"), 400);
                 break;
+        }
+    }
+
+    private void createAddBookNotification(User user, String isbn) {
+
+        List<Alert> alerts = alertDAO.getAlertByISBN(isbn);
+
+        for (Alert alert: alerts) {
+            Notification notification = new Notification();
+            User user1 = alert.getUser();
+            notification.setUser(user1);
+            notification.setFrom(user);
+            notification.setBookISBN(isbn);
+            notification.setType(Notification.Type.Alert);
+            notificationDAO.addNotification(notification);
         }
     }
 }

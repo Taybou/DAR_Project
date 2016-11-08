@@ -99,7 +99,7 @@ public class MessagesServlet extends HttpServlet {
         HttpServletJsonRequest request = (HttpServletJsonRequest) req;
 
         Map<String, Object> messagePost = request.getJsonMap();
-        System.out.println(messagePost);
+        //System.out.println(messagePost);
         MessageDAO messageDAO = new MessageDAO();
         UserDAO userDAO = new UserDAO();
         String to = (String) messagePost.get("receiver");

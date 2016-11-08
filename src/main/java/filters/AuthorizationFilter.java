@@ -13,8 +13,8 @@ import java.io.IOException;
 public class AuthorizationFilter implements Filter {
 
     public static final String USER_SESSION = "userSession";
-    private static final String SIGNIN_PAGE = "/signin";
-    private static final String SIGNUP_PAGE = "/signup";
+    public static final String SIGNIN_PAGE = "/signin";
+    public static final String SIGNUP_PAGE = "/signup";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

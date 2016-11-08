@@ -1,5 +1,6 @@
 package bean;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -46,11 +47,13 @@ public class User {
     @NotNull(message = "L'email est obligatoire")
     @NotBlank(message = "L'email est obligatoire")
     @Email(message = "Email non valide")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String email;
     @Size(min = 6, message = "Le mot de passe doit contenir plus de 6 caractères")
     @NotNull(message = "Le mot de passe est obligatoire")
     @NotBlank(message = "Le mot de passe est obligatoire")
     @SafeHtml(message = "Mot de passe non valide")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Pattern(regexp = "Male|Female", message = "Valeurs acceptées : \"Femme\", \"Homme\".")
     @SafeHtml(message = "Sexe non valide")
