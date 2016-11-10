@@ -1,13 +1,14 @@
 <!--<%@page contentType="text/html" pageEncoding="UTF-8"%>-->
 <!DOCTYPE html>
-<html lang="en" ng-app="booxchangeApp">
+<html lang="fr" ng-app="booxchangeApp">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>BooXchange</title>
 
     <!-- Loading External CSS files -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-google-places-autocomplete/src/autocomplete.css">
     <!--***************************-->
 
     <!-- Loading Internal CSS files -->
@@ -30,11 +31,14 @@
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
     <script src="bower_components/moment/moment.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBgKQMp-a7NqPJkXH7-m4UuSMbxwEzleRU"></script>
+    <script src="/bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
     <!-- ***************************************************** -->
 
     <!-- Loading AngularJS External Modules -->
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
     <!--******************************************************-->
 
     <!-- Loading Internal Angular Scripts and Modules -->
@@ -48,6 +52,7 @@
     <script src="app/services/messageService.js"></script>
     <script src="app/services/authenticationServices.js"></script>
     <script src="app/services/alertsService.js"></script>
+    <script src="app/services/endroitService.js"></script>
     <!-- Directives -->
     <script src="app/directives/bookDirective.js"></script>
     <!-- Controllers-->

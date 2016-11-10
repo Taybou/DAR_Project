@@ -9,6 +9,7 @@ angular.module('booxchangeApp')
         'userService',
         'bookService',
         function ($scope, $uibModal, userService, bookService) {
+            $scope.place = null ;
             var vm = this;
 
             vm.error = null;
@@ -20,6 +21,10 @@ angular.module('booxchangeApp')
                 description: 'I love donuts !',
                 gender: 'Male',
                 profilePictureUrl: null
+            };
+            $scope.autocompleteOptions = {
+                componentRestrictions: { country: 'fr' },
+                types: ['geocode']
             };
 
             vm.books = {};
@@ -74,6 +79,7 @@ angular.module('booxchangeApp')
 
             vm.findBook = function () {
                 vm.loadingSearch = true;
+               console.log( vm.query);
                 bookService.getBooks(vm.query, function (response) {
                     vm.foundBooks = response.data.slice(0, 5);
                     vm.loadingSearch = false;
@@ -112,6 +118,8 @@ angular.module('booxchangeApp')
 
             vm.save = function () {
                 vm.updateUser.loading = true;
+                vm.updatedUser.address =  vm.updatedUser.address.formatted_address ;
+                console.log(vm.updatedUser.address);
                 userService.updateUser(vm.updatedUser,
                     function (user) {
                         vm.user = user;

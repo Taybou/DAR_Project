@@ -55,9 +55,14 @@
                                                        class="form-control input-sm"
                                                        placeholder="Type your message here..."/>
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-warning btn-sm" ng-click="MsgCtrl.sendMsg()" id="btn-chat">
+                                          <button class="btn btn-warning btn-sm" ng-click="MsgCtrl.sendMsg()" id="btn-chat">
                                                         Send
                                                     </button>
+
+                                                   <button type="button" class="btn btn-info btn-lg" ng-click="MsgCtrl.open()">
+                                                        <span class="glyphicon glyphicon-map-marker"></span>
+                                                   </button>
+
                                                 </span>
                                             </div>
                                         </form>
@@ -68,7 +73,9 @@
                     </div>
 
 
-                    <!--<div class="body">-->
+
+
+    <!--<div class="body">-->
                     <!--<ul>-->
                     <!--<li  ng-repeat="msg in messages">[{{msg.moment}}] {{ msg.from.userName}} : {{msg.content}} </li>-->
                     <!--</ul>-->
@@ -88,8 +95,34 @@
                     <!--</button>-->
                     <!--</div>-->
                 </section>
+
+
+
             </div>
         </div>
-    </div>
 
+
+
+
+    </div>
+    <script type="text/ng-template" id="places.html">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Endroits de rencontres </h4>
+        </div>
+        <div  class="modal-body">
+            <ul class="list-group" ng-repeat="place in MsgCtrl.places">
+                <li class="list-group-item">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                    <b>{{place.name}}</b><br>
+                    {{place.vicinity}}
+                </li>
+
+            </ul>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="MsgCtrl.close()">Fermer</button>
+        </div>
+    </script>
 </section>

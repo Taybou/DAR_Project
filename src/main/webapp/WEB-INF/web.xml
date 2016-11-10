@@ -81,6 +81,11 @@
         <servlet-name>AlertsServlet</servlet-name>
         <servlet-class>servlets.AlertsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EndroitServlet</servlet-name>
+        <servlet-class>servlets.EndroitServlet</servlet-class>
+    </servlet>
+
 
     <!-- Servlets Mapping-->
 
@@ -137,5 +142,12 @@
         <servlet-name>AlertsServlet</servlet-name>
         <url-pattern>/api/alerts</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EndroitServlet</servlet-name>
+        <url-pattern>/api/endroit</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>

@@ -16,12 +16,19 @@ angular.module('booxchangeApp')
             '$routeParams',
         'notificationService',
         'messageService',
-        function ($routeParams, notificationService, messageService) {
+        'endroitService',
+        '$uibModal',
+        '$scope',
+        function ($routeParams, notificationService, messageService , endroitService , $uibModal, $scope) {
             var vm = this;
 
             vm.username = "";
             vm.contacts = {};
             vm.contactsWithNew = {};
+            vm.places = {};
+
+            // Modal scope
+            vm.placesMap = {};
 
             vm.fetchMsg = function (username) {
 
@@ -30,6 +37,7 @@ angular.module('booxchangeApp')
 
                     vm.username = username || vm.username;
                     username = vm.username;
+
                 vm.messages = messageService.getMessages(vm.username, function () {
 
                         for (var user in vm.contacts) {
@@ -40,6 +48,7 @@ angular.module('booxchangeApp')
                             }
                         }
                     vm.updateContactsNotification();
+                    vm.getPlaces(username);
                     });
                 };
 
@@ -72,7 +81,7 @@ angular.module('booxchangeApp')
                     return vm.contacts;
                 });
 
-            }
+            };
 
             // calling the getContacts to initialize the view
             // notificationService.stopAutoUpdate();
@@ -81,6 +90,32 @@ angular.module('booxchangeApp')
                 vm.updateContactsNotification();
                 setInterval(vm.updateContactsNotification, 1000);
             });
+
+           vm.getPlaces = function () {
+               endroitService.getPlaces(vm.username,
+                   function success(response) {
+                       vm.places = response.data.slice(0, 5);
+                       console.log(vm.places);
+                   },
+                   function error(response) {
+                       console.log("user not exist");
+                   }
+               );
+           }
+
+            vm.open = function () {
+                vm.placesMap = angular.copy(vm.places);
+                vm.modal = $uibModal.open({
+                    templateUrl: 'places.html',
+                    scope: $scope
+                });
+            };
+
+            vm.close = function () {
+                vm.placesMap.errors = null;
+                vm.modal.dismiss();
+            };
+
 
 
             }
