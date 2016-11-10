@@ -17,11 +17,12 @@ import java.util.ArrayList;
  */
 public class BookAPIAccess {
 
+    private static BookAPIAccess instance = null;
     public static String GOOGLE_BOOKS_URI = "https://www.googleapis.com/books/v1/volumes";
 
     //private ObjectMapper objectMapper;
 
-    public BookAPIAccess() {
+    private BookAPIAccess() {
 
         Unirest.setObjectMapper(new ObjectMapper() {
             private com.fasterxml.jackson.databind.ObjectMapper jacksonObjectMapper
@@ -43,6 +44,17 @@ public class BookAPIAccess {
                 }
             }
         });
+    }
+
+    public static BookAPIAccess getBookAPIAccess() {
+
+        if (instance != null) {
+            return instance;
+        }
+        else {
+            instance = new BookAPIAccess();
+            return instance;
+        }
     }
 
     public GoogleBook getBook(String isbn) {

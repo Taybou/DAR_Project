@@ -27,7 +27,7 @@ public class UserDAO {
 
     public UserDAO() {
         datastore = MorphiaDataStore.getDataStore();
-        bookAPIAccess = new BookAPIAccess();
+        bookAPIAccess = BookAPIAccess.getBookAPIAccess();
     }
 
     public User addUser(User user) {

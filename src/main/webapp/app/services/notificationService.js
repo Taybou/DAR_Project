@@ -126,7 +126,7 @@ angular.module('booxchangeApp')
             this.interval = setInterval(function () {
                 updtMSG(onSuccessMsg);
                 //updtEXC(onSuccessExchange);
-            }, 1000);
+            }, 45000);
         };
 
         this.stopAutoUpdate = function () {

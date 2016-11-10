@@ -60,7 +60,7 @@ angular.module('booxchangeApp')
                 );
             };
 
-            setInterval(vm.getAlertNotifications, 30000);
+            setInterval(vm.getAlertNotifications, 45000);
 
             vm.getAlertNotifications();
         }

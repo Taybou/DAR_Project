@@ -23,7 +23,7 @@ public class BookDAOImpl implements BookDAO {
 
     public BookDAOImpl() {
         datastore = MorphiaDataStore.getDataStore();
-        bookAPIAccess = new BookAPIAccess();
+        bookAPIAccess = BookAPIAccess.getBookAPIAccess();
     }
 
     @Override
