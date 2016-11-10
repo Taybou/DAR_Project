@@ -65,12 +65,17 @@ public class BookAPIAccess {
                     .queryString("q", "isbn:" + isbn)
                     .asObject(BookSearchResult.class);
 
-            BookSearchResult result = response.getBody();
-            if (result == null || result.getTotalItems() == 0) {
-                return null;
+            if (response.getStatus() == 200) {
+                BookSearchResult result = response.getBody();
+                if (result == null || result.getTotalItems() == 0) {
+                    return null;
+                }
+                else {
+                    return result.getItems().get(0);
+                }
             }
             else {
-                return result.getItems().get(0);
+                return null;
             }
         } catch (UnirestException e) {
             e.printStackTrace();
@@ -87,8 +92,14 @@ public class BookAPIAccess {
                     .queryString("q", query)
                     .queryString("maxResults", 20)
                     .asObject(BookSearchResult.class);
-            BookSearchResult result = response.getBody();
-            return (ArrayList<GoogleBook>) result.getItems();
+
+            if (response.getStatus() == 200) {
+                BookSearchResult result = response.getBody();
+                return (ArrayList<GoogleBook>) result.getItems();
+            }
+            else {
+                return new ArrayList<>();
+            }
         } catch (UnirestException e) {
             e.printStackTrace();
         }
