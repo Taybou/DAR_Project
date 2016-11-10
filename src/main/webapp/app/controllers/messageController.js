@@ -34,23 +34,24 @@ angular.module('booxchangeApp')
 
                 // vm.msgNotificationExist = false;
                 // vm.msgNotificationNumber = notifsNum;
-
-                    vm.username = username || vm.username;
-                    username = vm.username;
+                vm.loadingMessages = true;
+                vm.username = username || vm.username;
+                username = vm.username;
 
                 vm.messages = messageService.getMessages(vm.username, function () {
 
-                        for (var user in vm.contacts) {
-                            if (vm.contacts[user].userName === username) {
-                                vm.contacts[user].active = "true";
-                            } else {
-                                vm.contacts[user].active = undefined;
-                            }
+                    for (var user in vm.contacts) {
+                        if (vm.contacts[user].userName === username) {
+                            vm.contacts[user].active = "true";
+                        } else {
+                            vm.contacts[user].active = undefined;
                         }
+                    }
+                    vm.loadingMessages = false;
                     vm.updateContactsNotification();
-                    vm.getPlaces(username);
-                    });
-                };
+
+                });
+            };
 
             vm.sendMsg = function () {
                     if (vm.username != "") {
@@ -86,29 +87,37 @@ angular.module('booxchangeApp')
             // calling the getContacts to initialize the view
             // notificationService.stopAutoUpdate();
             // notificationService.removeMessageNotificaiton();
+            vm.loadingContacts = true;
             vm.contacts = messageService.getContacts(function () {
+                vm.loadingContacts = false;
                 vm.updateContactsNotification();
-                setInterval(vm.updateContactsNotification, 1000);
+                setInterval(vm.updateContactsNotification, 45000);
             });
 
-           vm.getPlaces = function () {
+            vm.getPlaces = function (username, onSucess) {
                endroitService.getPlaces(vm.username,
                    function success(response) {
                        vm.places = response.data.slice(0, 5);
-                       console.log(vm.places);
+                       //console.log(vm.places);
+                       onSucess();
                    },
                    function error(response) {
-                       console.log("user not exist");
+                       console.log("user does not exist");
                    }
                );
            }
 
             vm.open = function () {
-                vm.placesMap = angular.copy(vm.places);
+                vm.loadingPlaces = true;
+                vm.getPlaces(vm.username, function () {
+                    vm.loadingPlaces = false;
+                    vm.placesMap = angular.copy(vm.places);
+                });
                 vm.modal = $uibModal.open({
                     templateUrl: 'places.html',
                     scope: $scope
                 });
+
             };
 
             vm.close = function () {

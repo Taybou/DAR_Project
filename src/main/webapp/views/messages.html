@@ -16,10 +16,13 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="loading-books list-group-item" ng-show="MsgCtrl.loadingContacts">
+                        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                    </div>
                 </div>
                 <section class="message">
                     <div class="container">
-                        <div class="row">
+                        <div class="row" style="width: 100%;">
                             <div style="height: 100%;">
                                 <div class="panel panel-primary" style="height: 87%;">
                                     <div class="panel-body" style="height: 100%;">
@@ -47,6 +50,9 @@
                                                 </div>
                                             </li>
                                         </ul>
+                                        <div class="loading-books list-group-item" ng-show="MsgCtrl.loadingMessages">
+                                            <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                                        </div>
                                     </div>
                                     <div class="panel-footer">
                                         <form novalidate>
@@ -111,15 +117,16 @@
             <h4 class="modal-title">Endroits de rencontres </h4>
         </div>
         <div  class="modal-body">
-            <ul class="list-group" ng-repeat="place in MsgCtrl.places">
-                <li class="list-group-item">
+            <ul class="list-group">
+                <li ng-repeat="place in MsgCtrl.places" class="list-group-item">
                     <span class="glyphicon glyphicon-map-marker"></span>
                     <b>{{place.name}}</b><br>
                     {{place.vicinity}}
                 </li>
-
             </ul>
-
+            <div class="loading-books list-group-item" ng-show="MsgCtrl.loadingPlaces">
+                <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-click="MsgCtrl.close()">Fermer</button>
