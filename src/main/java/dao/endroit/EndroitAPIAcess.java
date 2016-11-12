@@ -10,6 +10,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import unirest.config.UnirestConfig;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,31 +26,11 @@ public class EndroitAPIAcess {
     public static String GOOGLE_MAPS_PLACES_URI ="https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 
     public EndroitAPIAcess() {
-
-        Unirest.setObjectMapper(new ObjectMapper() {
-            private com.fasterxml.jackson.databind.ObjectMapper jacksonObjectMapper
-                    = new com.fasterxml.jackson.databind.ObjectMapper();
-
-            public <T> T readValue(String value, Class<T> valueType) {
-                try {
-                    return jacksonObjectMapper.readValue(value, valueType);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            public String writeValue(Object value) {
-                try {
-                    return jacksonObjectMapper.writeValueAsString(value);
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        UnirestConfig.init();
     }
 
     public Location getLatLongByAddress(String address) {
-        System.out.println(address);
+
         if (!address.equals("")) {
             try {
                 HttpResponse<GeoEndroit> response = Unirest.get("https://maps.googleapis.com/maps/api/geocode/json")
@@ -59,11 +40,8 @@ public class EndroitAPIAcess {
                         .asObject(GeoEndroit.class);
                 GeoEndroit result = response.getBody();
                 if(result == null){
-                    System.out.println("Latituuuuuuuuuuude");
                     return null;
                 }else{
-                    System.out.println("longitudeeeeeee" +result.getResults().size());
-
                     return result.getResults().get(0).getGeometry().getLocation();
                 }
 
@@ -97,7 +75,6 @@ public class EndroitAPIAcess {
             location = (loc3.getLat().toString() + "," + loc3.getLng().toString());
 
         }
-        System.out.println(location);
 
         try {
             HttpResponse<Places> response = Unirest.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+location+"&radius=500&types=book_store&key=AIzaSyBgKQMp-a7NqPJkXH7-m4UuSMbxwEzleRU")
@@ -110,7 +87,6 @@ public class EndroitAPIAcess {
             Places result = response.getBody();
 
             ArrayList<bean.googleplaces.Result> results = new ArrayList<bean.googleplaces.Result>();
-            System.out.println("SIZE--------------"+result.getResults().size());
             for(int i=0 ; i<result.getResults().size();i++){
                 results.add(result.getResults().get(i));
             }

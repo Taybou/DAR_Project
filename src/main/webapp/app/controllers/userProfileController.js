@@ -79,7 +79,6 @@ angular.module('booxchangeApp')
 
             vm.findBook = function () {
                 vm.loadingSearch = true;
-               console.log( vm.query);
                 bookService.getBooks(vm.query, function (response) {
                     vm.foundBooks = response.data.slice(0, 5);
                     vm.loadingSearch = false;
@@ -118,8 +117,7 @@ angular.module('booxchangeApp')
 
             vm.save = function () {
                 vm.updateUser.loading = true;
-                vm.updatedUser.address =  vm.updatedUser.address.formatted_address ;
-                console.log(vm.updatedUser.address);
+                vm.updatedUser.address =  vm.updatedUser.address.formatted_address;
                 userService.updateUser(vm.updatedUser,
                     function (user) {
                         vm.user = user;
