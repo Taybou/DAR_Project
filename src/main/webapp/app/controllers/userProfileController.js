@@ -116,8 +116,11 @@ angular.module('booxchangeApp')
             };
 
             vm.save = function () {
+
                 vm.updateUser.loading = true;
-                vm.updatedUser.address =  vm.updatedUser.address.formatted_address;
+                if (vm.updatedUser.address.formatted_address) {
+                    vm.updatedUser.address =  vm.updatedUser.address.formatted_address;
+                }
                 userService.updateUser(vm.updatedUser,
                     function (user) {
                         vm.user = user;
