@@ -6,6 +6,10 @@ html, body, .main-view, section.home {
     margin-top: 60px;
 }
 
+.main-view > section {
+    margin-bottom: 50px;
+}
+
 .book-view {
     padding-top: 30px;
 }
