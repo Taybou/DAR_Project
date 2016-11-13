@@ -11,17 +11,25 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span>
-                        <span class="" style="display:inline-block;margin-right:10px;">
-                            <img src="{{bookCtrl.book.volumeInfo.imageLinks.thumbnail}}" class="img-responsive">
+                            <span class="" style="display:inline-block;margin-right:10px;">
+                                <img src="{{bookCtrl.book.volumeInfo.imageLinks.thumbnail}}" class="img-responsive">
 
+                            </span>
+                            <span style="display:inline-block;">
+                                    <h3>{{bookCtrl.book.volumeInfo.title}}</h3>
+                                    <span>
+                                        by <span ng-repeat="author in bookCtrl.book.volumeInfo.authors"> {{author}} </span>.
+                                    </span>
+                            </span>
+                            <a ng-show="alertCtrl.hasAlert(bookCtrl.ISBN)" ng-click="alertCtrl.deleteAlert(bookCtrl.ISBN)" class="btn btn-danger pull-right">
+                                <i class="fa fa-bell-o"></i>
+                                Supprimer l'Alerte
+                            </a>
+                            <a ng-hide="alertCtrl.hasAlert(bookCtrl.ISBN)" ng-click="alertCtrl.createAlert(bookCtrl.ISBN)" class="btn btn-success pull-right">
+                                <i class="fa fa-bell-o"></i>
+                                Ajouter une Alerte
+                            </a>
                         </span>
-                        <span style="display:inline-block;">
-                                <h3>{{bookCtrl.book.volumeInfo.title}}</h3>
-                                <span>
-                                    by <span ng-repeat="author in bookCtrl.book.volumeInfo.authors"> {{author}} </span>.
-                                </span>
-                            </span>
-                            </span>
 
                     </div>
                     <div class="panel-body isbn">
