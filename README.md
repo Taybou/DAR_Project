@@ -1,6 +1,9 @@
 # DAR_Project
 # Name : BooXchange
 
+Vous devez lancer les commandes suivante pour télécharger les dépendances front end:
+node install -g bower
+bower install
 
 # Le site est accessible sur ce lien :
 http://booxchangeupmc.azurewebsites.net/
