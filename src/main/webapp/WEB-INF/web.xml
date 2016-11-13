@@ -32,7 +32,7 @@
 
     <servlet>
         <servlet-name>Home</servlet-name>
-        <jsp-file>/home.html</jsp-file>
+        <jsp-file>/home.jsp</jsp-file>
     </servlet>
 
     <servlet>

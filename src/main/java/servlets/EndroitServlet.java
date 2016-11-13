@@ -42,12 +42,11 @@ public class EndroitServlet extends HttpServlet {
         String address1 = user.getAddress();
         String username = request.getParameter("query");
         String address2 = userDAO.getUserByUserName(username).getAddress();
-        System.out.println("Adresse2 --------" + address2);
-        System.out.println("Adresse1 --------" + address1);
+
         ArrayList<bean.googleplaces.Result> results = new ArrayList<bean.googleplaces.Result>();
         if(address1 == null || address2 == null) {
            results = endroitAPIAcess.getNearestPlaces(null, null);
-        }else{
+        } else{
             results = endroitAPIAcess.getNearestPlaces(address1, address2);
         }
 

@@ -18,7 +18,8 @@ public class HttpServletJsonResponse extends HttpServletResponseWrapper {
 
     public HttpServletJsonResponse(HttpServletResponse response) {
         super(response);
-        this.setContentType("application/json");
+        this.setContentType("application/json;charset=UTF-8");
+        this.setCharacterEncoding("UTF-8");
     }
 
     /*

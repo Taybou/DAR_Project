@@ -26,6 +26,11 @@ public class HttpServletJsonRequest extends HttpServletRequestWrapper {
         super(request);
         this.jsonObject = null;
         this.jsonMap = null;
+        try {
+            this.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -38,6 +43,7 @@ public class HttpServletJsonRequest extends HttpServletRequestWrapper {
         }
         else {
             ObjectMapper objectMapper = new ObjectMapper();
+
             T val = objectMapper.readValue(this.getReader(), aClass);
             jsonObject = val;
             return  val;
@@ -75,7 +81,7 @@ public class HttpServletJsonRequest extends HttpServletRequestWrapper {
 
     @Override
     public BufferedReader getReader() throws IOException{
-        return new BufferedReader(new InputStreamReader(getInputStream()));
+        return new BufferedReader(new InputStreamReader(getInputStream(), "UTF-8"));
     }
 
     private void cacheInputStream() throws IOException {
