@@ -9,10 +9,7 @@ import servlets.wrappers.HttpServletJsonRequest;
 import servlets.wrappers.HttpServletJsonResponse;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.Map;
 
@@ -39,7 +36,10 @@ public class SigninServlet extends HttpServlet {
 //        Check if password is correct
         if (user != null && user.getPassword().equals(signinPost.get("password"))) {
             session.setAttribute(AuthorizationFilter.USER_SESSION, user);
-            response.sendRedirect("/");
+            Cookie XSRFCookie = new Cookie("XSRF-TOKEN", session.getId());
+            XSRFCookie.setPath("/");
+            response.addCookie(XSRFCookie);
+            response.setStatus(200);
         }
 //        Error, user does not exist or incorrect password
         else {

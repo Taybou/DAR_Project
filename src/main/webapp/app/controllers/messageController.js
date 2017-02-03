@@ -54,6 +54,8 @@ angular.module('booxchangeApp')
             };
 
             vm.sendMsg = function () {
+
+                    console.log(vm.message);
                     if (vm.username != "") {
                         messageService.sendMessage(
                             {username: vm.username, message: vm.message},

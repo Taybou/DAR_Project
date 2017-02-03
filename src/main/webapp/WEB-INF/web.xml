@@ -28,6 +28,41 @@
         <url-pattern>/</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/api/endroit</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/api/users</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/api/messages</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/api/books</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/api/exchanges</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/api/alerts</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/api/notifications</url-pattern>
+    </filter-mapping>
+
     <!-- Servlets -->
 
     <servlet>

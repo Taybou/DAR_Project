@@ -1,5 +1,6 @@
 package bean;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -14,10 +15,14 @@ public class Exchange {
     private String _id;
 
     // Demandeur de l'echange
+    @SafeHtml(message = "Utilisateur non valide")
     private String user1;
     // utilisateur demandé
+    @SafeHtml(message = "Utilisateur non valide")
     private String user2;
+    @SafeHtml(message = "ISBN non valide")
     private String isbnBookUser1;
+    @SafeHtml(message = "ISBN non valide")
     private String isbnBookUser2;
     private boolean isAccepted;
 

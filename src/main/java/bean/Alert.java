@@ -1,5 +1,6 @@
 package bean;
 
+import org.hibernate.validator.constraints.SafeHtml;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
 
@@ -14,6 +15,7 @@ public class Alert {
 
     @Reference
     private User user;
+    @SafeHtml(message = "ISBN non valide")
     private String bookISBN;
 
     public Alert() {

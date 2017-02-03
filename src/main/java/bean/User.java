@@ -48,6 +48,7 @@ public class User {
     @NotBlank(message = "L'email est obligatoire")
     @Email(message = "Email non valide")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @SafeHtml(message = "Email non valide")
     private String email;
     @Size(min = 6, message = "Le mot de passe doit contenir plus de 6 caractères")
     @NotNull(message = "Le mot de passe est obligatoire")
