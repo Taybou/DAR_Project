@@ -53,22 +53,18 @@ public class AuthorizationFilter implements Filter {
             if (request.getRequestURI().matches("/api/(.*)")) {
 
                 String XSRFHeader = request.getHeader("X-XSRF-TOKEN");
-                System.out.println(XSRFHeader);
 
                 Cookie[] cookies = request.getCookies();
 
                 int i = 0 ;
                 Cookie cookie = null;
                 while (i < cookies.length) {
-                    System.out.println(cookies[i].getName());
                     if (cookies[i].getName().equals("XSRF-TOKEN")) {
                         cookie = cookies[i];
                         break;
                     }
                     i++;
                 }
-                System.out.println(cookies.length);
-                System.out.println(cookie);
 
                 if (cookie != null && XSRFHeader != null && cookie.getValue().equals(XSRFHeader)) {
                     filterChain.doFilter(request, response);
